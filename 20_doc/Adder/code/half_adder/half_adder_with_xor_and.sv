@@ -1,0 +1,12 @@
+module half_adder_with_xor_and(
+    input logic     i_data_a,
+    input logic     i_data_b,
+
+    output logic    o_data,
+    output logic    o_carry
+);
+
+assign o_data = i_data_a ^ i_data_b;    // S = A XOR B
+assign o_carry = i_data_a & i_data_b;   // C = A AND B
+
+endmodule

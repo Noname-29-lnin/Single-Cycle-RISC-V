@@ -1,0 +1,118 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[utf8]{vietnam}
+\usepackage[margin = 2cm]{geometry}
+
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{nameref}
+\usepackage{hyperref}
+
+\usepackage{tabulary}
+\usepackage{multicol}
+\usepackage{multirow}
+
+\usepackage{minipage-marginpar}
+\usepackage{enumerate}
+\usepackage{enumitem}
+
+\usepackage{xcolor}
+\usepackage{listings}
+% Cài đặt chung
+\lstset{
+	basicstyle=\ttfamily\footnotesize, % Font chữ chính (mono-spaced)
+	numbers=left,                      % Hiển thị số dòng bên trái
+	numberstyle=\tiny\color{gray},     % Kích thước và màu sắc số dòng
+	frame=single,                      % Khung xung quanh đoạn mã
+	breaklines=true,                   % Tự động xuống dòng
+	tabsize=2,                         % Kích thước tab
+	showstringspaces=false,            % Không hiển thị ký hiệu khoảng trắng
+	captionpos=b,                      % Đặt caption ở dưới đoạn mã
+	backgroundcolor=\color{white},   % Màu nền của đoạn mã
+	keywordstyle=\color{blue}\bfseries,% Màu và kiểu từ khóa
+	commentstyle=\color{green!50!black},% Màu và kiểu chú thích
+	stringstyle=\color{red},           % Màu và kiểu chuỗi
+	moredelim=**[is][\color{magenta}]{@}{@}, % Highlight các từ bên trong @...@
+}
+
+% Định nghĩa phong cách cho Python
+\lstdefinestyle{python}{
+	language=Python,
+	basicstyle=\ttfamily\footnotesize,
+	keywordstyle=\color{blue}\bfseries,
+	commentstyle=\color{green!50!black},
+	stringstyle=\color{red},
+%	numbers=left,
+%	frame=single,
+%	breaklines=true,
+%	captionpos=b,
+%	backgroundcolor=\color{gray!10}
+}
+
+% Định nghĩa phong cách cho C
+\lstdefinestyle{c}{
+	language=C,
+	basicstyle=\ttfamily\footnotesize,
+	keywordstyle=\color{blue}\bfseries,
+	commentstyle=\color{gray},
+	stringstyle=\color{red},
+%	numbers=left,
+%	frame=single,
+%	breaklines=true,
+%	captionpos=b,
+%	backgroundcolor=\color{gray!10}
+}
+
+% Định nghĩa ngôn ngữ và phong cách cho SystemVerilog
+\lstdefinelanguage{SystemVerilog}{
+	morekeywords={
+		module, input, output, wire, reg, always, assign, logic, endmodule, initial, if, else, case, for, begin, end
+	},
+	sensitive=true,                      % Phân biệt chữ hoa và chữ thường
+	keywordstyle=\color{blue}\bfseries, % Màu và kiểu từ khóa
+	comment=[l]{//},                    % Chú thích đơn
+	morecomment=[s]{/*}{*/},            % Chú thích khối
+	commentstyle=\color{green!50!black},% Màu chú thích
+	stringstyle=\color{red},            % Màu chuỗi
+	basicstyle=\ttfamily\footnotesize,  % Font chữ
+	moredelim=[s][\color{magenta}]{`}{`}, % Macro (giữa dấu backtick `)
+}
+
+\lstdefinestyle{SystemVerilog}{
+	language=SystemVerilog,
+	basicstyle=\ttfamily\footnotesize,
+	keywordstyle=\color{blue}\bfseries,
+	commentstyle=\color{green!50!black},
+	stringstyle=\color{red},
+%	numbers=left,
+%	numberstyle=\tiny\color{gray},
+%	frame=single,
+%	breaklines=true,
+%	tabsize=4,
+%	captionpos=b,
+	showstringspaces=false
+%	backgroundcolor=\color{gray!10}
+}
+
+\begin{document}
+	\fontsize{13}{14}\selectfont
+	\section{Half Adder}
+%		\input{./section/half_adder.tex}
+	
+	\section{Full Adder}
+		\input{./section/full_adder.tex}
+	
+	\section{Ripple Carry Adder (RCA)}
+		\input{./section/rca.tex}
+	
+	\section{Carry Look-Ahead Adder (CLA)}
+		\input{./section/cla.tex}
+	
+	\section{Kogge-Stone Adder (KSA)}
+		\input{./section/ksa.tex}
+		
+	\section{Index}
+		\input{./section/index.tex}
+\end{document}

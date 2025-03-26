@@ -1,0 +1,13 @@
+# DESCRIPTION: Verilator output: Timestamp data for --skip-identical.  Delete at will.
+C "--cc full_adder_with_half_adder.sv --exe tb_main.cpp"
+S   7892640 15338587  1736403144   364153802  1598506306           0 "/usr/bin/verilator_bin"
+S       717  2491389  1736762055    41938131  1736762055    41938131 "full_adder_with_half_adder.sv"
+T      4968  2491365  1736762108   662339486  1736762108   662339486 "obj_dir/Vfull_adder_with_half_adder.cpp"
+T      3051  2491363  1736762108   662339486  1736762108   662339486 "obj_dir/Vfull_adder_with_half_adder.h"
+T      1882  2491367  1736762108   662339486  1736762108   662339486 "obj_dir/Vfull_adder_with_half_adder.mk"
+T      2340  2491364  1736762108   662339486  1736762108   662339486 "obj_dir/Vfull_adder_with_half_adder__Slow.cpp"
+T       644  2491361  1736762108   661339497  1736762108   661339497 "obj_dir/Vfull_adder_with_half_adder__Syms.cpp"
+T       928  2491362  1736762108   662339486  1736762108   662339486 "obj_dir/Vfull_adder_with_half_adder__Syms.h"
+T       423  2491368  1736762108   662339486  1736762108   662339486 "obj_dir/Vfull_adder_with_half_adder__ver.d"
+T         0        0  1736762108   662339486  1736762108   662339486 "obj_dir/Vfull_adder_with_half_adder__verFiles.dat"
+T      1630  2491366  1736762108   662339486  1736762108   662339486 "obj_dir/Vfull_adder_with_half_adder_classes.mk"

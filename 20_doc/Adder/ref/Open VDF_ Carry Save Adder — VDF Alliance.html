@@ -1,0 +1,2582 @@
+<!DOCTYPE html>
+<!-- saved from url=(0058)https://www.vdfalliance.org/news/open-vdf-carry-save-adder -->
+<html xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://www.facebook.com/2008/fbml" lang="en-US" class="yui3-js-enabled js flexbox canvas canvastext webgl no-touch hashchange history draganddrop rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms no-csstransforms3d csstransitions video audio svg inlinesvg svgclippaths wf-proximanova-n3-active wf-proximanova-n4-active wf-proximanova-n5-active wf-proximanova-n6-active wf-proximanova-n7-active wf-proximanova-i6-active wf-proximanova-i7-active wf-adobegaramondpro-n4-active wf-adobegaramondpro-n7-active wf-adobegaramondpro-i4-active wf-adobegaramondpro-i7-active wf-active mdl-js" id="yui_3_17_2_1_1736957762799_75"><script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/content/location/location.js" id="eppiocemhmnlbhjplcgkofciiegomcon"></script><script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/libs/extend-native-history-api.js"></script><script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/libs/requests.js"></script><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- This is Squarespace. --><!-- vdfalliance -->
+<link charset="utf-8" rel="stylesheet" id="yui_3_17_2_1_1736957762799_168" href="./Open VDF_ Carry Save Adder — VDF Alliance_files/simple-liking-4279cc7bb78333b8db43-min.en-US.css"><script charset="utf-8" id="yui_3_17_2_1_1736957762799_167" src="./Open VDF_ Carry Save Adder — VDF Alliance_files/simple-liking-cede7154e30542cabab1-min.en-US.js"></script><link charset="utf-8" rel="stylesheet" id="yui_3_17_2_1_1736957762799_172" href="./Open VDF_ Carry Save Adder — VDF Alliance_files/social-buttons-3a7d186e7e5e3b30911b-min.en-US.css"><script charset="utf-8" id="yui_3_17_2_1_1736957762799_171" src="./Open VDF_ Carry Save Adder — VDF Alliance_files/social-buttons-48ea0949077e3b1b72e6-min.en-US.js"></script><!--<base href="">--><base href=".">
+
+<title>Open VDF: Carry Save Adder — VDF Alliance</title>
+<meta http-equiv="Accept-CH" content="Sec-CH-UA-Platform-Version, Sec-CH-UA-Model"><link rel="icon" type="image/x-icon" href="https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1564676268580-QL2H08G58P6ARD9I5ZJ8/favicon.ico?format=100w">
+<link rel="canonical" href="https://www.vdfalliance.org/news/open-vdf-carry-save-adder">
+<meta property="og:site_name" content="VDF Alliance">
+<meta property="og:title" content="Open VDF: Carry Save Adder — VDF Alliance">
+<meta property="og:latitude" content="40.7207559">
+<meta property="og:longitude" content="-74.0007613">
+<meta property="og:locality" content="">
+<meta property="og:url" content="https://www.vdfalliance.org/news/open-vdf-carry-save-adder">
+<meta property="og:type" content="article">
+<meta property="og:description" content="In this post we’ll look at the construction of low latency carry save adders (CSAs) and compressor trees for use in a low latency MSU. These structures comprise the bulk of the Öztürk design. In the architecture drawing below both the white and red upside down triangles and the turquoise rectangle a">
+<meta property="og:image" content="http://static1.squarespace.com/static/5d2d6fcd480b2500018ab9bd/5d2e3ecc245abb000198eaf5/5e948ea85e4b116e09c40396/1587011235420/triangle.png?format=1500w">
+<meta property="og:image:width" content="464">
+<meta property="og:image:height" content="217">
+<meta itemprop="name" content="Open VDF: Carry Save Adder — VDF Alliance">
+<meta itemprop="url" content="https://www.vdfalliance.org/news/open-vdf-carry-save-adder">
+<meta itemprop="description" content="In this post we’ll look at the construction of low latency carry save adders (CSAs) and compressor trees for use in a low latency MSU. These structures comprise the bulk of the Öztürk design. In the architecture drawing below both the white and red upside down triangles and the turquoise rectangle a">
+<meta itemprop="thumbnailUrl" content="http://static1.squarespace.com/static/5d2d6fcd480b2500018ab9bd/5d2e3ecc245abb000198eaf5/5e948ea85e4b116e09c40396/1587011235420/triangle.png?format=1500w">
+<link rel="image_src" href="http://static1.squarespace.com/static/5d2d6fcd480b2500018ab9bd/5d2e3ecc245abb000198eaf5/5e948ea85e4b116e09c40396/1587011235420/triangle.png?format=1500w">
+<meta itemprop="image" content="http://static1.squarespace.com/static/5d2d6fcd480b2500018ab9bd/5d2e3ecc245abb000198eaf5/5e948ea85e4b116e09c40396/1587011235420/triangle.png?format=1500w">
+<meta itemprop="author" content="VDF Alliance">
+<meta itemprop="datePublished" content="2020-04-13T09:20:21-0700">
+<meta itemprop="dateModified" content="2020-04-15T21:27:15-0700">
+<meta itemprop="headline" content="Open VDF: Carry Save Adder">
+<meta itemprop="publisher" content="VDF Alliance">
+<meta name="twitter:title" content="Open VDF: Carry Save Adder — VDF Alliance">
+<meta name="twitter:image" content="http://static1.squarespace.com/static/5d2d6fcd480b2500018ab9bd/5d2e3ecc245abb000198eaf5/5e948ea85e4b116e09c40396/1587011235420/triangle.png?format=1500w">
+<meta name="twitter:url" content="https://www.vdfalliance.org/news/open-vdf-carry-save-adder">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:description" content="In this post we’ll look at the construction of low latency carry save adders (CSAs) and compressor trees for use in a low latency MSU. These structures comprise the bulk of the Öztürk design. In the architecture drawing below both the white and red upside down triangles and the turquoise rectangle a">
+<meta name="description" content="">
+<link rel="preconnect" href="https://images.squarespace-cdn.com/">
+<script type="text/javascript" src="./Open VDF_ Carry Save Adder — VDF Alliance_files/vQSEmNA-d-PgsweF4QO0rFKAM4HV9euFqU7oPDU51zvfelJffFHN4UJLFRbh52jhWDmqwcbhZcFqF263jRJuw2M3wQyyjR8KZg7YMPG0icscjAUC-AB0jh90SaBujW48Sagyjh90jhNlOeUzjhBC-eNDifUhZeZydeUTjAoRZPozScSCicscjAUC-AB0jh90SaBujW48Sagyjh90jhNlOYiaikohZeZydeUTjAoRZPozScSCiaiaO1ZqZcBC.js"></script>
+<style type="text/css">@font-face{font-family:proxima-nova;src:url(https://use.typekit.net/af/1be3c2/00000000000000007735e606/30/l?subset_id=2&fvd=n3&v=3) format("woff2"),url(https://use.typekit.net/af/1be3c2/00000000000000007735e606/30/d?subset_id=2&fvd=n3&v=3) format("woff"),url(https://use.typekit.net/af/1be3c2/00000000000000007735e606/30/a?subset_id=2&fvd=n3&v=3) format("opentype");font-weight:300;font-style:normal;font-stretch:normal;font-display:auto;}@font-face{font-family:proxima-nova;src:url(https://use.typekit.net/af/efe4a5/00000000000000007735e609/30/l?subset_id=2&fvd=n4&v=3) format("woff2"),url(https://use.typekit.net/af/efe4a5/00000000000000007735e609/30/d?subset_id=2&fvd=n4&v=3) format("woff"),url(https://use.typekit.net/af/efe4a5/00000000000000007735e609/30/a?subset_id=2&fvd=n4&v=3) format("opentype");font-weight:400;font-style:normal;font-stretch:normal;font-display:auto;}@font-face{font-family:proxima-nova;src:url(https://use.typekit.net/af/23e139/00000000000000007735e605/30/l?subset_id=2&fvd=n5&v=3) format("woff2"),url(https://use.typekit.net/af/23e139/00000000000000007735e605/30/d?subset_id=2&fvd=n5&v=3) format("woff"),url(https://use.typekit.net/af/23e139/00000000000000007735e605/30/a?subset_id=2&fvd=n5&v=3) format("opentype");font-weight:500;font-style:normal;font-stretch:normal;font-display:auto;}@font-face{font-family:proxima-nova;src:url(https://use.typekit.net/af/78aca8/00000000000000007735e60d/30/l?subset_id=2&fvd=n6&v=3) format("woff2"),url(https://use.typekit.net/af/78aca8/00000000000000007735e60d/30/d?subset_id=2&fvd=n6&v=3) format("woff"),url(https://use.typekit.net/af/78aca8/00000000000000007735e60d/30/a?subset_id=2&fvd=n6&v=3) format("opentype");font-weight:600;font-style:normal;font-stretch:normal;font-display:auto;}@font-face{font-family:proxima-nova;src:url(https://use.typekit.net/af/2555e1/00000000000000007735e603/30/l?subset_id=2&fvd=n7&v=3) format("woff2"),url(https://use.typekit.net/af/2555e1/00000000000000007735e603/30/d?subset_id=2&fvd=n7&v=3) format("woff"),url(https://use.typekit.net/af/2555e1/00000000000000007735e603/30/a?subset_id=2&fvd=n7&v=3) format("opentype");font-weight:700;font-style:normal;font-stretch:normal;font-display:auto;}@font-face{font-family:proxima-nova;src:url(https://use.typekit.net/af/bd0e3a/00000000000000007758cf8e/30/l?subset_id=2&fvd=i6&v=3) format("woff2"),url(https://use.typekit.net/af/bd0e3a/00000000000000007758cf8e/30/d?subset_id=2&fvd=i6&v=3) format("woff"),url(https://use.typekit.net/af/bd0e3a/00000000000000007758cf8e/30/a?subset_id=2&fvd=i6&v=3) format("opentype");font-weight:600;font-style:italic;font-stretch:normal;font-display:auto;}@font-face{font-family:proxima-nova;src:url(https://use.typekit.net/af/474f13/00000000000000007758cf7d/30/l?subset_id=2&fvd=i7&v=3) format("woff2"),url(https://use.typekit.net/af/474f13/00000000000000007758cf7d/30/d?subset_id=2&fvd=i7&v=3) format("woff"),url(https://use.typekit.net/af/474f13/00000000000000007758cf7d/30/a?subset_id=2&fvd=i7&v=3) format("opentype");font-weight:700;font-style:italic;font-stretch:normal;font-display:auto;}@font-face{font-family:adobe-garamond-pro;src:url(https://use.typekit.net/af/2011b6/00000000000000003b9b00c1/27/l?subset_id=2&fvd=n4&v=3) format("woff2"),url(https://use.typekit.net/af/2011b6/00000000000000003b9b00c1/27/d?subset_id=2&fvd=n4&v=3) format("woff"),url(https://use.typekit.net/af/2011b6/00000000000000003b9b00c1/27/a?subset_id=2&fvd=n4&v=3) format("opentype");font-weight:400;font-style:normal;font-stretch:normal;font-display:auto;}@font-face{font-family:adobe-garamond-pro;src:url(https://use.typekit.net/af/af619f/00000000000000003b9b00c5/27/l?subset_id=2&fvd=n7&v=3) format("woff2"),url(https://use.typekit.net/af/af619f/00000000000000003b9b00c5/27/d?subset_id=2&fvd=n7&v=3) format("woff"),url(https://use.typekit.net/af/af619f/00000000000000003b9b00c5/27/a?subset_id=2&fvd=n7&v=3) format("opentype");font-weight:700;font-style:normal;font-stretch:normal;font-display:auto;}@font-face{font-family:adobe-garamond-pro;src:url(https://use.typekit.net/af/5cace6/00000000000000003b9b00c2/27/l?subset_id=2&fvd=i4&v=3) format("woff2"),url(https://use.typekit.net/af/5cace6/00000000000000003b9b00c2/27/d?subset_id=2&fvd=i4&v=3) format("woff"),url(https://use.typekit.net/af/5cace6/00000000000000003b9b00c2/27/a?subset_id=2&fvd=i4&v=3) format("opentype");font-weight:400;font-style:italic;font-stretch:normal;font-display:auto;}@font-face{font-family:adobe-garamond-pro;src:url(https://use.typekit.net/af/6c275f/00000000000000003b9b00c6/27/l?subset_id=2&fvd=i7&v=3) format("woff2"),url(https://use.typekit.net/af/6c275f/00000000000000003b9b00c6/27/d?subset_id=2&fvd=i7&v=3) format("woff"),url(https://use.typekit.net/af/6c275f/00000000000000003b9b00c6/27/a?subset_id=2&fvd=i7&v=3) format("opentype");font-weight:700;font-style:italic;font-stretch:normal;font-display:auto;}</style><script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+<link rel="stylesheet" type="text/css" href="./Open VDF_ Carry Save Adder — VDF Alliance_files/css2">
+<script type="text/javascript" crossorigin="anonymous" defer="true" nomodule="nomodule" src="./Open VDF_ Carry Save Adder — VDF Alliance_files/legacy.js"></script>
+<script type="text/javascript" crossorigin="anonymous" defer="true" src="./Open VDF_ Carry Save Adder — VDF Alliance_files/modern.js"></script>
+<script type="text/javascript">SQUARESPACE_ROLLUPS = {};</script>
+<script>(function(rollups, name) { if (!rollups[name]) { rollups[name] = {}; } rollups[name].js = ["//assets.squarespace.com/universal/scripts-compressed/extract-css-runtime-eb03087910b8270fe891-min.en-US.js"]; })(SQUARESPACE_ROLLUPS, 'squarespace-extract_css_runtime');</script>
+<script crossorigin="anonymous" src="./Open VDF_ Carry Save Adder — VDF Alliance_files/extract-css-runtime-eb03087910b8270fe891-min.en-US.js" defer=""></script><script>(function(rollups, name) { if (!rollups[name]) { rollups[name] = {}; } rollups[name].js = ["//assets.squarespace.com/universal/scripts-compressed/extract-css-moment-js-vendor-6c569122bfa66a51a056-min.en-US.js"]; })(SQUARESPACE_ROLLUPS, 'squarespace-extract_css_moment_js_vendor');</script>
+<script crossorigin="anonymous" src="./Open VDF_ Carry Save Adder — VDF Alliance_files/extract-css-moment-js-vendor-6c569122bfa66a51a056-min.en-US.js" defer=""></script><script>(function(rollups, name) { if (!rollups[name]) { rollups[name] = {}; } rollups[name].js = ["//assets.squarespace.com/universal/scripts-compressed/cldr-resource-pack-907dfe7701e90c1e5cbd-min.en-US.js"]; })(SQUARESPACE_ROLLUPS, 'squarespace-cldr_resource_pack');</script>
+<script crossorigin="anonymous" src="./Open VDF_ Carry Save Adder — VDF Alliance_files/cldr-resource-pack-907dfe7701e90c1e5cbd-min.en-US.js" defer=""></script><script>(function(rollups, name) { if (!rollups[name]) { rollups[name] = {}; } rollups[name].js = ["//assets.squarespace.com/universal/scripts-compressed/common-vendors-stable-61293f01d648eef165fc-min.en-US.js"]; })(SQUARESPACE_ROLLUPS, 'squarespace-common_vendors_stable');</script>
+<script crossorigin="anonymous" src="./Open VDF_ Carry Save Adder — VDF Alliance_files/common-vendors-stable-61293f01d648eef165fc-min.en-US.js" defer=""></script><script>(function(rollups, name) { if (!rollups[name]) { rollups[name] = {}; } rollups[name].js = ["//assets.squarespace.com/universal/scripts-compressed/common-vendors-9d885b2cbf9c1a563d68-min.en-US.js"]; })(SQUARESPACE_ROLLUPS, 'squarespace-common_vendors');</script>
+<script crossorigin="anonymous" src="./Open VDF_ Carry Save Adder — VDF Alliance_files/common-vendors-9d885b2cbf9c1a563d68-min.en-US.js" defer=""></script><script>(function(rollups, name) { if (!rollups[name]) { rollups[name] = {}; } rollups[name].js = ["//assets.squarespace.com/universal/scripts-compressed/common-cd895dd8ee0265279e26-min.en-US.js"]; })(SQUARESPACE_ROLLUPS, 'squarespace-common');</script>
+<script crossorigin="anonymous" src="./Open VDF_ Carry Save Adder — VDF Alliance_files/common-cd895dd8ee0265279e26-min.en-US.js" defer=""></script><script>(function(rollups, name) { if (!rollups[name]) { rollups[name] = {}; } rollups[name].js = ["//assets.squarespace.com/universal/scripts-compressed/performance-e71b26781eaccf31f6f4-min.en-US.js"]; })(SQUARESPACE_ROLLUPS, 'squarespace-performance');</script>
+<script crossorigin="anonymous" src="./Open VDF_ Carry Save Adder — VDF Alliance_files/performance-e71b26781eaccf31f6f4-min.en-US.js" defer=""></script><script data-name="static-context">Static = window.Static || {}; Static.SQUARESPACE_CONTEXT = {"betaFeatureFlags":["marketing_landing_page","order_status_page_checkout_landing_enabled","campaigns_new_image_layout_picker","campaigns_thumbnail_layout","marketing_automations","campaigns_discount_section_in_blasts","campaigns_discount_section_in_automations","i18n_beta_website_locales","campaigns_import_discounts","contacts_and_campaigns_redesign"],"facebookAppId":"314192535267336","facebookApiVersion":"v6.0","rollups":{"squarespace-announcement-bar":{"js":"//assets.squarespace.com/universal/scripts-compressed/announcement-bar-468c960caeade4e0ef78-min.en-US.js"},"squarespace-audio-player":{"css":"//assets.squarespace.com/universal/styles-compressed/audio-player-ef238f99d44a3bdc6fbe-min.en-US.css","js":"//assets.squarespace.com/universal/scripts-compressed/audio-player-20cdd7bbff202c9ade3e-min.en-US.js"},"squarespace-blog-collection-list":{"css":"//assets.squarespace.com/universal/styles-compressed/blog-collection-list-8ec841cacfb75d4282f4-min.en-US.css","js":"//assets.squarespace.com/universal/scripts-compressed/blog-collection-list-93d51fbe4a919163e8fd-min.en-US.js"},"squarespace-calendar-block-renderer":{"css":"//assets.squarespace.com/universal/styles-compressed/calendar-block-renderer-10dac239e5ffd3b32e9c-min.en-US.css","js":"//assets.squarespace.com/universal/scripts-compressed/calendar-block-renderer-8eaef28684aecf472054-min.en-US.js"},"squarespace-chartjs-helpers":{"css":"//assets.squarespace.com/universal/styles-compressed/chartjs-helpers-9e75b5d75bb5cb4c1f67-min.en-US.css","js":"//assets.squarespace.com/universal/scripts-compressed/chartjs-helpers-4e8b59438f101c9b69b4-min.en-US.js"},"squarespace-comments":{"css":"//assets.squarespace.com/universal/styles-compressed/comments-a0d9356d7c1596ab2c53-min.en-US.css","js":"//assets.squarespace.com/universal/scripts-compressed/comments-549a1a8ecd5cab5f10fc-min.en-US.js"},"squarespace-custom-css-popup":{"css":"//assets.squarespace.com/universal/styles-compressed/custom-css-popup-936ce46433fbe5263143-min.en-US.css","js":"//assets.squarespace.com/universal/scripts-compressed/custom-css-popup-5455d9e8f44ec0f0cf39-min.en-US.js"},"squarespace-dialog":{"css":"//assets.squarespace.com/universal/styles-compressed/dialog-2dcac307baebe70727dc-min.en-US.css","js":"//assets.squarespace.com/universal/scripts-compressed/dialog-0bc530b249391caa4dc1-min.en-US.js"},"squarespace-events-collection":{"css":"//assets.squarespace.com/universal/styles-compressed/events-collection-10dac239e5ffd3b32e9c-min.en-US.css","js":"//assets.squarespace.com/universal/scripts-compressed/events-collection-387a105ae421f13a265e-min.en-US.js"},"squarespace-form-rendering-utils":{"js":"//assets.squarespace.com/universal/scripts-compressed/form-rendering-utils-4d2c5cbc75074ffd6660-min.en-US.js"},"squarespace-forms":{"css":"//assets.squarespace.com/universal/styles-compressed/forms-b952cddb94c5d471b8d3-min.en-US.css","js":"//assets.squarespace.com/universal/scripts-compressed/forms-7d3b0e9422ec0394430b-min.en-US.js"},"squarespace-gallery-collection-list":{"css":"//assets.squarespace.com/universal/styles-compressed/gallery-collection-list-8ec841cacfb75d4282f4-min.en-US.css","js":"//assets.squarespace.com/universal/scripts-compressed/gallery-collection-list-8ab6d60c33aaa9220d48-min.en-US.js"},"squarespace-image-zoom":{"css":"//assets.squarespace.com/universal/styles-compressed/image-zoom-8ec841cacfb75d4282f4-min.en-US.css","js":"//assets.squarespace.com/universal/scripts-compressed/image-zoom-fde0b4da7f2332d3851c-min.en-US.js"},"squarespace-pinterest":{"css":"//assets.squarespace.com/universal/styles-compressed/pinterest-8ec841cacfb75d4282f4-min.en-US.css","js":"//assets.squarespace.com/universal/scripts-compressed/pinterest-acbd45498d53e95639e9-min.en-US.js"},"squarespace-popup-overlay":{"css":"//assets.squarespace.com/universal/styles-compressed/popup-overlay-e89b4cc96c222ed66c64-min.en-US.css","js":"//assets.squarespace.com/universal/scripts-compressed/popup-overlay-e142b74a5284da4e4388-min.en-US.js"},"squarespace-product-quick-view":{"css":"//assets.squarespace.com/universal/styles-compressed/product-quick-view-2f87c3dcb76ca485179d-min.en-US.css","js":"//assets.squarespace.com/universal/scripts-compressed/product-quick-view-8d7fd066f2ed28ab08be-min.en-US.js"},"squarespace-products-collection-item-v2":{"css":"//assets.squarespace.com/universal/styles-compressed/products-collection-item-v2-8ec841cacfb75d4282f4-min.en-US.css","js":"//assets.squarespace.com/universal/scripts-compressed/products-collection-item-v2-921b8aa24f5746dfa032-min.en-US.js"},"squarespace-products-collection-list-v2":{"css":"//assets.squarespace.com/universal/styles-compressed/products-collection-list-v2-8ec841cacfb75d4282f4-min.en-US.css","js":"//assets.squarespace.com/universal/scripts-compressed/products-collection-list-v2-52403235629e0d8a003b-min.en-US.js"},"squarespace-search-page":{"css":"//assets.squarespace.com/universal/styles-compressed/search-page-917382e71b023cec7555-min.en-US.css","js":"//assets.squarespace.com/universal/scripts-compressed/search-page-36274fddfc902ef52e8f-min.en-US.js"},"squarespace-search-preview":{"js":"//assets.squarespace.com/universal/scripts-compressed/search-preview-16f2afd196dfeee984e8-min.en-US.js"},"squarespace-simple-liking":{"css":"//assets.squarespace.com/universal/styles-compressed/simple-liking-4279cc7bb78333b8db43-min.en-US.css","js":"//assets.squarespace.com/universal/scripts-compressed/simple-liking-cede7154e30542cabab1-min.en-US.js"},"squarespace-social-buttons":{"css":"//assets.squarespace.com/universal/styles-compressed/social-buttons-3a7d186e7e5e3b30911b-min.en-US.css","js":"//assets.squarespace.com/universal/scripts-compressed/social-buttons-48ea0949077e3b1b72e6-min.en-US.js"},"squarespace-tourdates":{"css":"//assets.squarespace.com/universal/styles-compressed/tourdates-8ec841cacfb75d4282f4-min.en-US.css","js":"//assets.squarespace.com/universal/scripts-compressed/tourdates-d99ab3a90176704b3781-min.en-US.js"},"squarespace-website-overlays-manager":{"css":"//assets.squarespace.com/universal/styles-compressed/website-overlays-manager-efd3c12d460f58781eb3-min.en-US.css","js":"//assets.squarespace.com/universal/scripts-compressed/website-overlays-manager-157a4d5a69fbdfde7b53-min.en-US.js"}},"pageType":50,"website":{"id":"5d2d6fcd480b2500018ab9bd","identifier":"vdfalliance","websiteType":1,"contentModifiedOn":1597976012837,"cloneable":false,"hasBeenCloneable":false,"siteStatus":{},"language":"en-US","timeZone":"America/Los_Angeles","machineTimeZoneOffset":-28800000,"timeZoneOffset":-28800000,"timeZoneAbbr":"PST","siteTitle":"VDF Alliance","fullSiteTitle":"Open VDF: Carry Save Adder \u2014 VDF Alliance","siteDescription":"","shareButtonOptions":{"4":true,"7":true,"1":true,"6":true,"8":true,"3":true,"2":true},"authenticUrl":"https://www.vdfalliance.org","internalUrl":"https://vdfalliance.squarespace.com","baseUrl":"https://www.vdfalliance.org","primaryDomain":"www.vdfalliance.org","sslSetting":3,"isHstsEnabled":false,"socialAccounts":[{"serviceId":73,"screenname":"GitHub","addedOn":1563315904401,"profileUrl":"http://github.com/supranational","iconEnabled":true,"serviceName":"github-unauth"},{"serviceId":62,"screenname":"Twitter","addedOn":1563315955864,"profileUrl":"http://twitter.com/_supranational","iconEnabled":true,"serviceName":"twitter-unauth"},{"serviceId":74,"screenname":"URL","addedOn":1563316176464,"profileUrl":"https://supranational.atlassian.net/wiki/spaces/VA/overview","iconEnabled":true,"serviceName":"url"}],"typekitId":"","statsMigrated":false,"imageMetadataProcessingEnabled":false,"showOwnerLogin":false},"websiteSettings":{"id":"5d2d6fcd480b2500018ab9c0","websiteId":"5d2d6fcd480b2500018ab9bd","subjects":[],"country":"US","state":"OR","simpleLikingEnabled":true,"popupOverlaySettings":{"style":1,"enabledPages":[]},"commentLikesAllowed":true,"commentAnonAllowed":true,"commentThreaded":true,"commentApprovalRequired":false,"commentAvatarsOn":true,"commentSortType":2,"commentFlagThreshold":0,"commentFlagsAllowed":true,"commentEnableByDefault":true,"commentDisableAfterDaysDefault":0,"disqusShortname":"","commentsEnabled":false,"storeSettings":{"returnPolicy":null,"termsOfService":null,"privacyPolicy":null,"expressCheckout":false,"continueShoppingLinkUrl":"/","useLightCart":false,"showNoteField":false,"shippingCountryDefaultValue":"US","billToShippingDefaultValue":false,"showShippingPhoneNumber":true,"isShippingPhoneRequired":false,"showBillingPhoneNumber":true,"isBillingPhoneRequired":false,"currenciesSupported":["CHF","HKD","MXN","EUR","DKK","USD","CAD","MYR","NOK","THB","AUD","SGD","ILS","PLN","GBP","CZK","SEK","NZD","PHP","RUB"],"defaultCurrency":"USD","selectedCurrency":"USD","measurementStandard":1,"showCustomCheckoutForm":false,"checkoutPageMarketingOptInEnabled":false,"enableMailingListOptInByDefault":false,"sameAsRetailLocation":false,"merchandisingSettings":{"scarcityEnabledOnProductItems":false,"scarcityEnabledOnProductBlocks":false,"scarcityMessageType":"DEFAULT_SCARCITY_MESSAGE","scarcityThreshold":10,"multipleQuantityAllowedForServices":true,"restockNotificationsEnabled":false,"restockNotificationsSuccessText":"","restockNotificationsMailingListSignUpEnabled":false,"relatedProductsEnabled":false,"relatedProductsOrdering":"random","soldOutVariantsDropdownDisabled":false,"productComposerOptedIn":false,"productComposerABTestOptedOut":false,"productReviewsEnabled":false,"displayImportedProductReviewsEnabled":false,"hasOptedToCollectNativeReviews":false},"minimumOrderSubtotalEnabled":false,"minimumOrderSubtotal":{"currency":"USD","value":"0.00"},"isLive":false,"multipleQuantityAllowedForServices":true},"useEscapeKeyToLogin":true,"ssBadgeType":1,"ssBadgePosition":4,"ssBadgeVisibility":1,"ssBadgeDevices":1,"pinterestOverlayOptions":{"mode":"disabled"},"ampEnabled":false,"userAccountsSettings":{"loginAllowed":false,"signupAllowed":false}},"cookieSettings":{"isCookieBannerEnabled":false,"isRestrictiveCookiePolicyEnabled":false,"cookieBannerText":"","cookieBannerTheme":"","cookieBannerVariant":"","cookieBannerPosition":"","cookieBannerCtaVariant":"","cookieBannerCtaText":"","cookieBannerAcceptType":"OPT_IN","cookieBannerOptOutCtaText":"","cookieBannerHasOptOut":false,"cookieBannerHasManageCookies":true,"cookieBannerManageCookiesLabel":"","cookieBannerSavedPreferencesText":"","cookieBannerSavedPreferencesLayout":"PILL"},"websiteCloneable":false,"collection":{"title":"News","id":"5d2e3ecc245abb000198eaf5","fullUrl":"/news","type":1,"permissionType":1},"item":{"title":"Open VDF: Carry Save Adder","id":"5e948ea85e4b116e09c40396","fullUrl":"/news/open-vdf-carry-save-adder","publicCommentCount":0,"commentState":2,"recordType":1},"subscribed":false,"appDomain":"squarespace.com","templateTweakable":true,"tweakJSON":{"aspect-ratio":"Auto","banner-slideshow-controls":"Arrows","gallery-arrow-style":"No Background","gallery-aspect-ratio":"3:2 Standard","gallery-auto-crop":"true","gallery-autoplay":"false","gallery-design":"Grid","gallery-info-overlay":"Show on Hover","gallery-loop":"false","gallery-navigation":"Bullets","gallery-show-arrows":"true","gallery-transitions":"Fade","galleryArrowBackground":"rgba(34,34,34,1)","galleryArrowColor":"rgba(255,255,255,1)","galleryAutoplaySpeed":"3","galleryCircleColor":"rgba(255,255,255,1)","galleryInfoBackground":"rgba(0, 0, 0, .7)","galleryThumbnailSize":"100px","gridSize":"280px","gridSpacing":"10px","logoContainerWidth":"140px","product-gallery-auto-crop":"false","product-image-auto-crop":"true","siteTitleContainerWidth":"220px","tweak-v1-related-products-title-spacing":"50px"},"templateId":"52a74dafe4b073a80cd253c5","templateVersion":"7","pageFeatures":[1,2,4],"gmRenderKey":"QUl6YVN5Q0JUUk9xNkx1dkZfSUUxcjQ2LVQ0QWVUU1YtMGQ3bXk4","templateScriptsRootUrl":"https://static1.squarespace.com/static/ta/52a74d9ae4b0253945d2aee9/1052/scripts/","impersonatedSession":false,"tzData":{"zones":[[-480,"US","P%sT",null]],"rules":{"US":[[1967,2006,null,"Oct","lastSun","2:00","0","S"],[1987,2006,null,"Apr","Sun>=1","2:00","1:00","D"],[2007,"max",null,"Mar","Sun>=8","2:00","1:00","D"],[2007,"max",null,"Nov","Sun>=1","2:00","0","S"]]}},"showAnnouncementBar":false,"recaptchaEnterpriseContext":{"recaptchaEnterpriseSiteKey":"6LdDFQwjAAAAAPigEvvPgEVbb7QBm-TkVJdDTlAv"},"i18nContext":{"timeZoneData":{"id":"America/Los_Angeles","name":"Pacific Time"}},"env":"PRODUCTION"};</script><script type="module">Squarespace.load(window);</script>
+<script data-sqs-type="imageloader-bootstrapper" type="module">if(window.ImageLoader) window.ImageLoader.bootstrap({}, document);</script>
+<script type="module">Squarespace.afterBodyLoad(Y);</script>
+<link rel="alternate" type="application/rss+xml" title="RSS Feed" href="https://www.vdfalliance.org/news?format=rss">
+<script type="application/ld+json">{"url":"https://www.vdfalliance.org","name":"VDF Alliance","description":"","@context":"http://schema.org","@type":"WebSite"}</script><script type="application/ld+json">{"name":"Open VDF: Carry Save Adder \u2014 VDF Alliance","url":"https://www.vdfalliance.org/news/open-vdf-carry-save-adder","datePublished":"2020-04-13T09:20:21-0700","dateModified":"2020-04-15T21:27:15-0700","headline":"Open VDF: Carry Save Adder","author":"VDF Alliance","publisher":{"name":"VDF Alliance","logo":{"@type":"ImageObject"},"@context":"http://schema.org","@type":"Organization"},"image":"http://static1.squarespace.com/static/5d2d6fcd480b2500018ab9bd/5d2e3ecc245abb000198eaf5/5e948ea85e4b116e09c40396/1587011235420/triangle.png?format=1500w","@context":"http://schema.org","@type":"Article"}</script><link rel="stylesheet" type="text/css" href="./Open VDF_ Carry Save Adder — VDF Alliance_files/site.css"><script>Static.COOKIE_BANNER_CAPABLE = true;</script>
+<!-- End of Squarespace Headers -->
+    <script>/* Must be below squarespace-headers */(function(){var e='ontouchstart'in window||navigator.msMaxTouchPoints;var t=document.documentElement;if(!e&&t){t.className=t.className.replace(/touch-styles/,'')}})()
+    </script>
+  <link rel="stylesheet" type="text/css" href="./Open VDF_ Carry Save Adder — VDF Alliance_files/2356ee25bed07678b7ee-min.en-US.css"><style type="text/css">.disable-hover:not(.sqs-layout-editing), .disable-hover:not(.sqs-layout-editing) * { pointer-events: none  ; }</style><style>.swal2-popup.swal2-toast{box-sizing:border-box;grid-column:1/4 !important;grid-row:1/4 !important;grid-template-columns:min-content auto min-content;padding:1em;overflow-y:hidden;background:#fff;box-shadow:0 0 1px rgba(0,0,0,.075),0 1px 2px rgba(0,0,0,.075),1px 2px 4px rgba(0,0,0,.075),1px 3px 8px rgba(0,0,0,.075),2px 4px 16px rgba(0,0,0,.075);pointer-events:all}.swal2-popup.swal2-toast>*{grid-column:2}.swal2-popup.swal2-toast .swal2-title{margin:.5em 1em;padding:0;font-size:1em;text-align:initial}.swal2-popup.swal2-toast .swal2-loading{justify-content:center}.swal2-popup.swal2-toast .swal2-input{height:2em;margin:.5em;font-size:1em}.swal2-popup.swal2-toast .swal2-validation-message{font-size:1em}.swal2-popup.swal2-toast .swal2-footer{margin:.5em 0 0;padding:.5em 0 0;font-size:.8em}.swal2-popup.swal2-toast .swal2-close{grid-column:3/3;grid-row:1/99;align-self:center;width:.8em;height:.8em;margin:0;font-size:2em}.swal2-popup.swal2-toast .swal2-html-container{margin:.5em 1em;padding:0;overflow:initial;font-size:1em;text-align:initial}.swal2-popup.swal2-toast .swal2-html-container:empty{padding:0}.swal2-popup.swal2-toast .swal2-loader{grid-column:1;grid-row:1/99;align-self:center;width:2em;height:2em;margin:.25em}.swal2-popup.swal2-toast .swal2-icon{grid-column:1;grid-row:1/99;align-self:center;width:2em;min-width:2em;height:2em;margin:0 .5em 0 0}.swal2-popup.swal2-toast .swal2-icon .swal2-icon-content{display:flex;align-items:center;font-size:1.8em;font-weight:bold}.swal2-popup.swal2-toast .swal2-icon.swal2-success .swal2-success-ring{width:2em;height:2em}.swal2-popup.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line]{top:.875em;width:1.375em}.swal2-popup.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=left]{left:.3125em}.swal2-popup.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=right]{right:.3125em}.swal2-popup.swal2-toast .swal2-actions{justify-content:flex-start;height:auto;margin:0;margin-top:.5em;padding:0 .5em}.swal2-popup.swal2-toast .swal2-styled{margin:.25em .5em;padding:.4em .6em;font-size:1em}.swal2-popup.swal2-toast .swal2-success{border-color:#a5dc86}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-circular-line]{position:absolute;width:1.6em;height:3em;border-radius:50%}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=left]{top:-0.8em;left:-0.5em;transform:rotate(-45deg);transform-origin:2em 2em;border-radius:4em 0 0 4em}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=right]{top:-0.25em;left:.9375em;transform-origin:0 1.5em;border-radius:0 4em 4em 0}.swal2-popup.swal2-toast .swal2-success .swal2-success-ring{width:2em;height:2em}.swal2-popup.swal2-toast .swal2-success .swal2-success-fix{top:0;left:.4375em;width:.4375em;height:2.6875em}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-line]{height:.3125em}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-line][class$=tip]{top:1.125em;left:.1875em;width:.75em}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-line][class$=long]{top:.9375em;right:.1875em;width:1.375em}.swal2-popup.swal2-toast .swal2-success.swal2-icon-show .swal2-success-line-tip{animation:swal2-toast-animate-success-line-tip .75s}.swal2-popup.swal2-toast .swal2-success.swal2-icon-show .swal2-success-line-long{animation:swal2-toast-animate-success-line-long .75s}.swal2-popup.swal2-toast.swal2-show{animation:swal2-toast-show .5s}.swal2-popup.swal2-toast.swal2-hide{animation:swal2-toast-hide .1s forwards}div:where(.swal2-container){display:grid;position:fixed;z-index:1060;inset:0;box-sizing:border-box;grid-template-areas:"top-start     top            top-end" "center-start  center         center-end" "bottom-start  bottom-center  bottom-end";grid-template-rows:minmax(min-content, auto) minmax(min-content, auto) minmax(min-content, auto);height:100%;padding:.625em;overflow-x:hidden;transition:background-color .1s;-webkit-overflow-scrolling:touch}div:where(.swal2-container).swal2-backdrop-show,div:where(.swal2-container).swal2-noanimation{background:rgba(0,0,0,.4)}div:where(.swal2-container).swal2-backdrop-hide{background:rgba(0,0,0,0) !important}div:where(.swal2-container).swal2-top-start,div:where(.swal2-container).swal2-center-start,div:where(.swal2-container).swal2-bottom-start{grid-template-columns:minmax(0, 1fr) auto auto}div:where(.swal2-container).swal2-top,div:where(.swal2-container).swal2-center,div:where(.swal2-container).swal2-bottom{grid-template-columns:auto minmax(0, 1fr) auto}div:where(.swal2-container).swal2-top-end,div:where(.swal2-container).swal2-center-end,div:where(.swal2-container).swal2-bottom-end{grid-template-columns:auto auto minmax(0, 1fr)}div:where(.swal2-container).swal2-top-start>.swal2-popup{align-self:start}div:where(.swal2-container).swal2-top>.swal2-popup{grid-column:2;place-self:start center}div:where(.swal2-container).swal2-top-end>.swal2-popup,div:where(.swal2-container).swal2-top-right>.swal2-popup{grid-column:3;place-self:start end}div:where(.swal2-container).swal2-center-start>.swal2-popup,div:where(.swal2-container).swal2-center-left>.swal2-popup{grid-row:2;align-self:center}div:where(.swal2-container).swal2-center>.swal2-popup{grid-column:2;grid-row:2;place-self:center center}div:where(.swal2-container).swal2-center-end>.swal2-popup,div:where(.swal2-container).swal2-center-right>.swal2-popup{grid-column:3;grid-row:2;place-self:center end}div:where(.swal2-container).swal2-bottom-start>.swal2-popup,div:where(.swal2-container).swal2-bottom-left>.swal2-popup{grid-column:1;grid-row:3;align-self:end}div:where(.swal2-container).swal2-bottom>.swal2-popup{grid-column:2;grid-row:3;place-self:end center}div:where(.swal2-container).swal2-bottom-end>.swal2-popup,div:where(.swal2-container).swal2-bottom-right>.swal2-popup{grid-column:3;grid-row:3;place-self:end end}div:where(.swal2-container).swal2-grow-row>.swal2-popup,div:where(.swal2-container).swal2-grow-fullscreen>.swal2-popup{grid-column:1/4;width:100%}div:where(.swal2-container).swal2-grow-column>.swal2-popup,div:where(.swal2-container).swal2-grow-fullscreen>.swal2-popup{grid-row:1/4;align-self:stretch}div:where(.swal2-container).swal2-no-transition{transition:none !important}div:where(.swal2-container) div:where(.swal2-popup){display:none;position:relative;box-sizing:border-box;grid-template-columns:minmax(0, 100%);width:32em;max-width:100%;padding:0 0 1.25em;border:none;border-radius:5px;background:#fff;color:#545454;font-family:inherit;font-size:1rem}div:where(.swal2-container) div:where(.swal2-popup):focus{outline:none}div:where(.swal2-container) div:where(.swal2-popup).swal2-loading{overflow-y:hidden}div:where(.swal2-container) h2:where(.swal2-title){position:relative;max-width:100%;margin:0;padding:.8em 1em 0;color:inherit;font-size:1.875em;font-weight:600;text-align:center;text-transform:none;word-wrap:break-word}div:where(.swal2-container) div:where(.swal2-actions){display:flex;z-index:1;box-sizing:border-box;flex-wrap:wrap;align-items:center;justify-content:center;width:auto;margin:1.25em auto 0;padding:0}div:where(.swal2-container) div:where(.swal2-actions):not(.swal2-loading) .swal2-styled[disabled]{opacity:.4}div:where(.swal2-container) div:where(.swal2-actions):not(.swal2-loading) .swal2-styled:hover{background-image:linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1))}div:where(.swal2-container) div:where(.swal2-actions):not(.swal2-loading) .swal2-styled:active{background-image:linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2))}div:where(.swal2-container) div:where(.swal2-loader){display:none;align-items:center;justify-content:center;width:2.2em;height:2.2em;margin:0 1.875em;animation:swal2-rotate-loading 1.5s linear 0s infinite normal;border-width:.25em;border-style:solid;border-radius:100%;border-color:#2778c4 rgba(0,0,0,0) #2778c4 rgba(0,0,0,0)}div:where(.swal2-container) button:where(.swal2-styled){margin:.3125em;padding:.625em 1.1em;transition:box-shadow .1s;box-shadow:0 0 0 3px rgba(0,0,0,0);font-weight:500}div:where(.swal2-container) button:where(.swal2-styled):not([disabled]){cursor:pointer}div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm{border:0;border-radius:.25em;background:initial;background-color:#7066e0;color:#fff;font-size:1em}div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm:focus{box-shadow:0 0 0 3px rgba(112,102,224,.5)}div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{border:0;border-radius:.25em;background:initial;background-color:#dc3741;color:#fff;font-size:1em}div:where(.swal2-container) button:where(.swal2-styled).swal2-deny:focus{box-shadow:0 0 0 3px rgba(220,55,65,.5)}div:where(.swal2-container) button:where(.swal2-styled).swal2-cancel{border:0;border-radius:.25em;background:initial;background-color:#6e7881;color:#fff;font-size:1em}div:where(.swal2-container) button:where(.swal2-styled).swal2-cancel:focus{box-shadow:0 0 0 3px rgba(110,120,129,.5)}div:where(.swal2-container) button:where(.swal2-styled).swal2-default-outline:focus{box-shadow:0 0 0 3px rgba(100,150,200,.5)}div:where(.swal2-container) button:where(.swal2-styled):focus{outline:none}div:where(.swal2-container) button:where(.swal2-styled)::-moz-focus-inner{border:0}div:where(.swal2-container) div:where(.swal2-footer){margin:1em 0 0;padding:1em 1em 0;border-top:1px solid #eee;color:inherit;font-size:1em;text-align:center}div:where(.swal2-container) .swal2-timer-progress-bar-container{position:absolute;right:0;bottom:0;left:0;grid-column:auto !important;overflow:hidden;border-bottom-right-radius:5px;border-bottom-left-radius:5px}div:where(.swal2-container) div:where(.swal2-timer-progress-bar){width:100%;height:.25em;background:rgba(0,0,0,.2)}div:where(.swal2-container) img:where(.swal2-image){max-width:100%;margin:2em auto 1em}div:where(.swal2-container) button:where(.swal2-close){z-index:2;align-items:center;justify-content:center;width:1.2em;height:1.2em;margin-top:0;margin-right:0;margin-bottom:-1.2em;padding:0;overflow:hidden;transition:color .1s,box-shadow .1s;border:none;border-radius:5px;background:rgba(0,0,0,0);color:#ccc;font-family:monospace;font-size:2.5em;cursor:pointer;justify-self:end}div:where(.swal2-container) button:where(.swal2-close):hover{transform:none;background:rgba(0,0,0,0);color:#f27474}div:where(.swal2-container) button:where(.swal2-close):focus{outline:none;box-shadow:inset 0 0 0 3px rgba(100,150,200,.5)}div:where(.swal2-container) button:where(.swal2-close)::-moz-focus-inner{border:0}div:where(.swal2-container) .swal2-html-container{z-index:1;justify-content:center;margin:1em 1.6em .3em;padding:0;overflow:auto;color:inherit;font-size:1.125em;font-weight:normal;line-height:normal;text-align:center;word-wrap:break-word;word-break:break-word}div:where(.swal2-container) input:where(.swal2-input),div:where(.swal2-container) input:where(.swal2-file),div:where(.swal2-container) textarea:where(.swal2-textarea),div:where(.swal2-container) select:where(.swal2-select),div:where(.swal2-container) div:where(.swal2-radio),div:where(.swal2-container) label:where(.swal2-checkbox){margin:1em 2em 3px}div:where(.swal2-container) input:where(.swal2-input),div:where(.swal2-container) input:where(.swal2-file),div:where(.swal2-container) textarea:where(.swal2-textarea){box-sizing:border-box;width:auto;transition:border-color .1s,box-shadow .1s;border:1px solid #d9d9d9;border-radius:.1875em;background:rgba(0,0,0,0);box-shadow:inset 0 1px 1px rgba(0,0,0,.06),0 0 0 3px rgba(0,0,0,0);color:inherit;font-size:1.125em}div:where(.swal2-container) input:where(.swal2-input).swal2-inputerror,div:where(.swal2-container) input:where(.swal2-file).swal2-inputerror,div:where(.swal2-container) textarea:where(.swal2-textarea).swal2-inputerror{border-color:#f27474 !important;box-shadow:0 0 2px #f27474 !important}div:where(.swal2-container) input:where(.swal2-input):focus,div:where(.swal2-container) input:where(.swal2-file):focus,div:where(.swal2-container) textarea:where(.swal2-textarea):focus{border:1px solid #b4dbed;outline:none;box-shadow:inset 0 1px 1px rgba(0,0,0,.06),0 0 0 3px rgba(100,150,200,.5)}div:where(.swal2-container) input:where(.swal2-input)::placeholder,div:where(.swal2-container) input:where(.swal2-file)::placeholder,div:where(.swal2-container) textarea:where(.swal2-textarea)::placeholder{color:#ccc}div:where(.swal2-container) .swal2-range{margin:1em 2em 3px;background:#fff}div:where(.swal2-container) .swal2-range input{width:80%}div:where(.swal2-container) .swal2-range output{width:20%;color:inherit;font-weight:600;text-align:center}div:where(.swal2-container) .swal2-range input,div:where(.swal2-container) .swal2-range output{height:2.625em;padding:0;font-size:1.125em;line-height:2.625em}div:where(.swal2-container) .swal2-input{height:2.625em;padding:0 .75em}div:where(.swal2-container) .swal2-file{width:75%;margin-right:auto;margin-left:auto;background:rgba(0,0,0,0);font-size:1.125em}div:where(.swal2-container) .swal2-textarea{height:6.75em;padding:.75em}div:where(.swal2-container) .swal2-select{min-width:50%;max-width:100%;padding:.375em .625em;background:rgba(0,0,0,0);color:inherit;font-size:1.125em}div:where(.swal2-container) .swal2-radio,div:where(.swal2-container) .swal2-checkbox{align-items:center;justify-content:center;background:#fff;color:inherit}div:where(.swal2-container) .swal2-radio label,div:where(.swal2-container) .swal2-checkbox label{margin:0 .6em;font-size:1.125em}div:where(.swal2-container) .swal2-radio input,div:where(.swal2-container) .swal2-checkbox input{flex-shrink:0;margin:0 .4em}div:where(.swal2-container) label:where(.swal2-input-label){display:flex;justify-content:center;margin:1em auto 0}div:where(.swal2-container) div:where(.swal2-validation-message){align-items:center;justify-content:center;margin:1em 0 0;padding:.625em;overflow:hidden;background:#f0f0f0;color:#666;font-size:1em;font-weight:300}div:where(.swal2-container) div:where(.swal2-validation-message)::before{content:"!";display:inline-block;width:1.5em;min-width:1.5em;height:1.5em;margin:0 .625em;border-radius:50%;background-color:#f27474;color:#fff;font-weight:600;line-height:1.5em;text-align:center}div:where(.swal2-container) .swal2-progress-steps{flex-wrap:wrap;align-items:center;max-width:100%;margin:1.25em auto;padding:0;background:rgba(0,0,0,0);font-weight:600}div:where(.swal2-container) .swal2-progress-steps li{display:inline-block;position:relative}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step{z-index:20;flex-shrink:0;width:2em;height:2em;border-radius:2em;background:#2778c4;color:#fff;line-height:2em;text-align:center}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step.swal2-active-progress-step{background:#2778c4}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step.swal2-active-progress-step~.swal2-progress-step{background:#add8e6;color:#fff}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step.swal2-active-progress-step~.swal2-progress-step-line{background:#add8e6}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step-line{z-index:10;flex-shrink:0;width:2.5em;height:.4em;margin:0 -1px;background:#2778c4}div:where(.swal2-icon){position:relative;box-sizing:content-box;justify-content:center;width:5em;height:5em;margin:2.5em auto .6em;border:0.25em solid rgba(0,0,0,0);border-radius:50%;border-color:#000;font-family:inherit;line-height:5em;cursor:default;user-select:none}div:where(.swal2-icon) .swal2-icon-content{display:flex;align-items:center;font-size:3.75em}div:where(.swal2-icon).swal2-error{border-color:#f27474;color:#f27474}div:where(.swal2-icon).swal2-error .swal2-x-mark{position:relative;flex-grow:1}div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line]{display:block;position:absolute;top:2.3125em;width:2.9375em;height:.3125em;border-radius:.125em;background-color:#f27474}div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line][class$=left]{left:1.0625em;transform:rotate(45deg)}div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line][class$=right]{right:1em;transform:rotate(-45deg)}div:where(.swal2-icon).swal2-error.swal2-icon-show{animation:swal2-animate-error-icon .5s}div:where(.swal2-icon).swal2-error.swal2-icon-show .swal2-x-mark{animation:swal2-animate-error-x-mark .5s}div:where(.swal2-icon).swal2-warning{border-color:#facea8;color:#f8bb86}div:where(.swal2-icon).swal2-warning.swal2-icon-show{animation:swal2-animate-error-icon .5s}div:where(.swal2-icon).swal2-warning.swal2-icon-show .swal2-icon-content{animation:swal2-animate-i-mark .5s}div:where(.swal2-icon).swal2-info{border-color:#9de0f6;color:#3fc3ee}div:where(.swal2-icon).swal2-info.swal2-icon-show{animation:swal2-animate-error-icon .5s}div:where(.swal2-icon).swal2-info.swal2-icon-show .swal2-icon-content{animation:swal2-animate-i-mark .8s}div:where(.swal2-icon).swal2-question{border-color:#c9dae1;color:#87adbd}div:where(.swal2-icon).swal2-question.swal2-icon-show{animation:swal2-animate-error-icon .5s}div:where(.swal2-icon).swal2-question.swal2-icon-show .swal2-icon-content{animation:swal2-animate-question-mark .8s}div:where(.swal2-icon).swal2-success{border-color:#a5dc86;color:#a5dc86}div:where(.swal2-icon).swal2-success [class^=swal2-success-circular-line]{position:absolute;width:3.75em;height:7.5em;border-radius:50%}div:where(.swal2-icon).swal2-success [class^=swal2-success-circular-line][class$=left]{top:-0.4375em;left:-2.0635em;transform:rotate(-45deg);transform-origin:3.75em 3.75em;border-radius:7.5em 0 0 7.5em}div:where(.swal2-icon).swal2-success [class^=swal2-success-circular-line][class$=right]{top:-0.6875em;left:1.875em;transform:rotate(-45deg);transform-origin:0 3.75em;border-radius:0 7.5em 7.5em 0}div:where(.swal2-icon).swal2-success .swal2-success-ring{position:absolute;z-index:2;top:-0.25em;left:-0.25em;box-sizing:content-box;width:100%;height:100%;border:.25em solid rgba(165,220,134,.3);border-radius:50%}div:where(.swal2-icon).swal2-success .swal2-success-fix{position:absolute;z-index:1;top:.5em;left:1.625em;width:.4375em;height:5.625em;transform:rotate(-45deg)}div:where(.swal2-icon).swal2-success [class^=swal2-success-line]{display:block;position:absolute;z-index:2;height:.3125em;border-radius:.125em;background-color:#a5dc86}div:where(.swal2-icon).swal2-success [class^=swal2-success-line][class$=tip]{top:2.875em;left:.8125em;width:1.5625em;transform:rotate(45deg)}div:where(.swal2-icon).swal2-success [class^=swal2-success-line][class$=long]{top:2.375em;right:.5em;width:2.9375em;transform:rotate(-45deg)}div:where(.swal2-icon).swal2-success.swal2-icon-show .swal2-success-line-tip{animation:swal2-animate-success-line-tip .75s}div:where(.swal2-icon).swal2-success.swal2-icon-show .swal2-success-line-long{animation:swal2-animate-success-line-long .75s}div:where(.swal2-icon).swal2-success.swal2-icon-show .swal2-success-circular-line-right{animation:swal2-rotate-success-circular-line 4.25s ease-in}[class^=swal2]{-webkit-tap-highlight-color:rgba(0,0,0,0)}.swal2-show{animation:swal2-show .3s}.swal2-hide{animation:swal2-hide .15s forwards}.swal2-noanimation{transition:none}.swal2-scrollbar-measure{position:absolute;top:-9999px;width:50px;height:50px;overflow:scroll}.swal2-rtl .swal2-close{margin-right:initial;margin-left:0}.swal2-rtl .swal2-timer-progress-bar{right:0;left:auto}@keyframes swal2-toast-show{0%{transform:translateY(-0.625em) rotateZ(2deg)}33%{transform:translateY(0) rotateZ(-2deg)}66%{transform:translateY(0.3125em) rotateZ(2deg)}100%{transform:translateY(0) rotateZ(0deg)}}@keyframes swal2-toast-hide{100%{transform:rotateZ(1deg);opacity:0}}@keyframes swal2-toast-animate-success-line-tip{0%{top:.5625em;left:.0625em;width:0}54%{top:.125em;left:.125em;width:0}70%{top:.625em;left:-0.25em;width:1.625em}84%{top:1.0625em;left:.75em;width:.5em}100%{top:1.125em;left:.1875em;width:.75em}}@keyframes swal2-toast-animate-success-line-long{0%{top:1.625em;right:1.375em;width:0}65%{top:1.25em;right:.9375em;width:0}84%{top:.9375em;right:0;width:1.125em}100%{top:.9375em;right:.1875em;width:1.375em}}@keyframes swal2-show{0%{transform:scale(0.7)}45%{transform:scale(1.05)}80%{transform:scale(0.95)}100%{transform:scale(1)}}@keyframes swal2-hide{0%{transform:scale(1);opacity:1}100%{transform:scale(0.5);opacity:0}}@keyframes swal2-animate-success-line-tip{0%{top:1.1875em;left:.0625em;width:0}54%{top:1.0625em;left:.125em;width:0}70%{top:2.1875em;left:-0.375em;width:3.125em}84%{top:3em;left:1.3125em;width:1.0625em}100%{top:2.8125em;left:.8125em;width:1.5625em}}@keyframes swal2-animate-success-line-long{0%{top:3.375em;right:2.875em;width:0}65%{top:3.375em;right:2.875em;width:0}84%{top:2.1875em;right:0;width:3.4375em}100%{top:2.375em;right:.5em;width:2.9375em}}@keyframes swal2-rotate-success-circular-line{0%{transform:rotate(-45deg)}5%{transform:rotate(-45deg)}12%{transform:rotate(-405deg)}100%{transform:rotate(-405deg)}}@keyframes swal2-animate-error-x-mark{0%{margin-top:1.625em;transform:scale(0.4);opacity:0}50%{margin-top:1.625em;transform:scale(0.4);opacity:0}80%{margin-top:-0.375em;transform:scale(1.15)}100%{margin-top:0;transform:scale(1);opacity:1}}@keyframes swal2-animate-error-icon{0%{transform:rotateX(100deg);opacity:0}100%{transform:rotateX(0deg);opacity:1}}@keyframes swal2-rotate-loading{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}@keyframes swal2-animate-question-mark{0%{transform:rotateY(-360deg)}100%{transform:rotateY(0)}}@keyframes swal2-animate-i-mark{0%{transform:rotateZ(45deg);opacity:0}25%{transform:rotateZ(-25deg);opacity:.4}50%{transform:rotateZ(15deg);opacity:.8}75%{transform:rotateZ(-5deg);opacity:1}100%{transform:rotateX(0);opacity:1}}body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown){overflow:hidden}body.swal2-height-auto{height:auto !important}body.swal2-no-backdrop .swal2-container{background-color:rgba(0,0,0,0) !important;pointer-events:none}body.swal2-no-backdrop .swal2-container .swal2-popup{pointer-events:all}body.swal2-no-backdrop .swal2-container .swal2-modal{box-shadow:0 0 10px rgba(0,0,0,.4)}@media print{body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown){overflow-y:scroll !important}body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown)>[aria-hidden=true]{display:none}body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) .swal2-container{position:static !important}}body.swal2-toast-shown .swal2-container{box-sizing:border-box;width:360px;max-width:100%;background-color:rgba(0,0,0,0);pointer-events:none}body.swal2-toast-shown .swal2-container.swal2-top{inset:0 auto auto 50%;transform:translateX(-50%)}body.swal2-toast-shown .swal2-container.swal2-top-end,body.swal2-toast-shown .swal2-container.swal2-top-right{inset:0 0 auto auto}body.swal2-toast-shown .swal2-container.swal2-top-start,body.swal2-toast-shown .swal2-container.swal2-top-left{inset:0 auto auto 0}body.swal2-toast-shown .swal2-container.swal2-center-start,body.swal2-toast-shown .swal2-container.swal2-center-left{inset:50% auto auto 0;transform:translateY(-50%)}body.swal2-toast-shown .swal2-container.swal2-center{inset:50% auto auto 50%;transform:translate(-50%, -50%)}body.swal2-toast-shown .swal2-container.swal2-center-end,body.swal2-toast-shown .swal2-container.swal2-center-right{inset:50% 0 auto auto;transform:translateY(-50%)}body.swal2-toast-shown .swal2-container.swal2-bottom-start,body.swal2-toast-shown .swal2-container.swal2-bottom-left{inset:auto auto 0 0}body.swal2-toast-shown .swal2-container.swal2-bottom{inset:auto auto 0 50%;transform:translateX(-50%)}body.swal2-toast-shown .swal2-container.swal2-bottom-end,body.swal2-toast-shown .swal2-container.swal2-bottom-right{inset:auto 0 0 auto}</style><style>
+      .ejoy-sub-active{
+        color: #1296ba !important;
+      }
+      
+      .ejoy-sub-hovered{
+        color: #1296ba !important;
+      }
+      .ejoy-sub-clzz{
+        cursor: pointer;
+        
+        lineHeight: 1.2;
+          font-size: 28px;
+          color: #FFCC00; background: rgba(17, 17, 17, 0.7);
+        
+      }
+      .ejoy-sub-clzz:hover{
+        color: #1296ba !important;
+      }
+      .ej-trans-sub{
+        position: absolute;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999999;
+        cursor: move;
+      }
+      .ej-trans-sub > span{
+        color: #3CF9ED;
+        font-size: 18px;
+        text-align: center;
+        padding: 0 16px;
+        line-height: 1.5;
+        background: rgba(32, 26, 25, 0.8);
+        // text-shadow: 0px 1px 4px black;
+        padding: 0 8px;
+        
+        lineHeight: 1.2;
+        font-size: 16px;
+        color: #0CB1C7; background: rgba(67, 65, 65, 0.7);
+      
+      }
+      .ej-full-screen-video{
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        top: 30px;
+        right: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 99999999;
+        cursor: pointer;
+      }
+      .ej-main-sub{
+        position: absolute;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 99999999;
+        cursor: move;
+        padding: 0 8px;
+      }
+      .ej-main-sub > span{
+        color: white;
+        font-size: 20px;
+        line-height: 1.5;
+        text-align: center;
+        background: rgba(32, 26, 25, 0.8);
+        padding: 2px 8px;
+        
+        lineHeight: 1.2;
+          font-size: 28px;
+          color: #FFCC00; background: rgba(17, 17, 17, 0.7);
+        
+      }
+
+      .ej-main-sub .ejoy-sub-clzz{
+        background: transparent !important
+      }
+
+      .tran-subtitle > span{
+        cursor: pointer;
+        padding-left: 10px;
+        top: 2px;
+        position: relative;
+      }
+
+      .tran-subtitle > span > span{
+        position: absolute;
+        top: -170%;
+        background: rgba(0,0,0,0.5);
+        font-size: 13px;
+        line-height: 20px;
+        padding: 2px 8px;
+        color: white;
+        display: none;
+        border-radius: 4px;
+        white-space: nowrap;
+        left: -50%;
+        font-weight: normal;
+      }
+
+      .viewPopupPro {
+        z-index: 2147483647;
+        cursor: auto;
+        position: absolute;
+        z-index: 2147483647;
+        background: #111111;
+        transition: opacity 1s;
+        width: 172px;
+        height: 66px;
+        opacity: 1;
+        border-radius: 6px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .titlePopupPro {
+        font-style: normal;
+        font-weight: 400;
+        font-size: 10px;
+        line-height: 12px;
+        color: #E5E5E5;
+        text-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
+      }
+  
+      .viewGoPro {
+        background: #FFCC00;
+        border-radius: 72.6257px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 8px;
+        padding-left: 10px;
+        cursor: pointer;
+  
+      }
+
+      .viewGoPro svg {
+        pointer-events: none;
+      }
+      
+      .textGoPro {
+        font-style: normal;
+        font-weight: 600;
+        font-size: 10px;
+        line-height: 12px;
+        pointer-events: none;
+        text-align: center;
+        color: #FFFFFF;
+        padding: 4px 14px 4px 4px;
+      }
+
+      .viewPopupPro{
+        top: auto !important;
+        bottom: 15px !important;
+      }
+
+      .view-icon-copy-main-sub:hover > span,
+      .view-icon-edit-sub:hover > span,
+      .view-icon-exit-full-sub:hover > span,
+      .view-icon-full-sub:hover > span,
+      .iconCrownGoPro:hover > span,
+      .view-icon-copy-tran-sub:hover > span {
+        display: block;
+      }
+
+      .iconCrownGoPro{
+        padding-left: 0px !important;
+        padding-right: 8px !important;
+      }
+      .iconCrownGoPro svg{
+        width: 17px;
+        height: 17px;
+      }
+      .view-icon-full-sub, .view-icon-exit-full-sub {
+        display: flex;
+      }
+
+      .view-icon-full-sub > svg, .view-icon-exit-full-sub > svg {
+        pointer-events: none;
+      }
+
+      .tran-subtitle > span > svg{
+        width: 16px;
+        height: 16px;
+        pointer-events: none;
+        display: inline-flex !important;
+        vertical-align: baseline !important;
+      }
+      
+      .view-icon-copy-main-sub > svg{
+        pointer-events: none;
+        color: #FFCC00
+      }
+
+      .iconCrownGoPro{
+        padding-left: 0 !important;
+        padding-right: 8px !important;
+      }
+      .view-icon-copy-tran-sub > svg{
+        pointer-events: none;
+        color: #0CB1C7
+      }
+
+      </style><style type="text/css">.__react_component_tooltip {
+  border-radius: 3px;
+  display: inline-block;
+  font-size: 13px;
+  left: -999em;
+  opacity: 0;
+  padding: 8px 21px;
+  position: fixed;
+  pointer-events: none;
+  transition: opacity 0.3s ease-out;
+  top: -999em;
+  visibility: hidden;
+  z-index: 999;
+}
+.__react_component_tooltip.allow_hover, .__react_component_tooltip.allow_click {
+  pointer-events: auto;
+}
+.__react_component_tooltip:before, .__react_component_tooltip:after {
+  content: "";
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+.__react_component_tooltip.show {
+  opacity: 0.9;
+  margin-top: 0px;
+  margin-left: 0px;
+  visibility: visible;
+}
+.__react_component_tooltip.type-dark {
+  color: #fff;
+  background-color: #222;
+}
+.__react_component_tooltip.type-dark.place-top:after {
+  border-top-color: #222;
+  border-top-style: solid;
+  border-top-width: 6px;
+}
+.__react_component_tooltip.type-dark.place-bottom:after {
+  border-bottom-color: #222;
+  border-bottom-style: solid;
+  border-bottom-width: 6px;
+}
+.__react_component_tooltip.type-dark.place-left:after {
+  border-left-color: #222;
+  border-left-style: solid;
+  border-left-width: 6px;
+}
+.__react_component_tooltip.type-dark.place-right:after {
+  border-right-color: #222;
+  border-right-style: solid;
+  border-right-width: 6px;
+}
+.__react_component_tooltip.type-dark.border {
+  border: 1px solid #fff;
+}
+.__react_component_tooltip.type-dark.border.place-top:before {
+  border-top: 8px solid #fff;
+}
+.__react_component_tooltip.type-dark.border.place-bottom:before {
+  border-bottom: 8px solid #fff;
+}
+.__react_component_tooltip.type-dark.border.place-left:before {
+  border-left: 8px solid #fff;
+}
+.__react_component_tooltip.type-dark.border.place-right:before {
+  border-right: 8px solid #fff;
+}
+.__react_component_tooltip.type-success {
+  color: #fff;
+  background-color: #8DC572;
+}
+.__react_component_tooltip.type-success.place-top:after {
+  border-top-color: #8DC572;
+  border-top-style: solid;
+  border-top-width: 6px;
+}
+.__react_component_tooltip.type-success.place-bottom:after {
+  border-bottom-color: #8DC572;
+  border-bottom-style: solid;
+  border-bottom-width: 6px;
+}
+.__react_component_tooltip.type-success.place-left:after {
+  border-left-color: #8DC572;
+  border-left-style: solid;
+  border-left-width: 6px;
+}
+.__react_component_tooltip.type-success.place-right:after {
+  border-right-color: #8DC572;
+  border-right-style: solid;
+  border-right-width: 6px;
+}
+.__react_component_tooltip.type-success.border {
+  border: 1px solid #fff;
+}
+.__react_component_tooltip.type-success.border.place-top:before {
+  border-top: 8px solid #fff;
+}
+.__react_component_tooltip.type-success.border.place-bottom:before {
+  border-bottom: 8px solid #fff;
+}
+.__react_component_tooltip.type-success.border.place-left:before {
+  border-left: 8px solid #fff;
+}
+.__react_component_tooltip.type-success.border.place-right:before {
+  border-right: 8px solid #fff;
+}
+.__react_component_tooltip.type-warning {
+  color: #fff;
+  background-color: #F0AD4E;
+}
+.__react_component_tooltip.type-warning.place-top:after {
+  border-top-color: #F0AD4E;
+  border-top-style: solid;
+  border-top-width: 6px;
+}
+.__react_component_tooltip.type-warning.place-bottom:after {
+  border-bottom-color: #F0AD4E;
+  border-bottom-style: solid;
+  border-bottom-width: 6px;
+}
+.__react_component_tooltip.type-warning.place-left:after {
+  border-left-color: #F0AD4E;
+  border-left-style: solid;
+  border-left-width: 6px;
+}
+.__react_component_tooltip.type-warning.place-right:after {
+  border-right-color: #F0AD4E;
+  border-right-style: solid;
+  border-right-width: 6px;
+}
+.__react_component_tooltip.type-warning.border {
+  border: 1px solid #fff;
+}
+.__react_component_tooltip.type-warning.border.place-top:before {
+  border-top: 8px solid #fff;
+}
+.__react_component_tooltip.type-warning.border.place-bottom:before {
+  border-bottom: 8px solid #fff;
+}
+.__react_component_tooltip.type-warning.border.place-left:before {
+  border-left: 8px solid #fff;
+}
+.__react_component_tooltip.type-warning.border.place-right:before {
+  border-right: 8px solid #fff;
+}
+.__react_component_tooltip.type-error {
+  color: #fff;
+  background-color: #BE6464;
+}
+.__react_component_tooltip.type-error.place-top:after {
+  border-top-color: #BE6464;
+  border-top-style: solid;
+  border-top-width: 6px;
+}
+.__react_component_tooltip.type-error.place-bottom:after {
+  border-bottom-color: #BE6464;
+  border-bottom-style: solid;
+  border-bottom-width: 6px;
+}
+.__react_component_tooltip.type-error.place-left:after {
+  border-left-color: #BE6464;
+  border-left-style: solid;
+  border-left-width: 6px;
+}
+.__react_component_tooltip.type-error.place-right:after {
+  border-right-color: #BE6464;
+  border-right-style: solid;
+  border-right-width: 6px;
+}
+.__react_component_tooltip.type-error.border {
+  border: 1px solid #fff;
+}
+.__react_component_tooltip.type-error.border.place-top:before {
+  border-top: 8px solid #fff;
+}
+.__react_component_tooltip.type-error.border.place-bottom:before {
+  border-bottom: 8px solid #fff;
+}
+.__react_component_tooltip.type-error.border.place-left:before {
+  border-left: 8px solid #fff;
+}
+.__react_component_tooltip.type-error.border.place-right:before {
+  border-right: 8px solid #fff;
+}
+.__react_component_tooltip.type-info {
+  color: #fff;
+  background-color: #337AB7;
+}
+.__react_component_tooltip.type-info.place-top:after {
+  border-top-color: #337AB7;
+  border-top-style: solid;
+  border-top-width: 6px;
+}
+.__react_component_tooltip.type-info.place-bottom:after {
+  border-bottom-color: #337AB7;
+  border-bottom-style: solid;
+  border-bottom-width: 6px;
+}
+.__react_component_tooltip.type-info.place-left:after {
+  border-left-color: #337AB7;
+  border-left-style: solid;
+  border-left-width: 6px;
+}
+.__react_component_tooltip.type-info.place-right:after {
+  border-right-color: #337AB7;
+  border-right-style: solid;
+  border-right-width: 6px;
+}
+.__react_component_tooltip.type-info.border {
+  border: 1px solid #fff;
+}
+.__react_component_tooltip.type-info.border.place-top:before {
+  border-top: 8px solid #fff;
+}
+.__react_component_tooltip.type-info.border.place-bottom:before {
+  border-bottom: 8px solid #fff;
+}
+.__react_component_tooltip.type-info.border.place-left:before {
+  border-left: 8px solid #fff;
+}
+.__react_component_tooltip.type-info.border.place-right:before {
+  border-right: 8px solid #fff;
+}
+.__react_component_tooltip.type-light {
+  color: #222;
+  background-color: #fff;
+}
+.__react_component_tooltip.type-light.place-top:after {
+  border-top-color: #fff;
+  border-top-style: solid;
+  border-top-width: 6px;
+}
+.__react_component_tooltip.type-light.place-bottom:after {
+  border-bottom-color: #fff;
+  border-bottom-style: solid;
+  border-bottom-width: 6px;
+}
+.__react_component_tooltip.type-light.place-left:after {
+  border-left-color: #fff;
+  border-left-style: solid;
+  border-left-width: 6px;
+}
+.__react_component_tooltip.type-light.place-right:after {
+  border-right-color: #fff;
+  border-right-style: solid;
+  border-right-width: 6px;
+}
+.__react_component_tooltip.type-light.border {
+  border: 1px solid #222;
+}
+.__react_component_tooltip.type-light.border.place-top:before {
+  border-top: 8px solid #222;
+}
+.__react_component_tooltip.type-light.border.place-bottom:before {
+  border-bottom: 8px solid #222;
+}
+.__react_component_tooltip.type-light.border.place-left:before {
+  border-left: 8px solid #222;
+}
+.__react_component_tooltip.type-light.border.place-right:before {
+  border-right: 8px solid #222;
+}
+.__react_component_tooltip.place-top {
+  margin-top: -10px;
+}
+.__react_component_tooltip.place-top:before {
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  bottom: -8px;
+  left: 50%;
+  margin-left: -10px;
+}
+.__react_component_tooltip.place-top:after {
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  bottom: -6px;
+  left: 50%;
+  margin-left: -8px;
+}
+.__react_component_tooltip.place-bottom {
+  margin-top: 10px;
+}
+.__react_component_tooltip.place-bottom:before {
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  top: -8px;
+  left: 50%;
+  margin-left: -10px;
+}
+.__react_component_tooltip.place-bottom:after {
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  top: -6px;
+  left: 50%;
+  margin-left: -8px;
+}
+.__react_component_tooltip.place-left {
+  margin-left: -10px;
+}
+.__react_component_tooltip.place-left:before {
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  right: -8px;
+  top: 50%;
+  margin-top: -5px;
+}
+.__react_component_tooltip.place-left:after {
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  right: -6px;
+  top: 50%;
+  margin-top: -4px;
+}
+.__react_component_tooltip.place-right {
+  margin-left: 10px;
+}
+.__react_component_tooltip.place-right:before {
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  left: -8px;
+  top: 50%;
+  margin-top: -5px;
+}
+.__react_component_tooltip.place-right:after {
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  left: -6px;
+  top: 50%;
+  margin-top: -4px;
+}
+.__react_component_tooltip .multi-line {
+  display: block;
+  padding: 2px 0px;
+  text-align: center;
+}</style></head>
+  <body id="item-5e948ea85e4b116e09c40396" class="transparent-header enable-nav-button nav-button-style-outline nav-button-corner-style-pill banner-button-style-solid banner-button-corner-style-pill banner-slideshow-controls-arrows meta-priority-date hide-entry-author hide-list-entry-footer hide-blog-sidebar center-navigation--info event-show-past-events event-thumbnails event-thumbnail-size-32-standard event-date-label event-list-show-cats event-list-date event-list-time event-list-address event-icalgcal-links event-excerpts gallery-design-grid aspect-ratio-auto lightbox-style-light gallery-navigation-bullets gallery-info-overlay-show-on-hover gallery-aspect-ratio-32-standard gallery-arrow-style-no-background gallery-transitions-fade gallery-show-arrows gallery-auto-crop product-list-titles-under product-list-alignment-center product-item-size-11-square product-image-auto-crop product-gallery-size-11-square show-product-price show-product-item-nav product-social-sharing tweak-v1-related-products-image-aspect-ratio-11-square tweak-v1-related-products-details-alignment-center newsletter-style-dark hide-opentable-icons opentable-style-dark small-button-style-solid small-button-shape-square medium-button-style-solid medium-button-shape-pill large-button-style-solid large-button-shape-square image-block-poster-text-alignment-center image-block-card-dynamic-font-sizing image-block-card-content-position-center image-block-card-text-alignment-center image-block-overlap-dynamic-font-sizing image-block-overlap-content-position-center image-block-overlap-text-alignment-left image-block-collage-dynamic-font-sizing image-block-collage-content-position-top image-block-collage-text-alignment-left image-block-stack-dynamic-font-sizing image-block-stack-text-alignment-left button-style-solid button-corner-style-square tweak-product-quick-view-button-style-floating tweak-product-quick-view-button-position-bottom tweak-product-quick-view-lightbox-excerpt-display-truncate tweak-product-quick-view-lightbox-show-arrows tweak-product-quick-view-lightbox-show-close-button tweak-product-quick-view-lightbox-controls-weight-light native-currency-code-usd collection-5d2e3ecc245abb000198eaf5 view-item collection-type-blog collection-layout-default mobile-style-available has-banner-image item-main-image" __processed_30532200-e29c-4bf2-b6de-3b32e10120cf__="true"><audio class="audio-for-speech" src=""></audio><div class="translate-tooltip-mtz blue sm-root translate hidden_translate">
+                    <div class="header-wrapper">
+                        <div class="header-controls">
+                            <span class="sound-translate"></span>
+                            <span class="copy blue"></span>
+                            <span class="settings-translator"></span>
+                        </div>
+                        <div class="header-title">translator</div>
+                        <div class="translate-icons">
+                            <img class="from" src="https://www.vdfalliance.org/news/open-vdf-carry-save-adder">
+                            <img class="translate-arrow" src="chrome-extension://bebmphofpgkhclocdbgomhnjcpelbenh/images/right-arrow.png">
+                            <div class="translate_to_dropdown">
+                                <button class="dropbtn dropdown-toggle" type="button" id="dropdownMenuButton1" aria-expanded="false"></button>
+                                <ul class="dropdown-content-wrapper languageSelector blue">
+                                    <li><a class="dropdown-item" data-lang="af">Afrikaans</a></li>
+                                    <li><a class="dropdown-item" data-lang="sq">Albanian - shqipe</a></li>
+                                    <li><a class="dropdown-item" data-lang="ar">Arabic - ‎‫العربية‬‎</a></li>
+                                    <li><a class="dropdown-item" data-lang="hy">Armenian - Հայերէն</a></li>
+                                    <li><a class="dropdown-item" data-lang="az">Azerbaijani - azərbaycanca</a></li>
+                                    <li><a class="dropdown-item" data-lang="eu">Basque - euskara</a></li>
+                                    <li><a class="dropdown-item" data-lang="be">Belarusian - беларуская</a></li>
+                                    <li><a class="dropdown-item" data-lang="bn">Bengali - বাংলা</a></li>
+                                    <li><a class="dropdown-item" data-lang="bg">Bulgarian - български</a></li>
+                                    <li><a class="dropdown-item" data-lang="ca">Catalan - català</a></li>
+                                    <li><a class="dropdown-item" data-lang="zh-CN">Chinese - 中文（简体中文）</a></li>
+                                    <li><a class="dropdown-item" data-lang="zh-TW">Chinese - 中文 (繁體中文)</a></li>
+                                    <li><a class="dropdown-item" data-lang="hr">Croatian - hrvatski</a></li>
+                                    <li><a class="dropdown-item" data-lang="cs">Czech - čeština</a></li>
+                                    <li><a class="dropdown-item" data-lang="da">Danish - dansk</a></li>
+                                    <li><a class="dropdown-item" data-lang="nl">Dutch - Nederlands</a></li>
+                                    <li><a class="dropdown-item" data-lang="en">English</a></li>
+                                    <li><a class="dropdown-item" data-lang="eo">Esperanto - esperanto</a></li>
+                                    <li><a class="dropdown-item" data-lang="et">Estonian - eesti</a></li>
+                                    <li><a class="dropdown-item" data-lang="tl">Filipino</a></li>
+                                    <li><a class="dropdown-item" data-lang="fi">Finnish - suomi</a></li>
+                                    <li><a class="dropdown-item" data-lang="fr">French - français</a></li>
+                                    <li><a class="dropdown-item" data-lang="gl">Galician - galego</a></li>
+                                    <li><a class="dropdown-item" data-lang="ka">Georgian - ქართული</a></li>
+                                    <li><a class="dropdown-item" data-lang="de">German - Deutsch</a></li>
+                                    <li><a class="dropdown-item" data-lang="el">Greek - Ελληνικά</a></li>
+                                    <li><a class="dropdown-item" data-lang="gu">Gujarati - ગુજરાતી</a></li>
+                                    <li><a class="dropdown-item" data-lang="ht">Haitian Creole - kreyòl ayisyen</a></li>
+                                    <li><a class="dropdown-item" data-lang="iw">Hebrew - ‎‫עברית‬‎</a></li>
+                                    <li><a class="dropdown-item" data-lang="hi">Hindi - हिन्दी</a></li>
+                                    <li><a class="dropdown-item" data-lang="hu">Hungarian - magyar</a></li>
+                                    <li><a class="dropdown-item" data-lang="is">Icelandic - íslenska</a></li>
+                                    <li><a class="dropdown-item" data-lang="id">Indonesian - Bahasa Indonesia</a></li>
+                                    <li><a class="dropdown-item" data-lang="ga">Irish - Gaeilge</a></li>
+                                    <li><a class="dropdown-item" data-lang="it">Italian - italiano</a></li>
+                                    <li><a class="dropdown-item" data-lang="ja">Japanese - 日本語</a></li>
+                                    <li><a class="dropdown-item" data-lang="kn">Kannada - ಕನ್ನಡ</a></li>
+                                    <li><a class="dropdown-item" data-lang="ko">Korean - 한국어</a></li>
+                                    <li><a class="dropdown-item" data-lang="la">Latin - Lingua Latina</a></li>
+                                    <li><a class="dropdown-item" data-lang="lv">Latvian - latviešu</a></li>
+                                    <li><a class="dropdown-item" data-lang="lt">Lithuanian - lietuvių</a></li>
+                                    <li><a class="dropdown-item" data-lang="mk">Macedonian - македонски</a></li>
+                                    <li><a class="dropdown-item" data-lang="ms">Malay - Bahasa Melayu</a></li>
+                                    <li><a class="dropdown-item" data-lang="mt">Maltese - Malti</a></li>
+                                    <li><a class="dropdown-item" data-lang="no">Norwegian - norsk</a></li>
+                                    <li><a class="dropdown-item" data-lang="fa">Persian - ‎‫فارسی‬‎</a></li>
+                                    <li><a class="dropdown-item" data-lang="pl">Polish - polski</a></li>
+                                    <li><a class="dropdown-item" data-lang="pt">Portuguese - português</a></li>
+                                    <li><a class="dropdown-item" data-lang="ro">Romanian - română</a></li>
+                                    <li><a class="dropdown-item" data-lang="ru">Russian - русский</a></li>
+                                    <li><a class="dropdown-item" data-lang="sr">Serbian - Српски</a></li>
+                                    <li><a class="dropdown-item" data-lang="sk">Slovak - slovenčina</a></li>
+                                    <li><a class="dropdown-item" data-lang="sl">Slovenian - slovenščina</a></li>
+                                    <li><a class="dropdown-item" data-lang="es">Spanish - español</a></li>
+                                    <li><a class="dropdown-item" data-lang="sw">Swahili - Kiswahili</a></li>
+                                    <li><a class="dropdown-item" data-lang="sv">Swedish - svenska</a></li>
+                                    <li><a class="dropdown-item" data-lang="ta">Tamil - தமிழ்</a></li>
+                                    <li><a class="dropdown-item" data-lang="te">Telugu - తెలుగు</a></li>
+                                    <li><a class="dropdown-item" data-lang="th">Thai - ไทย</a></li>
+                                    <li><a class="dropdown-item" data-lang="tr">Turkish - Türkçe</a></li>
+                                    <li><a class="dropdown-item" data-lang="uk">Ukrainian - українська</a></li>
+                                    <li><a class="dropdown-item" data-lang="ur">Urdu - ‎‫اردو‬‎</a></li>
+                                    <li><a class="dropdown-item" data-lang="vi">Vietnamese - Tiếng Việt</a></li>
+                                    <li><a class="dropdown-item" data-lang="cy">Welsh - Cymraeg</a></li>
+                                    <li><a class="dropdown-item" data-lang="yi">Yiddish - יידיש</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="translated-text">
+                        <div id="translator-words" class="words"></div>
+                        <div class="sentences blue"></div>
+                    </div>
+                    <div class="trans_controls">
+                        <div class="trans_controls__control-wrapper double_click">
+                            <span class="trans_controls__toggle dbl-click active" data-store="double_click">
+                                <div class="trans_controls__inner-circle"></div>
+                            </span>
+                            <span class="trans_controls__description">
+                            Double-click
+                            </span>
+                        </div>
+                        <div class="trans_controls__control-wrapper selection">
+                            <span class="trans_controls__toggle icon-trans active" data-store="icon_trans">
+                                <div class="trans_controls__inner-circle"></div>
+                            </span>
+                            <span class="trans_controls__description">
+                            Select to translate
+                            </span>
+                        </div>
+                    </div>
+                </div><span class="translate-button-mtz hidden_translate blue"></span>
+    <div class="body-overlay"></div>
+    <div class="sqs-announcement-bar-dropzone"></div>
+    <div id="sidecarNav">
+      
+
+  <div id="mobileNavWrapper" class="nav-wrapper" data-content-field="navigation-mobileNav">
+    <nav id="mobileNavigation">
+      
+
+      
+        
+          
+
+          
+
+            
+            <div class="collection homepage">
+              <a href="https://www.vdfalliance.org/">
+                Home
+              </a>
+            </div>
+            
+
+          
+        
+        
+
+      
+        
+          
+
+          
+          <div class="folder">
+            <div class="folder-toggle" data-href="/about">About</div>
+            <div class="subnav">
+            
+
+              
+              <div class="collection">
+                <a href="https://www.vdfalliance.org/what-we-do">
+                  What We Do
+                </a>
+              </div>
+              
+              
+            
+
+              
+              <div class="collection">
+                <a href="https://www.vdfalliance.org/partners">
+                  Partners
+                </a>
+              </div>
+              
+              
+            
+
+              
+              <div class="collection">
+                <a href="https://www.vdfalliance.org/community">
+                  Community
+                </a>
+              </div>
+              
+              
+            
+            </div>
+          </div>
+          
+        
+        
+
+      
+        
+          
+
+          
+
+            
+            <div class="collection active">
+              <a href="https://www.vdfalliance.org/news">
+                News
+              </a>
+            </div>
+            
+
+          
+        
+        
+
+      
+        
+          
+          <div class="external">
+            <a href="https://supranational.atlassian.net/wiki/spaces/VA/pages/36569208/FPGA+Competition">
+              FPGA Contest
+            </a>
+          </div>
+          
+
+        
+
+      
+        
+          
+          <div class="external">
+            <a href="https://vdfresearch.org/" target="_blank">
+              Learn
+            </a>
+          </div>
+          
+
+        
+
+      
+        
+          
+          <div class="external">
+            <a href="https://supranational.atlassian.net/wiki/spaces/VA/overview" target="_blank">
+              Collaborate
+            </a>
+          </div>
+          
+
+        
+
+      
+        
+          
+
+          
+
+            
+            <div class="collection">
+              <a href="https://www.vdfalliance.org/help-needed">
+                Help Needed
+              </a>
+            </div>
+            
+
+          
+        
+        
+
+      
+    </nav>
+  </div>
+
+
+
+    </div>
+    <div id="siteWrapper" class="clearfix">
+
+      <div class="sqs-cart-dropzone" style="top: 83px;"></div>
+
+      <header id="header" class="show-on-scroll" data-offset-el=".index-section" data-offset-behavior="bottom" role="banner">
+        <div class="header-inner">
+          <div id="siteTitleWrapper" class="wrapper" data-content-field="site-title">
+            
+              <h1 id="siteTitle" class="site-title"><a href="https://www.vdfalliance.org/">VDF Alliance</a></h1>
+            
+          </div><!--
+          --><div class="mobile-nav-toggle"><div class="top-bar"></div><div class="middle-bar"></div><div class="bottom-bar"></div></div><div class="mobile-nav-toggle fixed-nav-toggle"><div class="top-bar"></div><div class="middle-bar"></div><div class="bottom-bar"></div></div><!--
+          --><div id="headerNav">
+
+  <div id="mainNavWrapper" class="nav-wrapper" data-content-field="navigation-mainNav">
+    <nav id="mainNavigation" data-content-field="navigation-mainNav">
+      
+
+      
+        
+          
+
+          
+
+            
+            <div class="collection homepage">
+              <a href="https://www.vdfalliance.org/">
+                Home
+              </a>
+            </div>
+            
+
+          
+        
+        
+
+      
+        
+          
+
+          
+          <div class="folder">
+            <div class="folder-toggle" data-href="/about">About</div>
+            <div class="subnav">
+            
+
+              
+              <div class="collection">
+                <a href="https://www.vdfalliance.org/what-we-do">
+                  What We Do
+                </a>
+              </div>
+              
+              
+            
+
+              
+              <div class="collection">
+                <a href="https://www.vdfalliance.org/partners">
+                  Partners
+                </a>
+              </div>
+              
+              
+            
+
+              
+              <div class="collection">
+                <a href="https://www.vdfalliance.org/community">
+                  Community
+                </a>
+              </div>
+              
+              
+            
+            </div>
+          </div>
+          
+        
+        
+
+      
+        
+          
+
+          
+
+            
+            <div class="collection active">
+              <a href="https://www.vdfalliance.org/news">
+                News
+              </a>
+            </div>
+            
+
+          
+        
+        
+
+      
+        
+          
+          <div class="external">
+            <a href="https://supranational.atlassian.net/wiki/spaces/VA/pages/36569208/FPGA+Competition">
+              FPGA Contest
+            </a>
+          </div>
+          
+
+        
+
+      
+        
+          
+          <div class="external">
+            <a href="https://vdfresearch.org/" target="_blank">
+              Learn
+            </a>
+          </div>
+          
+
+        
+
+      
+        
+          
+          <div class="external">
+            <a href="https://supranational.atlassian.net/wiki/spaces/VA/overview" target="_blank">
+              Collaborate
+            </a>
+          </div>
+          
+
+        
+
+      
+        
+          
+
+          
+
+            
+            <div class="collection">
+              <a href="https://www.vdfalliance.org/help-needed">
+                Help Needed
+              </a>
+            </div>
+            
+
+          
+        
+        
+
+      
+    </nav>
+  </div>
+  <!-- style below blocks out the mobile nav toggle only when nav is loaded -->
+  <style>.mobile-nav-toggle-label { display: inline-block !important; }</style>
+
+
+</div>
+        </div>
+      </header>
+
+      
+        
+          
+            
+              
+                <div class="banner-thumbnail-wrapper" data-content-field="main-image">
+                  <div class="color-overlay"></div>
+                  <figure id="thumbnail" class="loading content-fill" style="overflow: hidden;"><img data-src="https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586808086348-ESNCVCIY3TOCF4VTH9FC/triangle.png" data-image="https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586808086348-ESNCVCIY3TOCF4VTH9FC/triangle.png" data-image-dimensions="464x217" data-image-focal-point="0.5,0.5" data-parent-ratio="3.1" style="font-size: 0px; left: 0px; top: -138.458px; width: 1905px; height: 890.916px; position: relative;" alt="Open VDF: Carry Save Adder" class="" data-image-resolution="2500w" src="./Open VDF_ Carry Save Adder — VDF Alliance_files/triangle.png"></figure>
+                  <div class="blog-item-wrapper">
+                    <div class="title-desc-wrapper" id="yui_3_17_2_1_1736957762799_181">
+                      <time class="dt-published published post-date" datetime="2020-04-13" pubdate="">April 13, 2020</time>
+                      <div class="post-category"></div>
+                      <div class="post-author"><a href="https://www.vdfalliance.org/news?author=5d40ebbf55459000015748a6">VDF Alliance</a></div>
+                      <div class="post-title" data-shrink-original-size="70" style="letter-spacing: 0.0571429em;">Open VDF: Carry Save Adder</div>
+                    </div>
+                  </div>
+                </div>
+              
+            
+          
+        
+      
+
+
+      
+      
+      
+
+      <main id="page" role="main">
+        
+        <!--
+        --><!--
+        --><div id="content" class="main-content" data-content-field="main-content" data-collection-id="5d2e3ecc245abb000198eaf5" data-edit-main-image="">
+         <div class="blog-item" id="yui_3_17_2_1_1736957762799_74">
+
+  
+  <article class="entry h-entry hentry author-vdf-alliance post-type-text has-main-image clear" id="article-5e948ea85e4b116e09c40396" data-item-id="5e948ea85e4b116e09c40396">
+
+    <header class="entry-header">
+      <div class="meta-above-title">
+        
+        <div class="entry-byline">
+          <span class="entry-author"><a href="https://www.vdfalliance.org/news?author=5d40ebbf55459000015748a6" class="p-author author entry-byline-link" rel="author">VDF Alliance</a></span>
+        </div>
+        
+        <div class="entry-dateline">
+          <time class="dt-published published entry-date" datetime="2020-04-13" pubdate=""><a href="https://www.vdfalliance.org/news/open-vdf-carry-save-adder" class="entry-dateline-link">April 13, 2020</a></time>
+          <time class="dt-updated updated" datetime="2020-04-15"></time>
+        </div>
+        
+      </div>
+      <h1 data-content-field="title" class="entry-title p-name">
+      
+        <a href="https://medium.com/supranational/open-vdf-carry-save-adder-33a4b7d69e86" class="entry-title-passthrough" target="_blank">Open VDF: Carry Save Adder</a>
+      
+      </h1>
+      <div class="meta-below-title no-categories">
+        
+        <div class="entry-byline">
+          <span class="entry-author"><a href="https://www.vdfalliance.org/news?author=5d40ebbf55459000015748a6" class="p-author author entry-byline-link" rel="author">VDF Alliance</a></span>
+        </div>
+        
+        <div class="entry-dateline">
+          <time class="dt-published published entry-date" datetime="2020-04-13" pubdate=""><a href="https://www.vdfalliance.org/news/open-vdf-carry-save-adder" class="entry-dateline-link">April 13, 2020</a></time>
+          <time class="dt-updated updated" datetime="2020-04-15"></time>
+        </div>
+        
+      </div>
+    </header>
+
+    <div class="entry-content e-content" id="yui_3_17_2_1_1736957762799_73">
+      
+        <div class="sqs-layout sqs-grid-12 columns-12" data-layout-label="Post Body" data-type="item" data-updated-on="1586794821779" id="item-5e948ea85e4b116e09c40396"><div class="row sqs-row" id="yui_3_17_2_1_1736957762799_72"><div class="col sqs-col-12 span-12" id="yui_3_17_2_1_1736957762799_71"><div class="sqs-block html-block sqs-block-html" data-block-type="2" id="block-bdc5ba6d6904485b2bd4"><div class="sqs-block-content">
+
+<div class="sqs-html-content">
+  <p class="" style="white-space:pre-wrap;">In this post we’ll look at the construction of low latency carry save adders (CSAs) and compressor trees for use in a low latency MSU. These structures comprise the bulk of the Öztürk design. In the architecture drawing below both the white and red upside down triangles and the turquoise rectangle are nearly 100% compressor trees, accounting for &gt;80% of the logic in the design.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div></div><div class="sqs-block image-block sqs-block-image sqs-text-ready" data-block-type="5" id="block-yui_3_17_2_1_1586794135968_14968"><div class="sqs-block-content" id="yui_3_17_2_1_1736957762799_70">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+    
+  
+    <div class="
+          image-block-outer-wrapper
+          layout-caption-below
+          design-layout-inline
+          combination-animation-none
+          individual-animation-none
+          individual-text-animation-none
+        " data-test="image-block-inline-outer-wrapper" id="yui_3_17_2_1_1736957762799_69">
+
+      
+
+      
+        <figure class="
+              sqs-block-image-figure
+              intrinsic
+            " style="max-width:1123px;" id="yui_3_17_2_1_1736957762799_68">
+          
+        
+        
+
+        
+          
+            
+          <div class="image-block-wrapper" data-animation-role="image" id="yui_3_17_2_1_1736957762799_67">
+            <div class="sqs-image-shape-container-element
+              
+          
+        
+              has-aspect-ratio
+            " style="
+                position: relative;
+                
+                  padding-bottom:126.89225769042969%;
+                
+                overflow: hidden;-webkit-mask-image: -webkit-radial-gradient(white, black);
+              " id="yui_3_17_2_1_1736957762799_66">
+                
+                
+                
+                
+                
+                
+                
+                <img data-stretch="false" data-src="https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794347895-VFHYZYXSU9ISIK32TK7V/ozturk.png" data-image="https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794347895-VFHYZYXSU9ISIK32TK7V/ozturk.png" data-image-dimensions="1123x1425" data-image-focal-point="0.5,0.5" alt="ozturk.png" data-load="false" elementtiming="system-image-block" src="./Open VDF_ Carry Save Adder — VDF Alliance_files/ozturk.png" width="1123" height="1425" sizes="(max-width: 640px) 100vw, (max-width: 767px) 100vw, 100vw" style="display:block;object-fit: cover; width: 100%; height: 100%; object-position: 50% 50%" onload="this.classList.add(&quot;loaded&quot;)" srcset="https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794347895-VFHYZYXSU9ISIK32TK7V/ozturk.png?format=100w 100w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794347895-VFHYZYXSU9ISIK32TK7V/ozturk.png?format=300w 300w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794347895-VFHYZYXSU9ISIK32TK7V/ozturk.png?format=500w 500w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794347895-VFHYZYXSU9ISIK32TK7V/ozturk.png?format=750w 750w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794347895-VFHYZYXSU9ISIK32TK7V/ozturk.png?format=1000w 1000w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794347895-VFHYZYXSU9ISIK32TK7V/ozturk.png?format=1500w 1500w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794347895-VFHYZYXSU9ISIK32TK7V/ozturk.png?format=2500w 2500w" loading="lazy" decoding="async" data-loader="sqs" class="loaded">
+
+            </div>
+          </div>
+        
+          
+        
+
+        
+      
+        </figure>
+      
+
+    </div>
+  
+
+
+  
+
+
+</div></div><div class="sqs-block html-block sqs-block-html" data-block-type="2" id="block-yui_3_17_2_1_1586794135968_15261"><div class="sqs-block-content">
+
+<div class="sqs-html-content">
+  <h2 style="white-space:pre-wrap;"><strong>Compressor Trees</strong></h2><p class="" style="white-space:pre-wrap;">Compressor trees perform the function of accumulating an array of numbers into a final redundant sum in a low latency manner. In our case the function we’re interested in is (in pseudo python):</p><pre><code>A = [ x0, x1, …, xn] # x0 .. xn are 16-bit unsigned integers
+sum = 0
+for i in range(len(A)):
+sum = sum + A[i]</code></pre><p class="" style="white-space:pre-wrap;">Because we need low latency it is not sufficient to sum the values in series as implied by the code. This section will walk through the techniques needed to achieve low latency using compressors, trees, and redundant representation.</p><h2 style="white-space:pre-wrap;"><strong>Bit-level compressors</strong></h2><p class="" style="white-space:pre-wrap;">At the lowest level a compressor takes as input a small number of input bits and sums them, producing a redundant carry and save output. Common compressor sizes are 3:2, 4:2, 7:3, and 9:4. The page&nbsp;<a href="http://www.geoffknagge.com/fyp/carrysave.shtml" target="_blank">ASIC Design for Signal Processing</a>&nbsp;describes these bit level compressors in more detail. We combine these bit level compressors to form carry-save adders, which use a redundant representation to reduce the latency of adding 3 or more inputs.</p><h2 style="white-space:pre-wrap;"><strong>Low latency adders</strong></h2><p class="" style="white-space:pre-wrap;">If you are not familiar with adders in general our previous blog post may be of interest. In that post we looked at the implementation of low latency adders and considered a variety of adder structures.</p><p class="" style="white-space:pre-wrap;">Recall that the key challenge with building low latency adder circuits is handling carries. The basic approach to adding two numbers is called a ripple carry adder and matches what you learned in school. Carries from one column are immediately propagated and summed into the next column. This creates a serial chain of carry dependencies as long as the width of the number, leading to high gate depth and slow circuits.</p><p class="" style="white-space:pre-wrap;">The following drawing shows a 4-bit ripple carry adder with a full adder depth of 4 (C1 through C4):</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div></div><div class="sqs-block image-block sqs-block-image sqs-text-ready" data-block-type="5" id="block-yui_3_17_2_1_1586794135968_21577"><div class="sqs-block-content" id="yui_3_17_2_1_1736957762799_84">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+    
+  
+    <div class="
+          image-block-outer-wrapper
+          layout-caption-below
+          design-layout-inline
+          combination-animation-none
+          individual-animation-none
+          individual-text-animation-none
+        " data-test="image-block-inline-outer-wrapper" id="yui_3_17_2_1_1736957762799_83">
+
+      
+
+      
+        <figure class="
+              sqs-block-image-figure
+              intrinsic
+            " style="max-width:1400px;" id="yui_3_17_2_1_1736957762799_82">
+          
+        
+        
+
+        
+          
+            
+          <div class="image-block-wrapper" data-animation-role="image" id="yui_3_17_2_1_1736957762799_81">
+            <div class="sqs-image-shape-container-element
+              
+          
+        
+              has-aspect-ratio
+            " style="
+                position: relative;
+                
+                  padding-bottom:40%;
+                
+                overflow: hidden;-webkit-mask-image: -webkit-radial-gradient(white, black);
+              " id="yui_3_17_2_1_1736957762799_80">
+                
+                
+                
+                
+                
+                
+                
+                <img data-stretch="false" data-src="https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794464343-3LT8JAY2FVV7STU5NWYD/ripple+carry+add.png" data-image="https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794464343-3LT8JAY2FVV7STU5NWYD/ripple+carry+add.png" data-image-dimensions="1400x560" data-image-focal-point="0.5,0.5" alt="“4-bit ripple carry adder made up of four 1-bit full adders” by Cburnett (Own work) CC BY-SA 3.0" data-load="false" elementtiming="system-image-block" src="./Open VDF_ Carry Save Adder — VDF Alliance_files/ripple+carry+add.png" width="1400" height="560" sizes="(max-width: 640px) 100vw, (max-width: 767px) 100vw, 100vw" style="display:block;object-fit: cover; width: 100%; height: 100%; object-position: 50% 50%" onload="this.classList.add(&quot;loaded&quot;)" srcset="https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794464343-3LT8JAY2FVV7STU5NWYD/ripple+carry+add.png?format=100w 100w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794464343-3LT8JAY2FVV7STU5NWYD/ripple+carry+add.png?format=300w 300w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794464343-3LT8JAY2FVV7STU5NWYD/ripple+carry+add.png?format=500w 500w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794464343-3LT8JAY2FVV7STU5NWYD/ripple+carry+add.png?format=750w 750w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794464343-3LT8JAY2FVV7STU5NWYD/ripple+carry+add.png?format=1000w 1000w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794464343-3LT8JAY2FVV7STU5NWYD/ripple+carry+add.png?format=1500w 1500w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794464343-3LT8JAY2FVV7STU5NWYD/ripple+carry+add.png?format=2500w 2500w" loading="lazy" decoding="async" data-loader="sqs" class="loaded">
+
+            </div>
+          </div>
+        
+          
+        
+
+        
+          
+          <figcaption class="image-caption-wrapper">
+            <div class="image-caption"><p class="">“<a href="https://commons.wikimedia.org/wiki/File:4-bit_ripple_carry_adder.svg" target="_blank">4-bit ripple carry adder made up of four 1-bit full adders</a>” by Cburnett (Own work) CC BY-SA 3.0</p></div>
+          </figcaption>
+        
+      
+        </figure>
+      
+
+    </div>
+  
+
+
+  
+
+
+</div></div><div class="sqs-block html-block sqs-block-html" data-block-type="2" id="block-yui_3_17_2_1_1586794135968_21869"><div class="sqs-block-content">
+
+<div class="sqs-html-content">
+  <p class="" style="white-space:pre-wrap;"><strong>Carry save adder:&nbsp;</strong>A carry save adder on the other hand breaks the carry chain by using bit level compressors to sum two numbers with no carry propagation. With this approach summing two numbers always has the same latency, regardless of the data width.</p><p class="" style="white-space:pre-wrap;">A 4-bit carry save adder has a full adder depth of 1 for any bitwidth, as shown:</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div></div><div class="sqs-block image-block sqs-block-image sqs-text-ready" data-block-type="5" id="block-yui_3_17_2_1_1586794135968_26785"><div class="sqs-block-content" id="yui_3_17_2_1_1736957762799_93">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+    
+  
+    <div class="
+          image-block-outer-wrapper
+          layout-caption-below
+          design-layout-inline
+          combination-animation-none
+          individual-animation-none
+          individual-text-animation-none
+        " data-test="image-block-inline-outer-wrapper" id="yui_3_17_2_1_1736957762799_92">
+
+      
+
+      
+        <figure class="
+              sqs-block-image-figure
+              intrinsic
+            " style="max-width:1341px;" id="yui_3_17_2_1_1736957762799_91">
+          
+        
+        
+
+        
+          
+            
+          <div class="image-block-wrapper" data-animation-role="image" id="yui_3_17_2_1_1736957762799_90">
+            <div class="sqs-image-shape-container-element
+              
+          
+        
+              has-aspect-ratio
+            " style="
+                position: relative;
+                
+                  padding-bottom:26.547351837158203%;
+                
+                overflow: hidden;-webkit-mask-image: -webkit-radial-gradient(white, black);
+              " id="yui_3_17_2_1_1736957762799_89">
+                
+                
+                
+                
+                
+                
+                
+                <img data-stretch="false" data-src="https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794519379-6LV27NTR7UR3QRVW5HHA/carry+save+add.png" data-image="https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794519379-6LV27NTR7UR3QRVW5HHA/carry+save+add.png" data-image-dimensions="1341x356" data-image-focal-point="0.5,0.5" alt="How to Use Carry-Save Adders to Efficiently Implement Multioperand Addition" data-load="false" elementtiming="system-image-block" src="./Open VDF_ Carry Save Adder — VDF Alliance_files/carry+save+add.png" width="1341" height="356" sizes="(max-width: 640px) 100vw, (max-width: 767px) 100vw, 100vw" style="display:block;object-fit: cover; width: 100%; height: 100%; object-position: 50% 50%" onload="this.classList.add(&quot;loaded&quot;)" srcset="https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794519379-6LV27NTR7UR3QRVW5HHA/carry+save+add.png?format=100w 100w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794519379-6LV27NTR7UR3QRVW5HHA/carry+save+add.png?format=300w 300w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794519379-6LV27NTR7UR3QRVW5HHA/carry+save+add.png?format=500w 500w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794519379-6LV27NTR7UR3QRVW5HHA/carry+save+add.png?format=750w 750w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794519379-6LV27NTR7UR3QRVW5HHA/carry+save+add.png?format=1000w 1000w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794519379-6LV27NTR7UR3QRVW5HHA/carry+save+add.png?format=1500w 1500w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794519379-6LV27NTR7UR3QRVW5HHA/carry+save+add.png?format=2500w 2500w" loading="lazy" decoding="async" data-loader="sqs" class="loaded">
+
+            </div>
+          </div>
+        
+          
+        
+
+        
+          
+          <figcaption class="image-caption-wrapper">
+            <div class="image-caption"><p class=""><a href="https://www.allaboutcircuits.com/technical-articles/use-carry-save-adders-efficiently-implement-multioperand-addition/" target="_blank">How to Use Carry-Save Adders to Efficiently Implement Multioperand Addition</a></p></div>
+          </figcaption>
+        
+      
+        </figure>
+      
+
+    </div>
+  
+
+
+  
+
+
+</div></div><div class="sqs-block html-block sqs-block-html" data-block-type="2" id="block-yui_3_17_2_1_1586794135968_27078"><div class="sqs-block-content">
+
+<div class="sqs-html-content">
+  <p class="" style="white-space:pre-wrap;">One thing to take into account with carry-save adders is that they produce two outputs, carry and sum, instead of a single sum. Our final design compensates for this by using a carry propagate adder (CPA) to produce a single result, but we only need to do this once at the end rather than at every stage of the tree, a big latency saver.</p><h2 style="white-space:pre-wrap;"><strong>Compressor trees</strong></h2><p class="" style="white-space:pre-wrap;">The Ozturk design requires accumulating large numbers of polynomial coefficients in both the squaring and reduction portions of the design. For a 2048 bit modulus and 16 bit coefficients we need to accumulate ~1200 16-bit multiplier partial products in the squaring portion of the design and ~1100 coefficients in the reduction portion of the design. If done serially using carry-save adders this would result in an adder depth of ~1200 and a very slow circuit.</p><p class="" style="white-space:pre-wrap;">The following drawing shows an example for serially adding 8 inputs:</p><p class="" style="white-space:pre-wrap;"><br></p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div></div><div class="sqs-block image-block sqs-block-image sqs-text-ready" data-block-type="5" id="block-yui_3_17_2_1_1586794135968_34146"><div class="sqs-block-content" id="yui_3_17_2_1_1736957762799_102">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+    
+  
+    <div class="
+          image-block-outer-wrapper
+          layout-caption-below
+          design-layout-inline
+          combination-animation-none
+          individual-animation-none
+          individual-text-animation-none
+        " data-test="image-block-inline-outer-wrapper" id="yui_3_17_2_1_1736957762799_101">
+
+      
+
+      
+        <figure class="
+              sqs-block-image-figure
+              intrinsic
+            " style="max-width:185px;" id="yui_3_17_2_1_1736957762799_100">
+          
+        
+        
+
+        
+          
+            
+          <div class="image-block-wrapper" data-animation-role="image" id="yui_3_17_2_1_1736957762799_99">
+            <div class="sqs-image-shape-container-element
+              
+          
+        
+              has-aspect-ratio
+            " style="
+                position: relative;
+                
+                  padding-bottom:220.54054260253906%;
+                
+                overflow: hidden;-webkit-mask-image: -webkit-radial-gradient(white, black);
+              " id="yui_3_17_2_1_1736957762799_98">
+                
+                
+                
+                
+                
+                
+                
+                <img data-stretch="false" data-src="https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794581446-64AZB8UGAISVQAVMHULU/csa1.png" data-image="https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794581446-64AZB8UGAISVQAVMHULU/csa1.png" data-image-dimensions="185x408" data-image-focal-point="0.5,0.5" alt="Carry-Save Addition" data-load="false" elementtiming="system-image-block" src="./Open VDF_ Carry Save Adder — VDF Alliance_files/csa1.png" width="185" height="408" sizes="(max-width: 640px) 100vw, (max-width: 767px) 100vw, 100vw" style="display:block;object-fit: cover; width: 100%; height: 100%; object-position: 50% 50%" onload="this.classList.add(&quot;loaded&quot;)" srcset="https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794581446-64AZB8UGAISVQAVMHULU/csa1.png?format=100w 100w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794581446-64AZB8UGAISVQAVMHULU/csa1.png?format=300w 300w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794581446-64AZB8UGAISVQAVMHULU/csa1.png?format=500w 500w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794581446-64AZB8UGAISVQAVMHULU/csa1.png?format=750w 750w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794581446-64AZB8UGAISVQAVMHULU/csa1.png?format=1000w 1000w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794581446-64AZB8UGAISVQAVMHULU/csa1.png?format=1500w 1500w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794581446-64AZB8UGAISVQAVMHULU/csa1.png?format=2500w 2500w" loading="lazy" decoding="async" data-loader="sqs" class="loaded">
+
+            </div>
+          </div>
+        
+          
+        
+
+        
+          
+          <figcaption class="image-caption-wrapper">
+            <div class="image-caption"><p class=""><a href="https://people.clarkson.edu/~linh/algorithms/carry%20save%20addition.pdf" target="_blank">Carry-Save Addition</a></p></div>
+          </figcaption>
+        
+      
+        </figure>
+      
+
+    </div>
+  
+
+
+  
+
+
+</div></div><div class="sqs-block html-block sqs-block-html" data-block-type="2" id="block-yui_3_17_2_1_1586794135968_34438"><div class="sqs-block-content">
+
+<div class="sqs-html-content">
+  <p class="" style="white-space:pre-wrap;">Instead we can take advantage of the commutative property of addition and structure these additions into a tree of log(n) depth, as shown below. In this case the levels of carry-save adders for 8 inputs drops to 4:</p><p class="" style="white-space:pre-wrap;"><br></p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div></div><div class="sqs-block image-block sqs-block-image sqs-text-ready" data-block-type="5" id="block-yui_3_17_2_1_1586794135968_39106"><div class="sqs-block-content" id="yui_3_17_2_1_1736957762799_111">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+    
+  
+    <div class="
+          image-block-outer-wrapper
+          layout-caption-below
+          design-layout-inline
+          combination-animation-none
+          individual-animation-none
+          individual-text-animation-none
+        " data-test="image-block-inline-outer-wrapper" id="yui_3_17_2_1_1736957762799_110">
+
+      
+
+      
+        <figure class="
+              sqs-block-image-figure
+              intrinsic
+            " style="max-width:199px;" id="yui_3_17_2_1_1736957762799_109">
+          
+        
+        
+
+        
+          
+            
+          <div class="image-block-wrapper" data-animation-role="image" id="yui_3_17_2_1_1736957762799_108">
+            <div class="sqs-image-shape-container-element
+              
+          
+        
+              has-aspect-ratio
+            " style="
+                position: relative;
+                
+                  padding-bottom:174.37185668945312%;
+                
+                overflow: hidden;-webkit-mask-image: -webkit-radial-gradient(white, black);
+              " id="yui_3_17_2_1_1736957762799_107">
+                
+                
+                
+                
+                
+                
+                
+                <img data-stretch="false" data-src="https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794625214-IFIO42WYNQOWHYDLYS5O/csa2.png" data-image="https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794625214-IFIO42WYNQOWHYDLYS5O/csa2.png" data-image-dimensions="199x347" data-image-focal-point="0.5,0.5" alt="Carry-Save Addition" data-load="false" elementtiming="system-image-block" src="./Open VDF_ Carry Save Adder — VDF Alliance_files/csa2.png" width="199" height="347" sizes="(max-width: 640px) 100vw, (max-width: 767px) 100vw, 100vw" style="display:block;object-fit: cover; width: 100%; height: 100%; object-position: 50% 50%" onload="this.classList.add(&quot;loaded&quot;)" srcset="https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794625214-IFIO42WYNQOWHYDLYS5O/csa2.png?format=100w 100w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794625214-IFIO42WYNQOWHYDLYS5O/csa2.png?format=300w 300w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794625214-IFIO42WYNQOWHYDLYS5O/csa2.png?format=500w 500w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794625214-IFIO42WYNQOWHYDLYS5O/csa2.png?format=750w 750w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794625214-IFIO42WYNQOWHYDLYS5O/csa2.png?format=1000w 1000w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794625214-IFIO42WYNQOWHYDLYS5O/csa2.png?format=1500w 1500w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794625214-IFIO42WYNQOWHYDLYS5O/csa2.png?format=2500w 2500w" loading="lazy" decoding="async" data-loader="sqs" class="loaded">
+
+            </div>
+          </div>
+        
+          
+        
+
+        
+          
+          <figcaption class="image-caption-wrapper">
+            <div class="image-caption"><p class=""><a href="https://people.clarkson.edu/~linh/algorithms/carry%20save%20addition.pdf">Carry-Save Addition</a></p></div>
+          </figcaption>
+        
+      
+        </figure>
+      
+
+    </div>
+  
+
+
+  
+
+
+</div></div><div class="sqs-block html-block sqs-block-html" data-block-type="2" id="block-yui_3_17_2_1_1586794135968_39398"><div class="sqs-block-content">
+
+<div class="sqs-html-content">
+  <p class="" style="white-space:pre-wrap;">In this study we analyze the compressor trees required for the Ozturk design and begin to look at implications for the full MSU design.</p><h1 style="white-space:pre-wrap;"><strong>Study Approach</strong></h1><p class="" style="white-space:pre-wrap;">For this study we chose sizes that correspond to the 2048-bit&nbsp;<a href="https://eprint.iacr.org/2019/826" target="_blank">Öztürk</a>&nbsp;design, but we expect the results are applicable to compressor trees in general.</p><p class="" style="white-space:pre-wrap;">The Intel white-paper&nbsp;<a href="https://www.intel.com/content/dam/www/public/us/en/documents/white-papers/large-integer-squaring-ia-paper.pdf" target="_blank">Large Integer Squaring on Intel® Architecture Processors</a>&nbsp;provides a good general background on large integer multiplication and squaring techniques. To illustrate with small numbers, suppose the task is to square a 4-digit number. The drawing below shows the schoolbook multiply adapted to a squaring operation.</p><p class="" style="white-space:pre-wrap;"><br></p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div></div><div class="sqs-block image-block sqs-block-image sqs-text-ready" data-block-type="5" id="block-yui_3_17_2_1_1586794135968_44155"><div class="sqs-block-content" id="yui_3_17_2_1_1736957762799_120">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+    
+  
+    <div class="
+          image-block-outer-wrapper
+          layout-caption-below
+          design-layout-inline
+          combination-animation-none
+          individual-animation-none
+          individual-text-animation-none
+        " data-test="image-block-inline-outer-wrapper" id="yui_3_17_2_1_1736957762799_119">
+
+      
+
+      
+        <figure class="
+              sqs-block-image-figure
+              intrinsic
+            " style="max-width:464px;" id="yui_3_17_2_1_1736957762799_118">
+          
+        
+        
+
+        
+          
+            
+          <div class="image-block-wrapper" data-animation-role="image" id="yui_3_17_2_1_1736957762799_117">
+            <div class="sqs-image-shape-container-element
+              
+          
+        
+              has-aspect-ratio
+            " style="
+                position: relative;
+                
+                  padding-bottom:46.767242431640625%;
+                
+                overflow: hidden;-webkit-mask-image: -webkit-radial-gradient(white, black);
+              " id="yui_3_17_2_1_1736957762799_116">
+                
+                
+                
+                
+                
+                
+                
+                <img data-stretch="false" data-src="https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794694771-KTOZBRKS63CKANATER4V/triangle.png" data-image="https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794694771-KTOZBRKS63CKANATER4V/triangle.png" data-image-dimensions="464x217" data-image-focal-point="0.5,0.5" alt="triangle.png" data-load="false" elementtiming="system-image-block" src="./Open VDF_ Carry Save Adder — VDF Alliance_files/triangle(1).png" width="464" height="217" sizes="(max-width: 640px) 100vw, (max-width: 767px) 100vw, 100vw" style="display:block;object-fit: cover; width: 100%; height: 100%; object-position: 50% 50%" onload="this.classList.add(&quot;loaded&quot;)" srcset="https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794694771-KTOZBRKS63CKANATER4V/triangle.png?format=100w 100w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794694771-KTOZBRKS63CKANATER4V/triangle.png?format=300w 300w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794694771-KTOZBRKS63CKANATER4V/triangle.png?format=500w 500w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794694771-KTOZBRKS63CKANATER4V/triangle.png?format=750w 750w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794694771-KTOZBRKS63CKANATER4V/triangle.png?format=1000w 1000w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794694771-KTOZBRKS63CKANATER4V/triangle.png?format=1500w 1500w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794694771-KTOZBRKS63CKANATER4V/triangle.png?format=2500w 2500w" loading="lazy" decoding="async" data-loader="sqs" class="loaded">
+
+            </div>
+          </div>
+        
+          
+        
+
+        
+      
+        </figure>
+      
+
+    </div>
+  
+
+
+  
+
+
+</div></div><div class="sqs-block html-block sqs-block-html" data-block-type="2" id="block-yui_3_17_2_1_1586794135968_44447"><div class="sqs-block-content">
+
+<div class="sqs-html-content">
+  <p class="" style="white-space:pre-wrap;">First the partial products are generated by multiplying the individual digits together. Each result is inserted in the appropriate column, then the columns are summed (using compressor trees) to produce the product, which is twice as wide as the input. When squaring, the two operands are the same, therefore the light purple partial products will appear twice (for example x0*x1 and x1*x0). Rather than add them twice we optimize by generating these partial products once and then double the result, which is simply a 1 bit shift left in hardware.</p><p class="" style="white-space:pre-wrap;">In our case we assume 16-bit digits and 130 coefficients, leading to compressor trees of depth ~1200 in the middle columns. For reduction we have a nearly constant depth of around 1100 inputs, with some variation depending on the particular fixed modulus.</p><p class="" style="white-space:pre-wrap;">Given a compressor tree size we can then either consider it as a monolithic block or compose it from smaller building blocks. Functionally the approaches are the same but there are physical and tool implications, including:</p><ul data-rte-list="default"><li><p class="" style="white-space:pre-wrap;">The ability of the tools to optimize a design of the given size. Above a certain size and complexity runtimes become prohibitively long and the tools tend to do less well finding ideal implementations.</p></li><li><p class="" style="white-space:pre-wrap;">The power, performance, and area implications of replicating thousands of a small core design vs. optimizing individual columns specifically for the number of inputs they need to sum.</p></li><li><p class="" style="white-space:pre-wrap;">The opportunity to spend significant effort optimizing a single cell that is leveraged many times (perhaps using custom cells) vs. spreading that effort around.</p></li></ul><p class="" style="white-space:pre-wrap;">In this case we consider 3 cases, a 1-level compressor design, as well as a 2 or 3-level balanced design. We use the term balanced tree to mean choosing a compressor size such that the number of inputs and therefore the latency consumed at each level are approximately equal. This leads to the following sized trees:</p><ul data-rte-list="default"><li><p class="" style="white-space:pre-wrap;"><strong>1-level compressor</strong>: 1224-input x 17-bit</p></li><li><p class="" style="white-space:pre-wrap;"><strong>2-level compressor</strong>: 72-input x 17-bit</p></li><li><p class="" style="white-space:pre-wrap;"><strong>3-level compressor</strong>: 22-input x 17-bit</p></li></ul><h2 style="white-space:pre-wrap;"><strong>Impact of Performance on Power</strong></h2><p class="" style="white-space:pre-wrap;">Minimizing latency has a cascade of effects that result in large power increases. These come from insertion of more low voltage threshold (VT) devices, larger drive strength, higher voltage, and higher leakage. Specifically:</p><ul data-rte-list="default"><li><p class="" style="white-space:pre-wrap;">ULVT (ultra-low voltage threshold) devices replace LVT (low voltage threshold) and SVT (standard voltage threshold) devices in the critical path. ULVT devices transition faster at the expense of higher power and leakage.</p></li><li><p class="" style="white-space:pre-wrap;">Drive strength, which is the ability of gates and transistors to transmit current onto a wire, increases. This increases power and area.</p></li><li><p class="" style="white-space:pre-wrap;">Voltage is increased for higher performance, increasing power.</p></li><li><p class="" style="white-space:pre-wrap;">Higher voltage increases leakage current and leads to higher temperatures, which further increases leakage.</p></li></ul><p class="" style="white-space:pre-wrap;">These factors mean that minimizing latency comes at a high cost in power and heat.</p><h1 style="white-space:pre-wrap;"><strong>Study Results</strong></h1><h2 style="white-space:pre-wrap;"><strong>Compressor Construction</strong></h2><p class="" style="white-space:pre-wrap;">To start we explored building compressor trees using a variety of bit level building blocks (compressors of size 3:2, 4:2, and 7:3) and tree styles (Wallace, Dadda). Like in the CPA study, these differences had little impact on the final outcome. By default the tools look through the hierarchy and apply transformations that reshape and improve the circuit. When the tools are forced to keep the structure intact the resulting circuit performance is somewhat worse.</p><p class="" style="white-space:pre-wrap;">We also compared these designs to simply using a series of “+” operations to sum many inputs. There are two big potential pitfalls with this approach:</p><ol data-rte-list="default"><li><p class="" style="white-space:pre-wrap;">If the tools treat it as a long linear chain instead of forming it into a tree then latency would be very bad.</p></li><li><p class="" style="white-space:pre-wrap;">If each “+” is implemented as a carry propagate adder then the carry chain latency would be very long, exactly the problem we hope to avoid by using carry save adders.</p></li></ol><p class="" style="white-space:pre-wrap;">It turns out neither of these pitfalls occurs. When coded using “+” the tool is able to recognize the arithmetic function and apply specialized arithmetic optimizations that target low latency. Specifically, it creates a tree structure and uses carry save adders internal to the tree to keep latency low.</p><p class="" style="white-space:pre-wrap;">In the end, the results using an explicit tree and a series of “+” operations are shown in the table below:</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div></div><div class="sqs-block image-block sqs-block-image sqs-text-ready" data-block-type="5" id="block-yui_3_17_2_1_1586794135968_49004"><div class="sqs-block-content" id="yui_3_17_2_1_1736957762799_129">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+    
+  
+    <div class="
+          image-block-outer-wrapper
+          layout-caption-below
+          design-layout-inline
+          combination-animation-none
+          individual-animation-none
+          individual-text-animation-none
+        " data-test="image-block-inline-outer-wrapper" id="yui_3_17_2_1_1736957762799_128">
+
+      
+
+      
+        <figure class="
+              sqs-block-image-figure
+              intrinsic
+            " style="max-width:1216px;" id="yui_3_17_2_1_1736957762799_127">
+          
+        
+        
+
+        
+          
+            
+          <div class="image-block-wrapper" data-animation-role="image" id="yui_3_17_2_1_1736957762799_126">
+            <div class="sqs-image-shape-container-element
+              
+          
+        
+              has-aspect-ratio
+            " style="
+                position: relative;
+                
+                  padding-bottom:42.434207916259766%;
+                
+                overflow: hidden;-webkit-mask-image: -webkit-radial-gradient(white, black);
+              " id="yui_3_17_2_1_1736957762799_125">
+                
+                
+                
+                
+                
+                
+                
+                <img data-stretch="false" data-src="https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794743588-2VN8FH54W8PIDSBQ526Z/result1.png" data-image="https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794743588-2VN8FH54W8PIDSBQ526Z/result1.png" data-image-dimensions="1216x516" data-image-focal-point="0.5,0.5" alt="result1.png" data-load="false" elementtiming="system-image-block" src="./Open VDF_ Carry Save Adder — VDF Alliance_files/result1.png" width="1216" height="516" sizes="(max-width: 640px) 100vw, (max-width: 767px) 100vw, 100vw" style="display:block;object-fit: cover; width: 100%; height: 100%; object-position: 50% 50%" onload="this.classList.add(&quot;loaded&quot;)" srcset="https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794743588-2VN8FH54W8PIDSBQ526Z/result1.png?format=100w 100w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794743588-2VN8FH54W8PIDSBQ526Z/result1.png?format=300w 300w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794743588-2VN8FH54W8PIDSBQ526Z/result1.png?format=500w 500w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794743588-2VN8FH54W8PIDSBQ526Z/result1.png?format=750w 750w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794743588-2VN8FH54W8PIDSBQ526Z/result1.png?format=1000w 1000w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794743588-2VN8FH54W8PIDSBQ526Z/result1.png?format=1500w 1500w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794743588-2VN8FH54W8PIDSBQ526Z/result1.png?format=2500w 2500w" loading="lazy" decoding="async" data-loader="sqs" class="loaded">
+
+            </div>
+          </div>
+        
+          
+        
+
+        
+      
+        </figure>
+      
+
+    </div>
+  
+
+
+  
+
+
+</div></div><div class="sqs-block html-block sqs-block-html" data-block-type="2" id="block-yui_3_17_2_1_1586794135968_49296"><div class="sqs-block-content">
+
+<div class="sqs-html-content">
+  <p class="" style="white-space:pre-wrap;">Relative performance of a compressor built with a “+” operations vs. an explicit tree structure with bit level compressor cells</p><p class="" style="white-space:pre-wrap;">As can be seen, the minimum achievable latency was slightly better using the bit level implementation, while the other metrics were worse. Given these similarity of the metrics and the simplicity of the “+” based approach, the “+” based approach is preferred. Interestingly, similar experiments with FPGA designs showed worse performance using the “+” approach vs. the bit level approach due to the heavy use of carry propagate adders.</p><h2 style="white-space:pre-wrap;"><strong>Compressor Size and Number of Levels</strong></h2><p class="" style="white-space:pre-wrap;">Having determined the best way to code the compressor trees, we next looked at building a 1224-input compressor tree in 1, 2, and 3 levels. Our reasoning for trying a multi-level design was that smaller building block circuits might allow the tools to do a better job in optimizing this core component, which could then be repeatedly tiled.</p><p class="" style="white-space:pre-wrap;">The following table shows the results for the various trees at the lowest achievable latency. Latency, area, and power are relative to a 1-level design baseline, and encompass the compressor trees needed for both the squaring and reduction parts of the design. The instance count shows the estimated number of trees required in a full 2048-bit square-reduce design.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div></div><div class="sqs-block image-block sqs-block-image sqs-text-ready" data-block-type="5" id="block-yui_3_17_2_1_1586794135968_53711"><div class="sqs-block-content" id="yui_3_17_2_1_1736957762799_138">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+    
+  
+    <div class="
+          image-block-outer-wrapper
+          layout-caption-below
+          design-layout-inline
+          combination-animation-none
+          individual-animation-none
+          individual-text-animation-none
+        " data-test="image-block-inline-outer-wrapper" id="yui_3_17_2_1_1736957762799_137">
+
+      
+
+      
+        <figure class="
+              sqs-block-image-figure
+              intrinsic
+            " style="max-width:1264px;" id="yui_3_17_2_1_1736957762799_136">
+          
+        
+        
+
+        
+          
+            
+          <div class="image-block-wrapper" data-animation-role="image" id="yui_3_17_2_1_1736957762799_135">
+            <div class="sqs-image-shape-container-element
+              
+          
+        
+              has-aspect-ratio
+            " style="
+                position: relative;
+                
+                  padding-bottom:18.196203231811523%;
+                
+                overflow: hidden;-webkit-mask-image: -webkit-radial-gradient(white, black);
+              " id="yui_3_17_2_1_1736957762799_134">
+                
+                
+                
+                
+                
+                
+                
+                <img data-stretch="false" data-src="https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794760728-LM9PBSZDNZY11D8D4M4M/result+2.png" data-image="https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794760728-LM9PBSZDNZY11D8D4M4M/result+2.png" data-image-dimensions="1264x230" data-image-focal-point="0.5,0.5" alt="result 2.png" data-load="false" elementtiming="system-image-block" src="./Open VDF_ Carry Save Adder — VDF Alliance_files/result+2.png" width="1264" height="230" sizes="(max-width: 640px) 100vw, (max-width: 767px) 100vw, 100vw" style="display:block;object-fit: cover; width: 100%; height: 100%; object-position: 50% 50%" onload="this.classList.add(&quot;loaded&quot;)" srcset="https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794760728-LM9PBSZDNZY11D8D4M4M/result+2.png?format=100w 100w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794760728-LM9PBSZDNZY11D8D4M4M/result+2.png?format=300w 300w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794760728-LM9PBSZDNZY11D8D4M4M/result+2.png?format=500w 500w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794760728-LM9PBSZDNZY11D8D4M4M/result+2.png?format=750w 750w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794760728-LM9PBSZDNZY11D8D4M4M/result+2.png?format=1000w 1000w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794760728-LM9PBSZDNZY11D8D4M4M/result+2.png?format=1500w 1500w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794760728-LM9PBSZDNZY11D8D4M4M/result+2.png?format=2500w 2500w" loading="lazy" decoding="async" data-loader="sqs" class="loaded">
+
+            </div>
+          </div>
+        
+          
+        
+
+        
+      
+        </figure>
+      
+
+    </div>
+  
+
+
+  
+
+
+</div></div><div class="sqs-block html-block sqs-block-html" data-block-type="2" id="block-yui_3_17_2_1_1586794135968_54003"><div class="sqs-block-content">
+
+<div class="sqs-html-content">
+  <p class="" style="white-space:pre-wrap;">And in chart form:</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div></div><div class="sqs-block image-block sqs-block-image sqs-text-ready" data-block-type="5" id="block-yui_3_17_2_1_1586794135968_58063"><div class="sqs-block-content" id="yui_3_17_2_1_1736957762799_147">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+    
+  
+    <div class="
+          image-block-outer-wrapper
+          layout-caption-below
+          design-layout-inline
+          combination-animation-none
+          individual-animation-none
+          individual-text-animation-none
+        " data-test="image-block-inline-outer-wrapper" id="yui_3_17_2_1_1736957762799_146">
+
+      
+
+      
+        <figure class="
+              sqs-block-image-figure
+              intrinsic
+            " style="max-width:1400px;" id="yui_3_17_2_1_1736957762799_145">
+          
+        
+        
+
+        
+          
+            
+          <div class="image-block-wrapper" data-animation-role="image" id="yui_3_17_2_1_1736957762799_144">
+            <div class="sqs-image-shape-container-element
+              
+          
+        
+              has-aspect-ratio
+            " style="
+                position: relative;
+                
+                  padding-bottom:58.35714340209961%;
+                
+                overflow: hidden;-webkit-mask-image: -webkit-radial-gradient(white, black);
+              " id="yui_3_17_2_1_1736957762799_143">
+                
+                
+                
+                
+                
+                
+                
+                <img data-stretch="false" data-src="https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794774691-89JU0DGQD544HD9ZSJPX/result3.png" data-image="https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794774691-89JU0DGQD544HD9ZSJPX/result3.png" data-image-dimensions="1400x817" data-image-focal-point="0.5,0.5" alt="result3.png" data-load="false" elementtiming="system-image-block" src="./Open VDF_ Carry Save Adder — VDF Alliance_files/result3.png" width="1400" height="817" sizes="(max-width: 640px) 100vw, (max-width: 767px) 100vw, 100vw" style="display:block;object-fit: cover; width: 100%; height: 100%; object-position: 50% 50%" onload="this.classList.add(&quot;loaded&quot;)" srcset="https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794774691-89JU0DGQD544HD9ZSJPX/result3.png?format=100w 100w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794774691-89JU0DGQD544HD9ZSJPX/result3.png?format=300w 300w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794774691-89JU0DGQD544HD9ZSJPX/result3.png?format=500w 500w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794774691-89JU0DGQD544HD9ZSJPX/result3.png?format=750w 750w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794774691-89JU0DGQD544HD9ZSJPX/result3.png?format=1000w 1000w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794774691-89JU0DGQD544HD9ZSJPX/result3.png?format=1500w 1500w, https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586794774691-89JU0DGQD544HD9ZSJPX/result3.png?format=2500w 2500w" loading="lazy" decoding="async" data-loader="sqs" class="loaded">
+
+            </div>
+          </div>
+        
+          
+        
+
+        
+      
+        </figure>
+      
+
+    </div>
+  
+
+
+  
+
+
+</div></div><div class="sqs-block html-block sqs-block-html" data-block-type="2" id="block-yui_3_17_2_1_1586794135968_58355"><div class="sqs-block-content">
+
+<div class="sqs-html-content">
+  <p class="" style="white-space:pre-wrap;">The 1-level design is clearly better for latency and power. Area is slightly worse for the 1-level design, but this is not a big concern as the incremental silicon cost is a marginal price to pay for improved power and performance.</p><p class="" style="white-space:pre-wrap;">Building on the themes from this and the previous blog, we believe the 1-level design does better because the tools are able to optimize for the entire circuit. In constructing larger trees from smaller components, each of the smaller components has a critical path driven by the low latency cells. This critical path is built with low voltage threshold cells with larger drive strengths in order to meet timing. However, once tiled together into larger trees, most of these paths are no longer critical in the larger circuit, meaning that the increased performance and power goes to waste. Further, the actual critical path of the larger circuit may not fully align with the fastest paths in the smaller components, resulting in a longer latency.</p><p class="" style="white-space:pre-wrap;">These results point us in the direction of focusing on the 1-level compressor tree design rather than a multi-level design, thereby giving the tools the most opportunity to optimize.</p><h1 style="white-space:pre-wrap;"><strong>Conclusions</strong></h1><ul data-rte-list="default"><li><p class="" style="white-space:pre-wrap;">In general special care is not needed to build low latency compressor trees for ASICs — “+” is sufficient. The tools are very good.</p></li><li><p class="" style="white-space:pre-wrap;">A 1-level tree design is preferred over a 2 or 3-level design.</p></li><li><p class="" style="white-space:pre-wrap;">It is preferable to synthesize each compressor tree for the exact number of inputs needed rather than tiling out a larger tree from smaller components. This results in significant area and power savings.</p></li></ul><h1 style="white-space:pre-wrap;"><strong>Source Code</strong></h1><p class="" style="white-space:pre-wrap;">Source code<strong>&nbsp;</strong>for the designs presented here are available on GitHub at&nbsp;<a href="https://github.com/supranational/hardware/" target="_blank">supranational/hardware</a>&nbsp;and is licensed under the Apache 2 license.</p><h1 style="white-space:pre-wrap;"><strong>Acknowledgements</strong></h1><p class="" style="white-space:pre-wrap;">We’d like provide a special acknowledgement to&nbsp;<a href="https://www.synopsys.com/silicon-design.html" target="_blank">Synopsys</a>® for their support of this work.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div></div></div></div></div>
+      
+    </div>
+
+    <footer class="entry-footer clear">
+      
+      <p class="entry-source">
+        Source:<a href="https://medium.com/supranational/open-vdf-carry-save-adder-33a4b7d69e86" target="_blank">https://medium.com/supranational/open-vdf-carry-save-adder-33a4b7d69e86</a>
+      </p>
+      
+      
+      <div class="entry-actions">
+        
+  <span class="sqs-simple-like" data-item-id="5e948ea85e4b116e09c40396" data-like-count="0" id="yui_3_17_2_1_1736957762799_276">
+    <span class="like-icon"></span>
+    <span class="like-count">0 Likes</span>
+  </span>
+<span class="squarespace-social-buttons inline-style" data-system-data-id="1586808086348-ESNCVCIY3TOCF4VTH9FC" data-asset-url="https://images.squarespace-cdn.com/content/v1/5d2d6fcd480b2500018ab9bd/1586808086348-ESNCVCIY3TOCF4VTH9FC/triangle.png" data-record-type="1" data-full-url="/news/open-vdf-carry-save-adder" data-title="Open VDF: Carry Save Adder"><div id="social-yui_3_17_2_1_1736957762799_231" class="yui3-widget yui3-socialbutton"><div id="yui_3_17_2_1_1736957762799_236" class="yui3-socialbutton-content"><div class="ss-social-button-wrapper"><div class="ss-social-button"><span class="ss-social-button-icon"></span>Share</div></div><div class="ss-social-list-wrapper"><div class="ss-social-button-list"></div></div></div></div></span>
+      </div>
+    </footer>
+
+    
+
+  </article>
+
+  <div id="comments-5e948ea85e4b116e09c40396" class="p-comment">
+    
+  </div>
+
+  
+
+  
+  <nav class="pagination clear">
+    <div class="newer"><span class="prev-label">Newer Post</span><a href="https://www.vdfalliance.org/news/open-vdf-partial-product-generation" rel="prev"><span>Open VDF: Partial Product Generation</span></a></div><!-- comment the linebreak between these two elements because science
+  --><div class="older"><span class="next-label">Older Post</span><a href="https://www.vdfalliance.org/news/open-vdf-carry-propagate-adders" rel="next"><span>Open VDF: Carry Propagate Adders</span></a></div>
+  </nav>
+  
+
+</div>
+        </div><!--
+        --><aside id="rightSidebar" role="complementary">
+          <div class="sqs-layout sqs-grid-12 columns-12 open-block-field empty" data-layout-label="Blog Sidebar Content" data-type="block-field" id="blogBlocks-5d2e3ecc245abb000198eaf5"><div class="row sqs-row"><div class="col sqs-col-12 span-12"></div></div></div>
+        </aside>
+        
+        
+      </main>
+
+      <div id="preFooter" class="">
+        <div class="pre-footer-inner">
+          <div class="sqs-layout sqs-grid-12 columns-12" data-layout-label="Pre-Footer Content" data-type="block-field" data-updated-on="1564536757082" id="preFooterBlocks"><div class="row sqs-row"><div class="col sqs-col-12 span-12"><div class="sqs-block newsletter-block sqs-block-newsletter rendered" data-block-type="51" id="block-d88fb7d15a3b382027c0"><div class="sqs-block-content">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="newsletter-form-wrapper
+  
+  newsletter-form-wrapper--layoutFloat
+  newsletter-form-wrapper--alignCenter
+  
+  ">
+  <form class="newsletter-form" data-form-id="5d2d6fcd480b2500018ab9d4" autocomplete="on" method="POST" novalidate="" onsubmit="return (function (form) {
+    Y.use(&#39;squarespace-form-submit&#39;, &#39;node&#39;, function usingFormSubmit(Y) {
+      (new Y.Squarespace.FormSubmit(form)).submit({
+        formId: &#39;5d2d6fcd480b2500018ab9d4&#39;,
+        collectionId: &#39;&#39;,
+        objectName: &#39;preFooterBlocks&#39;
+      });
+    });
+    return false;
+  })(this);">
+    <header class="newsletter-form-header">
+      <h2 class="newsletter-form-header-title">Subscribe</h2>
+      <div class="newsletter-form-header-description"><p>Sign up with your email address to receive news and updates.</p></div>
+    </header>
+    <div class="newsletter-form-body">
+      <div class="newsletter-form-fields-wrapper form-fields" style="vertical-align: middle;">
+        
+        
+          
+            <div id="email-yui_3_17_2_1_1535471160468_3967" class="newsletter-form-field-wrapper form-item field email required" style="vertical-align: bottom;">
+              <label class="newsletter-form-field-label title" for="email-yui_3_17_2_1_1535471160468_3967-field">Email Address</label>
+              <input id="email-yui_3_17_2_1_1535471160468_3967-field" class="newsletter-form-field-element field-element" name="email" x-autocompletetype="email" autocomplete="email" type="email" spellcheck="false" placeholder="Email Address">
+            </div>
+          
+        
+          
+        
+      </div>
+      <div data-animation-role="button" class="newsletter-form-button-wrapper submit-wrapper" style="vertical-align: middle;">
+        <button class="
+            newsletter-form-button
+            sqs-system-button
+            sqs-editable-button-layout
+            sqs-editable-button-style
+            sqs-editable-button-shape
+            sqs-button-element--primary
+          " type="submit" value="Sign Up">
+          <span class="newsletter-form-spinner sqs-spin light large"></span>
+          <span class="newsletter-form-button-label">Sign Up</span>
+          <span class="newsletter-form-button-icon"></span>
+        </button>
+      </div>
+      
+        
+      
+    </div>
+    <div class="newsletter-form-footnote"></div>
+    <div class="hidden form-submission-text">Thank you!</div>
+    <div class="hidden form-submission-html" data-submission-html=""></div>
+  </form>
+</div>
+</div></div></div></div></div>
+        </div>
+      </div>
+
+      <footer id="footer" role="contentinfo">
+        <div class="footer-inner">
+          <div class="nav-wrapper back-to-top-nav"><nav><div class="back-to-top"><a href="https://www.vdfalliance.org/news/open-vdf-carry-save-adder#header">Back to Top</a></div></nav></div>
+          
+
+
+          
+          <div class="sqs-layout sqs-grid-12 columns-12" data-layout-label="Footer Content" data-type="block-field" data-updated-on="1563316333231" id="footerBlocks"><div class="row sqs-row"><div class="col sqs-col-12 span-12"><div class="sqs-block socialaccountlinks-v2-block sqs-block-socialaccountlinks-v2" data-block-type="54" id="block-yui_3_17_2_1_1563304897166_28015"><div class="sqs-block-content">
+
+
+
+<div class="sqs-svg-icon--outer social-icon-alignment-center social-icons-color-white social-icons-size-small social-icons-style-regular ">
+  <style>
+    #block-yui_3_17_2_1_1563304897166_28015 .social-icons-style-border .sqs-svg-icon--wrapper {
+      
+        box-shadow: 0 0 0 2px inset;
+      
+      border: none; 
+    }
+  </style>
+  <nav class="sqs-svg-icon--list">
+    <a href="http://github.com/supranational" target="_blank" class="sqs-svg-icon--wrapper github-unauth" aria-label="GitHub">
+      <div>
+        <svg class="sqs-svg-icon--social" viewBox="0 0 64 64">
+          <use class="sqs-use--icon" xlink:href="#github-unauth-icon"></use>
+          <use class="sqs-use--mask" xlink:href="#github-unauth-mask"></use>
+        </svg>
+      </div>
+    </a><a href="http://twitter.com/_supranational" target="_blank" class="sqs-svg-icon--wrapper twitter-unauth" aria-label="Twitter">
+      <div>
+        <svg class="sqs-svg-icon--social" viewBox="0 0 64 64">
+          <use class="sqs-use--icon" xlink:href="#twitter-unauth-icon"></use>
+          <use class="sqs-use--mask" xlink:href="#twitter-unauth-mask"></use>
+        </svg>
+      </div>
+    </a><a href="https://supranational.atlassian.net/wiki/spaces/VA/overview" target="_blank" class="sqs-svg-icon--wrapper url" aria-label="URL">
+      <div>
+        <svg class="sqs-svg-icon--social" viewBox="0 0 64 64">
+          <use class="sqs-use--icon" xlink:href="#url-icon"></use>
+          <use class="sqs-use--mask" xlink:href="#url-mask"></use>
+        </svg>
+      </div>
+    </a>
+  </nav>
+</div>
+</div></div></div></div></div>
+        </div>
+      </footer>
+
+    </div>
+
+    <script defer="true" src="./Open VDF_ Carry Save Adder — VDF Alliance_files/site-bundle.js" type="text/javascript"></script>
+    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="display:none" data-usage="social-icons-svg"><symbol id="github-unauth-icon" viewBox="0 0 64 64"><path d="M32,16c-8.8,0-16,7.2-16,16c0,7.1,4.6,13.1,10.9,15.2 c0.8,0.1,1.1-0.3,1.1-0.8c0-0.4,0-1.4,0-2.7c-4.5,1-5.4-2.1-5.4-2.1c-0.7-1.8-1.8-2.3-1.8-2.3c-1.5-1,0.1-1,0.1-1 c1.6,0.1,2.5,1.6,2.5,1.6c1.4,2.4,3.7,1.7,4.7,1.3c0.1-1,0.6-1.7,1-2.1c-3.6-0.4-7.3-1.8-7.3-7.9c0-1.7,0.6-3.2,1.6-4.3 c-0.2-0.4-0.7-2,0.2-4.2c0,0,1.3-0.4,4.4,1.6c1.3-0.4,2.6-0.5,4-0.5c1.4,0,2.7,0.2,4,0.5c3.1-2.1,4.4-1.6,4.4-1.6 c0.9,2.2,0.3,3.8,0.2,4.2c1,1.1,1.6,2.5,1.6,4.3c0,6.1-3.7,7.5-7.3,7.9c0.6,0.5,1.1,1.5,1.1,3c0,2.1,0,3.9,0,4.4 c0,0.4,0.3,0.9,1.1,0.8C43.4,45.1,48,39.1,48,32C48,23.2,40.8,16,32,16z"></path></symbol><symbol id="github-unauth-mask" viewBox="0 0 64 64"><path d="M0,0v64h64V0H0z M37.1,47.2c-0.8,0.2-1.1-0.3-1.1-0.8c0-0.5,0-2.3,0-4.4c0-1.5-0.5-2.5-1.1-3 c3.6-0.4,7.3-1.7,7.3-7.9c0-1.7-0.6-3.2-1.6-4.3c0.2-0.4,0.7-2-0.2-4.2c0,0-1.3-0.4-4.4,1.6c-1.3-0.4-2.6-0.5-4-0.5 c-1.4,0-2.7,0.2-4,0.5c-3.1-2.1-4.4-1.6-4.4-1.6c-0.9,2.2-0.3,3.8-0.2,4.2c-1,1.1-1.6,2.5-1.6,4.3c0,6.1,3.7,7.5,7.3,7.9 c-0.5,0.4-0.9,1.1-1,2.1c-0.9,0.4-3.2,1.1-4.7-1.3c0,0-0.8-1.5-2.5-1.6c0,0-1.6,0-0.1,1c0,0,1,0.5,1.8,2.3c0,0,0.9,3.1,5.4,2.1 c0,1.3,0,2.3,0,2.7c0,0.4-0.3,0.9-1.1,0.8C20.6,45.1,16,39.1,16,32c0-8.8,7.2-16,16-16c8.8,0,16,7.2,16,16 C48,39.1,43.4,45.1,37.1,47.2z"></path></symbol><symbol id="twitter-unauth-icon" viewBox="0 0 64 64"><path d="M48,22.1c-1.2,0.5-2.4,0.9-3.8,1c1.4-0.8,2.4-2.1,2.9-3.6c-1.3,0.8-2.7,1.3-4.2,1.6 C41.7,19.8,40,19,38.2,19c-3.6,0-6.6,2.9-6.6,6.6c0,0.5,0.1,1,0.2,1.5c-5.5-0.3-10.3-2.9-13.5-6.9c-0.6,1-0.9,2.1-0.9,3.3 c0,2.3,1.2,4.3,2.9,5.5c-1.1,0-2.1-0.3-3-0.8c0,0,0,0.1,0,0.1c0,3.2,2.3,5.8,5.3,6.4c-0.6,0.1-1.1,0.2-1.7,0.2c-0.4,0-0.8,0-1.2-0.1 c0.8,2.6,3.3,4.5,6.1,4.6c-2.2,1.8-5.1,2.8-8.2,2.8c-0.5,0-1.1,0-1.6-0.1c2.9,1.9,6.4,2.9,10.1,2.9c12.1,0,18.7-10,18.7-18.7 c0-0.3,0-0.6,0-0.8C46,24.5,47.1,23.4,48,22.1z"></path></symbol><symbol id="twitter-unauth-mask" viewBox="0 0 64 64"><path d="M0,0v64h64V0H0z M44.7,25.5c0,0.3,0,0.6,0,0.8C44.7,35,38.1,45,26.1,45c-3.7,0-7.2-1.1-10.1-2.9 c0.5,0.1,1,0.1,1.6,0.1c3.1,0,5.9-1,8.2-2.8c-2.9-0.1-5.3-2-6.1-4.6c0.4,0.1,0.8,0.1,1.2,0.1c0.6,0,1.2-0.1,1.7-0.2 c-3-0.6-5.3-3.3-5.3-6.4c0,0,0-0.1,0-0.1c0.9,0.5,1.9,0.8,3,0.8c-1.8-1.2-2.9-3.2-2.9-5.5c0-1.2,0.3-2.3,0.9-3.3 c3.2,4,8.1,6.6,13.5,6.9c-0.1-0.5-0.2-1-0.2-1.5c0-3.6,2.9-6.6,6.6-6.6c1.9,0,3.6,0.8,4.8,2.1c1.5-0.3,2.9-0.8,4.2-1.6 c-0.5,1.5-1.5,2.8-2.9,3.6c1.3-0.2,2.6-0.5,3.8-1C47.1,23.4,46,24.5,44.7,25.5z"></path></symbol><symbol id="url-icon" viewBox="0 0 64 64"><path d="M40.038 24c2.203 0 4.08.801 5.633 2.404C47.224 27.956 48 29.834 48 32.038c0 2.203-.776 4.106-2.329 5.709-1.552 1.552-3.43 2.328-5.633 2.328h-6.46v-3.08h6.46c1.352 0 2.504-.475 3.455-1.427 1.002-1.002 1.502-2.178 1.502-3.53 0-1.353-.5-2.504-1.502-3.456-.952-1.001-2.103-1.502-3.455-1.502h-6.46V24h6.46zm-14.423 9.615V30.46h12.77v3.155h-12.77zm-5.183-5.033c-.952.952-1.427 2.103-1.427 3.456 0 1.352.475 2.529 1.427 3.53 1.002.952 2.178 1.427 3.53 1.427h6.46v3.08h-6.46c-2.203 0-4.08-.776-5.633-2.329C16.776 36.145 16 34.241 16 32.038c0-2.204.776-4.082 2.329-5.634C19.88 24.8 21.759 24 23.962 24h6.46v3.08h-6.46c-1.352 0-2.529.5-3.53 1.502z"></path></symbol><symbol id="url-mask" viewBox="0 0 64 64"><path fill-rule="evenodd" clip-rule="evenodd" d="M64 0H0v64h64V0zM45.671 26.404C44.12 24.8 42.241 24 40.038 24h-6.46v3.08h6.46c1.352 0 2.504.5 3.455 1.502 1.002.952 1.502 2.103 1.502 3.456 0 1.352-.5 2.529-1.502 3.53-.952.952-2.103 1.427-3.455 1.427h-6.46v3.08h6.46c2.203 0 4.08-.776 5.633-2.329C47.224 36.145 48 34.241 48 32.038c0-2.204-.776-4.082-2.329-5.634zm-7.286 4.056h-12.77v3.155h12.77V30.46zm-19.38 1.578c0-1.353.475-2.504 1.427-3.456 1.002-1.001 2.178-1.502 3.53-1.502h6.46V24h-6.46c-2.203 0-4.08.801-5.633 2.404C16.776 27.956 16 29.834 16 32.038c0 2.203.776 4.106 2.329 5.709 1.552 1.552 3.43 2.328 5.633 2.328h6.46v-3.08h-6.46c-1.352 0-2.529-.475-3.53-1.427-.952-1.002-1.427-2.178-1.427-3.53z"></path></symbol></svg>
+
+  
+
+<div id="yui3-css-stamp" style="position: absolute !important; visibility: hidden !important"></div></body><div id="eJOY__extension_ai_adv_root" class="eJOY__extension_ai_adv_root_class"><div class="wrapperAiAssEjoy "><div class="containerSumEjoyIcon containerSumEjoyIconShow"><div class="viewIconEjoy gl-tooltip-ejoy gl-tooltip-ejoy-left" tooltip-data="eJOY AI Assistant"><div class="viewIconEjoyItem"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="26" viewBox="0 0 24 26" fill="none"><mask id="mask0_427_34" maskUnits="userSpaceOnUse" x="16" y="3" width="8" height="8" style="mask-type: luminance;"><path d="M24 3H16V11H24V3Z" fill="white"></path></mask><g mask="url(#mask0_427_34)"><path d="M23.8012 7.00309L21.0136 8.01539L20.0012 10.8031L18.9889 8.01539L16.2012 7.00309L18.9889 5.9908L20.0012 3.20309L21.0136 5.9908L23.8012 7.00309Z" fill="url(#paint0_linear_427_34)"></path></g><mask id="mask1_427_34" maskUnits="userSpaceOnUse" x="0" y="10" width="6" height="6" style="mask-type: luminance;"><path d="M6 10H0V16H6V10Z" fill="white"></path></mask><g mask="url(#mask1_427_34)"><path d="M5.8494 13.0023L3.7587 13.7616L2.9994 15.8523L2.2402 13.7616L0.149399 13.0023L2.2402 12.2431L2.9994 10.1523L3.7587 12.2431L5.8494 13.0023Z" fill="url(#paint1_linear_427_34)"></path></g><mask id="mask2_427_34" maskUnits="userSpaceOnUse" x="16" y="20" width="4" height="4" style="mask-type: luminance;"><path d="M20 20H16V24H20V20Z" fill="white"></path></mask><g mask="url(#mask2_427_34)"><path d="M19.8996 22.0016L18.5058 22.5077L17.9996 23.9016L17.4934 22.5077L16.0996 22.0016L17.4934 21.4954L17.9996 20.1016L18.5058 21.4954L19.8996 22.0016Z" fill="url(#paint2_linear_427_34)"></path></g><g filter="url(#filter0_d_427_34)"><path fill-rule="evenodd" clip-rule="evenodd" d="M11.8671 20.3327C14.8098 20.2537 16.4674 18.0538 16.368 15.5257C15.9553 11.8147 11.5502 10.6201 13.3135 5.666C9.7712 8.7188 7.228 12.6272 7.3363 15.408C7.3847 18.1053 8.9455 20.3327 11.8671 20.3327ZM14.5512 16.5696C15.0045 16.5696 15.3306 16.2001 15.3719 15.7489C15.4799 15.431 15.3719 13.9738 14.2947 13.0395C14.4695 14.2529 13.6329 15.261 13.7305 15.7489C13.7305 16.2022 14.0979 16.5696 14.5512 16.5696Z" fill="#1DA1F2"></path></g><defs><filter id="filter0_d_427_34" x="2.47583" y="0.80886" width="18.7535" height="24.381" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feflood flood-opacity="0" result="BackgroundImageFix"></feflood><fecolormatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></fecolormatrix><feoffset></feoffset><fegaussianblur stdDeviation="2.42857"></fegaussianblur><fecolormatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.12 0"></fecolormatrix><feblend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_427_34"></feblend><feblend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_427_34" result="shape"></feblend></filter><lineargradient id="paint0_linear_427_34" x1="20.0012" y1="3.20309" x2="20.0012" y2="10.8031" gradientUnits="userSpaceOnUse"><stop stop-color="#1DA1F2"></stop><stop offset="1" stop-color="#6CD2FF"></stop></lineargradient><lineargradient id="paint1_linear_427_34" x1="2.9994" y1="10.1523" x2="2.9994" y2="15.8523" gradientUnits="userSpaceOnUse"><stop stop-color="#1DA1F2"></stop><stop offset="1" stop-color="#6CD2FF"></stop></lineargradient><lineargradient id="paint2_linear_427_34" x1="17.9996" y1="20.1016" x2="17.9996" y2="23.9016" gradientUnits="userSpaceOnUse"><stop stop-color="#1DA1F2"></stop><stop offset="1" stop-color="#6CD2FF"></stop></lineargradient></defs></svg></div><div class="moveIconEjoyAi"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M5.45139 0.667969C4.64931 0.667969 4 1.31727 4 2.11936C4 2.92144 4.64931 3.57075 5.45139 3.57075C6.25347 3.57075 6.90278 2.92144 6.90278 2.11936C6.90278 1.31727 6.25347 0.667969 5.45139 0.667969ZM4 8.00868C4 7.2066 4.64931 6.55729 5.45139 6.55729C6.25347 6.55729 6.90278 7.2066 6.90278 8.00868C6.90278 8.81076 6.25347 9.46007 5.45139 9.46007C4.64931 9.46007 4 8.81076 4 8.00868ZM4 13.8837C4 13.0816 4.64931 12.4323 5.45139 12.4323C6.25347 12.4323 6.90278 13.0816 6.90278 13.8837C6.90278 14.6858 6.25347 15.3351 5.45139 15.3351C4.64931 15.3351 4 14.6858 4 13.8837Z" fill="#666666"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M10.7854 0.667969C9.98329 0.667969 9.33398 1.31727 9.33398 2.11936C9.33398 2.92144 9.98329 3.57075 10.7854 3.57075C11.5875 3.57075 12.2368 2.92144 12.2368 2.11936C12.2368 1.31727 11.5875 0.667969 10.7854 0.667969ZM9.33398 8.00868C9.33398 7.2066 9.98329 6.55729 10.7854 6.55729C11.5875 6.55729 12.2368 7.2066 12.2368 8.00868C12.2368 8.81076 11.5875 9.46007 10.7854 9.46007C9.98329 9.46007 9.33398 8.81076 9.33398 8.00868ZM9.33398 13.8837C9.33398 13.0816 9.98329 12.4323 10.7854 12.4323C11.5875 12.4323 12.2368 13.0816 12.2368 13.8837C12.2368 14.6858 11.5875 15.3351 10.7854 15.3351C9.98329 15.3351 9.33398 14.6858 9.33398 13.8837Z" fill="#666666"></path></svg></div></div><div class="viewCloseIconEjoy"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="6" fill="black" fill-opacity="0.25"></circle><path fill-rule="evenodd" clip-rule="evenodd" d="M8.71289 3.58672C8.87135 3.74518 8.87135 4.00209 8.71289 4.16054L6.72363 6.14981L8.71289 8.13907C8.87135 8.29752 8.87135 8.55444 8.71289 8.71289C8.55444 8.87135 8.29752 8.87135 8.13907 8.71289L6.14981 6.72363L4.16054 8.71289C4.00209 8.87135 3.74518 8.87135 3.58672 8.71289C3.42826 8.55443 3.42826 8.29752 3.58672 8.13907L5.57598 6.14981L3.58672 4.16054C3.42826 4.00209 3.42826 3.74518 3.58672 3.58672C3.74518 3.42826 4.00209 3.42826 4.16054 3.58672L6.14981 5.57598L8.13907 3.58672C8.29752 3.42826 8.55444 3.42826 8.71289 3.58672Z" fill="white"></path></svg></div></div><div class="eJOY__container  "><div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding-left: 12px;"><div><div style="border-radius: 3px; padding: 4px 8px; color: rgb(255, 255, 255); font-size: 12px; font-style: normal; font-weight: 400; line-height: 12px; background: rgba(29, 161, 242, 0.65);">Beta</div></div><div style="display: flex; justify-content: center; padding-right: 12px; flex-direction: column;"><span style="color: rgb(140, 140, 140); font-size: 10px; font-style: normal; font-weight: 600; line-height: 12px; padding-bottom: 1px;">0 / 0</span><span style="color: rgb(140, 140, 140); font-size: 8px; font-style: normal; font-weight: 400; line-height: 10px;">used queries</span></div></div></div></div></div><div id="eJOY__extension_root" class="eJOY__extension_root_class" style="all: unset;"><template shadowrootmode="open">
+        <style>
+          @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600');
+          .wrapperEjoy{font-family:system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Open Sans,Helvetica Neue,sans-serif;-webkit-user-select:text;-moz-user-select:text;user-select:text}.container{position:absolute;display:none;z-index:2147483647;color:#000;font-size:14px;font-family:system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Open Sans,Helvetica Neue,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;transition:width 1s ease-in-out}.container button{background-color:transparent}.main{position:relative;flex-grow:1}.main_content{background-color:#fff;min-height:100px;width:304px;height:100%;display:flex;flex-direction:column;border-radius:5px;top:0;box-shadow:0 4px 8px #0003,0 6px 20px #00000030;border-color:transparent;z-index:2;box-sizing:border-box;padding:0 0 8px}.view_main{overflow-y:auto;overflow-x:hidden}.view_main_old{height:calc(100% - 65px);display:flex;flex-direction:column}.view_main_old_with_promote{height:calc(100% - 95px);display:flex;flex-direction:column}.icon{cursor:pointer}.viewLoading{background:#fff;box-shadow:0 0 4px #727272;width:30px;height:30px;display:flex;justify-content:center;align-items:center;border-radius:5px}.icon:hover{transform:scale(1.1)}.triangle{position:absolute;width:0;height:0;bottom:-21px;border-bottom:25px solid transparent;border-left:35px solid #fff;filter:drop-shadow(-1px 7px 4px rgba(0,0,0,.2))}.header_container{background-color:#1da1f2;letter-spacing:-.2px;font-size:12px;text-align:left;max-height:33px;line-height:normal;border-radius:5px 5px 0 0}.header_bar{background-color:transparent;height:100%;display:flex;overflow:hidden;text-align:center;border-radius:5px 5px 0 0}.header_btn{height:100%;width:33.3%;color:#fff;background-color:transparent;cursor:pointer;padding:8px}.header_btn:hover{background-color:#196594}.header_btn_new{display:flex;align-items:center;justify-content:center;color:#fff;background-color:transparent;cursor:pointer;padding:8px}.header_btn_new .clzzTooltip{display:none;position:absolute;top:-30px;white-space:nowrap;background:#424141b5;padding:4px 12px;border-radius:5px;font-weight:600}.header_btn_new:hover{background-color:#196594}.header_btn_new:hover .clzzTooltipShow{display:block}.header_close_icon_container{position:absolute;top:11.4px;right:-20px;cursor:pointer;width:12px;height:12px;border-radius:50%;background-color:#fff;box-shadow:1px 1px 10px #000}.header_close_icon{padding:3px}.header_triangle_top{position:absolute;width:0;height:0;bottom:-21px;border-bottom:25px solid transparent;border-left:35px solid #fff;filter:drop-shadow(-1px 7px 4px rgba(0,0,0,.2))}.word_container{padding:8px 7px 8px 16px;line-height:1.17}.word_content{min-height:28px;max-height:116px;padding-bottom:0;display:flex;flex-wrap:wrap;overflow-wrap:break-word;align-items:center}.word_content_long{overflow:auto;overflow-x:hidden}.word_content::-webkit-scrollbar{width:4px;border-radius:100px}.word_content::-webkit-scrollbar-track{-webkit-box-shadow:inset 0 0 6px rgba(0,0,0,.3);border-radius:100px}.word_content::-webkit-scrollbar-thumb{background-color:#9f9f9f;outline:1px solid #e5e5e5;border-radius:100px}.word_speaker_container{cursor:pointer;align-self:flex-start;opacity:.7;height:28px;display:flex;justify-content:center;align-items:center}.word_speaker_container:hover{opacity:1}.word_word{min-width:10px;font-size:24px;font-weight:700;letter-spacing:1.2px;text-align:left;color:#000}.word_incorect{font-size:12px;font-weight:300;letter-spacing:1.2px;text-align:left;color:#000;margin-left:5px}.word_pronun{font-style:italic;margin-left:8px}.word_loading_container{margin-left:20px;margin-top:7px;overflow:hidden}.word_loading{height:20px;width:20px;animation:spin 1.5s linear .3s infinite}@keyframes spin{to{transform:rotate(360deg)}}.word_pop_symbol_container{position:relative}.word_pop_symbol{width:33px;height:15px;background-color:#fc0;margin-left:8px;transform:skew(-25deg);display:flex;justify-content:center;align-items:center;border-radius:2px}.word_pop_symbol img{z-index:1;transform:skew(25deg)}.word_tooltip_container{position:fixed;margin-top:14px;margin-left:30px;opacity:0;display:none;transition:opacity .3s ease;z-index:1000000000000;background-color:#fff;height:40px;width:120px;border-radius:5px;box-shadow:-1px -4px 8px #0003,0 6px 20px #0003;font-size:11px;font-weight:400;font-style:normal;font-stretch:normal;line-height:1.25;letter-spacing:normal;text-align:left;padding:5px}.word_tooltip_triangle{position:absolute;width:0;height:0;top:-14px;border-top:15px solid transparent;border-left:15px solid #fff;filter:drop-shadow(-1px -1px 1px rgba(0,0,0,.2))}.word_pop_symbol_container:hover .word_tooltip_container{opacity:1;display:block}.word_tooltip_container p{margin-top:5px}.content_container{padding:0 7px 0 13px;overflow-y:auto;overflow-x:hidden;flex-grow:1}.content_container_new_scroll{padding:0 7px 0 13px;flex-grow:1}.content_container .content_inner{position:relative;min-height:150px;padding-top:5px}.content_inner_list{width:284px;box-sizing:border-box;padding-left:8px}.content_container::-webkit-scrollbar,.selectWbConSelect::-webkit-scrollbar,.selectWbConSelect .selectWbConSelectMain::-webkit-scrollbar{width:4px;border-radius:100px}.content_container::-webkit-scrollbar-track,.selectWbConSelect::-webkit-scrollbar-track,.selectWbConSelect .selectWbConSelectMain::-webkit-scrollbar-track{-webkit-box-shadow:inset 0 0 6px rgba(95,85,85,.3);border-radius:100px}.content_container::-webkit-scrollbar-thumb,.selectWbConSelect::-webkit-scrollbar-thumb,.selectWbConSelect .selectWbConSelectMain::-webkit-scrollbar-thumb{background-color:#9f9f9f;outline:1px solid #e5e5e5;border-radius:100px;text-align:center}.content_pos{color:#faa918;font-size:16px;font-weight:600;line-height:1.17;letter-spacing:-.3px;text-align:left}.content_more_btn{width:94%;height:24px;border-radius:16px;margin-top:20px;background-color:#d8d8d8;cursor:pointer;text-align:center;display:flex;justify-content:center;align-items:center}.content_more_btn:hover{background-color:#949494}.tran_container{width:256px;min-height:40px;border-radius:5px;background-color:#d8d8d8;margin-top:4px;margin-bottom:4px}.tran_content{padding:11px 8px 12px;display:flex;flex-direction:column}.tran_content .tran_content_top{display:flex;margin-bottom:8px;justify-content:space-between}.tran_tran_content{display:flex}.tran_tran{width:77%;font-weight:600;line-height:1.14;letter-spacing:-.2px;flex-grow:1;flex-wrap:wrap;overflow-wrap:break-word;text-align:left;color:#333}.tran_btn_add{all:initial;margin-left:4px;cursor:pointer;width:48px;height:20px;float:left;background-color:#1da1f2;border-radius:2px;display:flex!important;color:#fff;justify-content:space-around;font-family:Open Sans,sans-serif;align-items:center;font-size:12px;font-weight:300;font-style:normal;font-stretch:normal;line-height:1.33;letter-spacing:.8px;text-overflow:ellipsis}.tran_btn_edit{all:initial;margin-right:10px;cursor:pointer;opacity:.7}.tran_btn_add:hover,.btn_edit:hover{transform:scale(1.1)}.tran_extra_data{width:100%;font-weight:300;font-size:14px;line-height:1.33;letter-spacing:-.2px;flex-wrap:wrap;overflow-wrap:break-word;text-align:left;color:#666;padding-top:2px;white-space:pre-wrap}.tran_footer{display:flex;width:100%;justify-content:flex-end}.tran_vote_container{min-width:88px;height:16px;border-radius:8px;background-color:#d8d8d8;border:solid 1px #979797;margin-bottom:-27px;font-size:8px;font-weight:400;font-style:italic;font-stretch:normal;line-height:normal;letter-spacing:normal;text-align:justify;color:#000;display:flex;justify-content:space-around;align-items:center}.OOPS_container{height:129px;border-radius:5px;background-color:#d8d8d8;display:flex;justify-content:center;flex-direction:column;text-align:center}.OOPS_img{align-self:center}.OOPS_oops_text{font-size:14px;font-weight:700}.OOPS_alert_text{font-size:12px;font-family:300;line-height:1.33;letter-spacing:-.2px}.btnSayItCon{padding:8px}.btnToAdvTranslation{position:absolute;right:-32px;width:32px;height:32px;top:33px;background:#fff;border-radius:0 5px 5px 0;cursor:pointer;box-shadow:3px 2px 4px #00000080;padding:0;display:flex;justify-content:center;align-items:center}.btnSpeak{position:absolute;right:-32px;width:32px;height:32px;top:66px;background:#fff;border-radius:0 5px 5px 0;cursor:pointer;box-shadow:3px 2px 4px #00000080;padding:0;display:flex;justify-content:center;align-items:center}.btnGoProIconRight{top:132px}.btnGoSupportRight{top:99px}.btnSayIt{display:flex;justify-content:center;align-items:center;height:18px;border-radius:5px;padding:0 4px;background-color:#f70;cursor:pointer}.btnSayItIcon{display:flex;padding-right:4px}.btnSayItIcon svg{width:12px;height:12px}.btnSayItText{font-size:12px;font-weight:600;font-style:normal;font-stretch:normal;line-height:1.3333333333333333;letter-spacing:normal;color:#fff}.word_pron{margin-top:8px;display:flex;align-items:center}.custom_container{position:relative;z-index:99999999999999999}.custom_add_translation{display:flex;justify-content:flex-end;align-items:center}.custom_input{flex-grow:1;padding:0 21px 0 0}.custom_input input{width:100%;min-height:35px;border-radius:5px;background-color:#d8d8d8;border:none;font-weight:600;line-height:1.14;letter-spacing:-.2px;flex-grow:1;flex-wrap:wrap;overflow-wrap:break-word;text-align:left;color:#000;font-size:14px;padding:0 8px}.custom_content{flex-grow:1}.icon_plus{cursor:pointer;display:flex}.icon_plus svg{width:16px;height:16px}.hidden{display:none}.tooltip_custom_add{position:absolute}[tooltip]{position:relative;display:inline-block}[tooltip]:before{content:"";position:absolute;pointer-events:none;top:-7px;left:50%;transform:translate(-50%);border-width:5px 6px 0 6px;border-style:solid;border-color:#808080 transparent transparent transparent;z-index:99;opacity:0}[tooltip-position=left]:before{left:0%;top:50%;margin-left:-12px;transform:translatey(-50%) rotate(-90deg)}[tooltip-position=top-left]:before{left:90%}[tooltip-position=top-right]:before{left:14%}[tooltip-position=top]:before{left:50%}[tooltip-position=buttom]:before{top:100%;margin-top:8px;transform:translate(-50%) translatey(-100%) rotate(-180deg)}[tooltip-position=right]:before{left:100%;top:50%;margin-left:1px;transform:translatey(-50%) rotate(90deg)}[tooltip]:after{content:attr(tooltip);position:absolute;left:50%;top:-6px;transform:translate(-50%) translateY(-100%);background:gray;text-align:center;color:#fff;font-size:10px;min-width:180px;border-radius:5px;pointer-events:none;padding:4px;z-index:99;opacity:0;white-space:pre-wrap}[tooltip-position=left]:after{left:0%;top:50%;margin-left:-8px;transform:translate(-100%) translateY(-50%)}[tooltip-position=top]:after{left:50%}[tooltip-position=top-left]:after{left:-90%}[tooltip-position=top-right]:after{left:90%}[tooltip-position=buttom]:after{top:100%;margin-top:8px;transform:translate(-50%) translateY(0)}[tooltip-position=right]:after{left:100%;top:50%;margin-left:8px;transform:translate(0) translateY(-50%)}[tooltip]:hover:after,[tooltip]:hover:before{opacity:1}.selectWbCon{display:flex;justify-content:flex-end;position:relative;align-items:center;padding:8px 8px 0;font-size:12px;color:#666}.selectWbConLeft{font-style:normal;font-weight:400;font-size:12px;line-height:16px;display:flex;cursor:pointer;color:#666;align-items:center;padding-right:4px}.selectWbConRight{font-style:normal;font-weight:600;font-size:12px;line-height:16px;display:flex;cursor:pointer;color:#666;align-items:center;padding-right:3px;white-space:nowrap}.selectWbIcon{display:flex;cursor:pointer}.selectWbConSelect{position:absolute;bottom:31px;visibility:hidden;background:#fff;z-index:9999999999;min-width:200px;max-width:300px;max-height:300px;overflow:auto;filter:drop-shadow(-1px 7px 4px rgba(0,0,0,.2));box-shadow:0 4px 8px #0003,0 6px 20px #00000030;border-radius:5px}.selectWbConSelect.isShow{visibility:visible}.selectWbConSelect.hidden{visibility:hidden}.itemOptionSelectWb{cursor:pointer;padding:6px 8px;font-style:normal;font-weight:400;font-size:12px;line-height:16px;display:flex;color:#666;align-items:center}.itemOptionSelectWb.active{color:#1da1f2}.itemOptionSelectWb:hover{background:#1da1f2;color:#fff}.selectWb{border:none;font-size:14px;font-weight:400;color:#666;background:transparent}.viewIconFilter{display:flex;justify-content:center;align-items:center}.iconFilter{width:24px;height:23px;background:#1da1f2;-webkit-mask-size:cover;mask-size:cover;display:flex;justify-content:center;align-items:center;margin-right:8px}.iconFilter span{font-size:12px;line-height:1.2;align-items:center;font-weight:700;color:#fff}.nameFilter{font-style:normal;font-weight:600;font-size:14px;line-height:16px;display:flex;align-items:center;color:#333}.iconItemGoPro svg{width:38px;transition:all .5s}.iconItemGoPro path{fill:#b2b2b2;transition:all .5s}.iconItemGoProActive svg{width:56px}.iconItemGoProActive path{fill:#1da1f2}.switch{position:relative;display:inline-block;cursor:pointer;width:30px;height:17px}.slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:#ccc;transition:background-color .4s,transform .4s}.slider:before{position:absolute;content:"";height:13px;width:13px;left:2px;bottom:2px;background-color:#fff;transition:background-color .4s,transform .4s}.round{border-radius:30px}.round:before{border-radius:50%}.active .slider{background-color:#1da1f2}.active .slider:before{transform:translate(13px)}.view_main::-webkit-scrollbar,.selectWbConSelect::-webkit-scrollbar,.selectWbConSelect .selectWbConSelectMain::-webkit-scrollbar{width:4px;border-radius:100px}.view_main::-webkit-scrollbar-track,.selectWbConSelect::-webkit-scrollbar-track,.selectWbConSelect .selectWbConSelectMain::-webkit-scrollbar-track{-webkit-box-shadow:inset 0 0 6px rgba(95,85,85,.3);border-radius:100px}.view_main::-webkit-scrollbar-thumb,.selectWbConSelect::-webkit-scrollbar-thumb,.selectWbConSelect .selectWbConSelectMain::-webkit-scrollbar-thumb{background-color:#9f9f9f;border-radius:100px;text-align:center}.scale-animation{height:20px;width:20px;animation:scale-infi 1.5s linear .3s infinite}@keyframes scale-infi{0%{transform:rotate(1)}50%{transform:rotate(1.5)}}.notify_onboarding_container{position:absolute;width:272px;min-height:65px;flex-direction:column;left:16px;padding-bottom:8px;display:flex;align-items:center;bottom:45px;text-align:center;background:#fff;box-shadow:0 2px 10px #0003;border-radius:5px;border:1px solid #1DA1F2}.notify_onboarding_close{display:flex;cursor:pointer;align-self:self-end;justify-content:flex-end}.notify_onboarding_close>svg{padding:10px 10px 0 0}.notify_onboarding_title{font-style:normal;font-weight:400;font-size:12px;padding:0 16px;line-height:16px;color:#333}.notify_onboarding_btn{justify-content:center;font-style:normal;font-weight:400;font-size:12px;display:flex;align-items:center;padding:6px 24px;line-height:14px;cursor:pointer;background:#1da1f2;color:#fff;border-radius:72.6px;margin-top:10px;margin-bottom:10px}.notify_onboarding_btn>span{padding-left:8px}.notify_onboarding_arrow{position:absolute;bottom:-21px;left:0}[class*=icono]{position:relative;display:inline-block;vertical-align:middle;color:#c4c4c4;box-sizing:border-box}[class*=icono-white]{color:#fff}[class*=icono]:after,[class*=icono]:before{content:"";box-sizing:border-box}[class*=icono-arrow4]{width:0;height:0;border:7px solid transparent;border-top:7px solid;border-right:7px solid;margin:15px}[class*=icono-arrow4][class*=-left]{transform:rotate(45deg)}[class*=icono-arrow4][class*=-left][class*=-up]{transform:none}[class*=icono-arrow4][class*=-left][class*=-down]{transform:rotate(90deg)}[class*=icono-arrow4][class*=-right]{transform:rotate(-135deg)}[class*=icono-arrow4][class*=-right][class*=-up]{transform:rotate(-90deg)}[class*=icono-arrow4][class*=-right][class*=-down]{transform:rotate(180deg)}[class*=icono-arrow4][class*=-up]{transform:rotate(-45deg)}[class*=icono-arrow4][class*=-down]{transform:rotate(135deg)}.searchMeaningGg_container{border-radius:4px;padding:8px 0;display:flex;justify-content:center;align-items:center;flex-direction:column}.searchMeaningGg_text{font-style:normal;font-weight:400;font-size:14px;line-height:16px;cursor:pointer}.searchMeaningGg_text span{color:#1da1f2}.searchMeaningGg_btn{border-radius:100px;padding:8px 36px;margin-top:16px;font-style:normal;font-size:14px;line-height:16px;text-align:center;color:#1da1f2;cursor:pointer}.view_similar{display:flex;flex-wrap:wrap}.view_similar .imilar_text{font-style:normal;font-weight:400;font-size:10px;line-height:16px;display:flex;padding-right:10px;align-items:center;text-align:center;color:#397447}.view_similar .imilar_item{background-color:#fff;border:1px solid #dadce0;line-height:16px;font-size:9px;margin:3px 4px 3px 0;padding:0 10px;border-radius:32px;float:left;max-width:250px;cursor:pointer;position:relative;overflow:hidden;text-align:center;text-overflow:ellipsis;white-space:nowrap;color:#3c4043}.view_similar .imilar_item.imilar_item_disable{cursor:text;color:#bdc1c6!important;cursor:default;background-color:#f1f3f4;border:1px solid #f8f9fa}.google_Dictionary_title{background:#e6e7eb;font-style:normal;font-weight:500;font-size:12px;line-height:16px;display:flex;align-items:center;letter-spacing:.05em;text-transform:uppercase;color:#3b3c40;padding:4px 9px}.google_Dictionary_desc{font-style:normal;font-weight:400;font-size:10px;line-height:16px;cursor:pointer;display:flex;align-items:center;text-align:center;color:#626262;padding-top:8px;padding-bottom:4px}.google_Dictionary_pharse{font-style:normal;font-weight:400;font-size:12px;line-height:16px;display:flex;align-items:center;text-align:center;color:#8c8c8c;padding-bottom:4px;padding-left:26px}.google_Dictionary_content_pos{text-align:left;font-style:italic;font-weight:400;font-size:12px;line-height:20px;color:#8c8c8c}.google_Dictionary_pharse_link{font-style:normal;font-weight:400;font-size:12px;line-height:16px;cursor:pointer;display:flex;align-items:center;text-align:center;color:#0f59c5;padding-left:4px}.dataGetMeaningEmpty{background:#d8d8d8;border-radius:4px;font-style:normal;font-weight:400;font-size:12px;line-height:16px;color:#3b3c40;width:"100%";min-width:124px;min-height:124px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}.dataGetMeaningEmpty span{padding:16px 11px 0}.item_lookup_container{min-height:34px;display:flex;flex-direction:row;padding:8px 12px;align-items:center;cursor:pointer}.item_lookup_logo{height:34px;width:34px;display:flex;justify-content:center;align-items:center;background-color:#11a37f}.item_lookup_logo_small{height:16px;width:16px;border-radius:3px;font-weight:600}.item_lookup_logo_bg_none{background-color:transparent}.item_lookup_logo img{height:34px;width:34px}.item_lookup_logo_small svg{height:10px;width:10px}.item_lookup_logo svg path{fill:#fff}.item_lookup_text{font-style:normal;font-weight:400;font-size:14px;line-height:20px;display:flex;align-items:center;color:#666;flex:1;padding-left:12px}.item_lookup_text_small{font-size:12px;line-height:16px;font-weight:600}.item_lookup_more{cursor:pointer}.viewIcon{display:flex;justify-content:center;position:relative;align-items:center;background:#fff;border:1px solid #1DA1F2;border-radius:3px}.viewIcon img{background:#1da1f2;border-radius:1px 0 0 1px}.itemDropDown{color:#333;font-size:14px;line-height:16px;padding:0 8px;position:relative}.btnAddImg{position:relative;height:100%;justify-content:center;align-items:center;display:flex}.btnAddImg>img,.itemArrowDropDownImg{position:absolute;top:0;left:0;width:100%;height:100%;cursor:pointer;opacity:0;background:transparent}.itemDropDownWithLine{border-right:1px solid #B2B2B2}.itemArrowDropDown{padding:0 6px;cursor:pointer;height:100%;display:flex;position:relative;justify-content:center;align-items:center}.viewContentItemDrop{max-width:362px;position:absolute;right:0;flex-shrink:0;display:flex;flex-direction:column;background:#fff;padding-bottom:6px;border-radius:4px;box-shadow:0 2px 12px #0003}.viewContentItemDropTop{top:105%}.viewContentItemDropBottom{bottom:105%}.viewItemHoverTitle{color:#333;font-size:14px;font-style:normal;font-weight:600;display:flex;align-items:center;justify-content:space-between;padding:12px 12px 6px;line-height:16px}.viewItemDrop{height:32px;display:flex;padding:0 0 0 12px;align-items:center;cursor:pointer;position:relative;background:#fff}.viewItemPin{height:24px;width:24px;display:flex;align-items:center;cursor:pointer;background:#fff}.viewItemDrop>span{flex-grow:1;font-size:14px;padding:0 12px;line-height:16px}.viewItemDrop:hover{background:#f0f0f0}.viewIconShow{opacity:0}.viewItemDrop:hover .viewIconShow{opacity:1}.viewIconPin{display:flex;padding:6px;transition:opacity .5s;justify-content:center;align-items:center;cursor:pointer}.viewIconPinDisable{display:none}.viewIconPinActive{opacity:1!important}.viewIconPinDisable img{cursor:not-allowed!important}.itemArrowDropDown>svg,.viewItemDrop>svg,.viewItemDrop>span,.viewIconPin svg{pointer-events:none}.viewIconPin:hover svg path{fill:#1da1f2}#PopupSyncNotifyContent{position:absolute;font-family:Open Sans,Arial,sans-serif!important;left:0;right:0;bottom:0;top:0;margin:auto;background:#0000005c;display:flex;z-index:2147483647;flex-direction:column;justify-content:space-around;align-items:center}.PopupSyncNotifyContent-main{background:#fff;border-radius:10px;align-items:center;display:flex;width:600px;height:500px;position:relative;flex-direction:column;justify-content:space-evenly;padding:32px 33px 27px}.PopupSyncNotifyContent-viewTitle{color:#333;font-family:Open Sans;font-size:24px;font-style:normal;font-weight:600;line-height:32px}.PopupSyncNotifyContent-viewDesc{margin-top:16px;font-style:normal;font-weight:400;font-size:16px;line-height:24px;display:flex;align-items:center;text-align:center;padding-bottom:32px;color:#333}.PopupSyncNotifyContent-main-close{position:absolute;top:-30px;right:0;cursor:pointer}.PopupSyncNotifyContent-viewViewBtn{display:flex;flex-direction:column;justify-content:center;align-items:center}.PopupSyncNotifyContent-viewViewBtn1{flex-direction:column;justify-content:center;cursor:pointer;background:#1da1f2;border-radius:72.6px;padding:10px 46px;min-width:189px;font-style:normal;font-weight:400;font-size:16px;line-height:20px;display:flex;align-items:center;text-align:center;color:#fff}.PopupSyncNotifyContent-viewViewBtn1 img{width:22px}.PopupSyncNotifyContent-viewViewBtn2{margin-top:16px;cursor:pointer;flex-direction:column;justify-content:center;background:#7ac70c;border-radius:72.6px;padding:10px 46px;min-width:189px;font-style:normal;font-weight:400;font-size:16px;line-height:20px;display:flex;align-items:center;text-align:center;color:#fff}.PopupSyncNotifyContent-viewViewBtn3{margin-top:16px;cursor:pointer;flex-direction:column;justify-content:center;background:#e6e6e6;border-radius:72.6px;padding:10px 46px;min-width:189px;font-style:normal;font-weight:400;font-size:16px;line-height:20px;display:flex;align-items:center;text-align:center;color:#1da1f2}.PopupSyncNotifyContent-viewItems{display:flex;flex-direction:column;justify-content:center;align-items:center}.ejoyViewNotifyAddWord{border-radius:8px;position:fixed;left:50%;transform:translate(-50%);bottom:16px;z-index:9999;background:#fff;box-shadow:0 2px 10px #0003;display:flex;padding:8px 16px!important;align-items:center;gap:54px}.ejoyViewNotifyAddWord span{color:var(--standard-standard-high-day, #2C2C2C);font-size:16px;font-style:normal;font-weight:600;line-height:20px}.ejoyViewNotifyAddWord button{display:flex;flex-direction:column;justify-content:center;cursor:pointer;align-items:center;padding:10px 12px;gap:8px;color:var(--Primary-Azuare, #1DA1F2);text-align:right;font-size:16px;font-style:normal;font-weight:400;border:none;background:transparent;line-height:20px}.ejoyStatusEndGeneralSub{align-items:center;background:#fff;border-radius:8px;bottom:20px;box-shadow:0 4px 8px #0003,0 6px 20px #00000030;color:#333;display:flex;font-size:16px;font-style:normal;font-weight:400;justify-content:center;line-height:20px;padding:16px;position:fixed;left:50%;transform:translate(-50%);text-align:center;z-index:999999}.ejoyStatusEndGeneralSub svg{margin-right:6px}.ejoyBtnCloseShowGeneral{cursor:pointer;display:flex;padding-left:32px}.selectWbConPopup{display:flex;align-items:center;padding:8px 8px 0;font-size:12px;color:#666;position:fixed;top:0;right:0;bottom:0;left:0;justify-content:center;background:#00000082;z-index:999999}.selectWbConSelectPopup{visibility:hidden;background:#fff;z-index:999;min-width:255px;max-width:300px;height:330px;display:flex;flex-direction:column;filter:drop-shadow(-1px 7px 4px rgba(0,0,0,.2));box-shadow:0 4px 8px #0003,0 6px 20px #00000030;border-radius:5px}.selectWbConSelectMainPopup{overflow:auto;overflow-x:hidden;flex:1}.selectWbConSelectPopup.isShow{visibility:visible}.selectWbConSelectPopup.hidden{visibility:hidden}.itemOptionSelectWbPopup{cursor:pointer;padding:6px 8px;font-style:normal;font-weight:400;font-size:12px;line-height:16px;display:flex;color:#666;align-items:center}.itemOptionSelectWbPopup.active{color:#1da1f2}.itemOptionSelectWbPopup:hover{text-decoration:underline}.conPopupInline{position:fixed;top:0;left:0;z-index:999999999999;right:0;bottom:0;background:#000000b3;overflow:hidden;display:flex;justify-content:center;align-items:center}.conPopupInlineMain{position:relative;width:488px;height:382px;flex-shrink:0;border-radius:10px;background:#fff}.closeIconPopupPro{position:absolute;color:#fff;top:-30px;right:0;cursor:pointer}.btnHoverTooltip{height:24px;display:flex;justify-content:center;align-items:center}.btnHoverTooltip span{display:none;position:absolute;bottom:150%;white-space:nowrap;padding:8px;pointer-events:none;justify-content:flex-end;align-items:center;border-radius:4px;background:var(--Shades-of-gray-Medium-dark, #404040);color:var(--5-surface-primary, #FFF);text-align:right;font-size:14px;font-style:normal;font-weight:400;line-height:16px}.btnHoverTooltip:hover span{display:flex}.isNotifyEjoy{position:absolute;top:1px;right:3px;width:4px;pointer-events:none;height:4px;border-radius:2px;background:#e53838}
+          #popup_eJOY{all:initial;position:fixed;left:0;right:0;bottom:0;top:0;margin:auto;background-color:#000c;z-index:99999999999999999999999999999999;outline:none;display:flex;justify-content:center;align-items:center}.view_desc{display:flex;min-width:279px;align-items:center;justify-content:flex-start}.popup_main_go_pro{position:relative;margin:auto;width:623px;border-radius:10px;background-color:#fff;display:flex;max-width:100%;flex-direction:column;justify-content:flex-start;align-items:center;font-size:16px;font-weight:400;font-style:normal;font-stretch:normal;line-height:1.5;letter-spacing:-.4px;text-align:center;color:#000;animation:alertPop .2s ease-out;background:#fff;font-family:Open Sans,Arial,sans-serif}.popup_main{position:absolute;left:0;right:0;bottom:0;top:0;margin:auto;height:201px;width:415px;max-width:100%;border-radius:5px;background-color:#fff;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;font-size:16px;font-weight:400;font-style:normal;font-stretch:normal;line-height:1.5;letter-spacing:-.4px;text-align:center;color:#000;animation:alertPop .2s ease-out}.popup_main_login{position:absolute;font-family:Open Sans,Arial,sans-serif!important;left:0;right:0;bottom:0;top:0;margin:auto;height:342px;width:392px;max-width:100%;border-radius:5px;background-color:#fff;display:flex;flex-direction:column;justify-content:space-around;align-items:center;font-size:16px;font-weight:400;font-style:normal;font-stretch:normal;line-height:1.5;letter-spacing:-.4px;text-align:center;color:#000;animation:alertPop .2s ease-out}.popup_main_login span,.popup_main_login button{font-family:Open Sans,Arial,sans-serif!important}@keyframes alertPop{0%{transform:scale(0)}to{transform:scale(1)}}#popup_eJOY header{font-size:24px;font-weight:600;margin-top:10px}#popup_eJOY p{width:342px}.popup_line{width:414px;height:1px;background-color:#d8d8d8;margin-top:6px}.popup_close_btn{position:absolute;top:18px;right:29px;width:12px;height:12px;border-radius:50%;background-color:#b4b4b4;display:flex;justify-content:center;align-items:center;cursor:pointer}.btn_login{background-color:#1da1f2}#popup_eJOY .titleTxt{font-style:normal;font-weight:600;font-size:32px;max-width:100%;line-height:40px;text-align:center;color:#333;padding-top:16px}#popup_eJOY .descTxt{font-style:normal;font-weight:400;font-size:18px;line-height:28px;text-align:center;color:#333;padding-top:16px;max-width:100%;width:403px}#popup_eJOY .descTxt span:first-child{color:#1da1f2;text-decoration:none;cursor:pointer}#popup_eJOY .viewIcon{width:100%;display:flex;justify-content:center;align-items:center;padding:16px 0 40px}#popup_eJOY .viewItem{display:flex;flex-direction:column;justify-content:center;align-items:center;margin:0 20px;cursor:pointer}#popup_eJOY .itemICon{background:linear-gradient(360deg,#71c5f6 -3.99%,#61ccdf 95.66%);border-radius:18px;width:80px;height:80px;display:flex;justify-content:center;align-items:center;margin-bottom:8px}#popup_eJOY .itemText{font-style:normal;font-weight:300;font-size:12px;line-height:15px;text-align:center;letter-spacing:-.0738461px;color:#000;width:90px}#popup_eJOY button{border-radius:16px;color:#fff;padding:6px 16px;background-color:#f70;display:flex;justify-content:center;align-items:center;cursor:pointer;outline:none;font-weight:600;font-size:16px;margin-top:24px;border:none}#popup_eJOY .btn_button_disableAi{margin:12px 0;background:var(--1-primary-azure, #1DA1F2);width:306px}#popup_eJOY .btn_button_fix_width{width:306px;display:flex;justify-content:center;align-items:center}.popup_main_login button{padding:6px 49px!important}.popup_main_login .popup_close_btn{top:8px!important;right:9px!important}@media only screen and (max-width: 400px){#popup_eJOY .popup_main_go_pro{border-radius:0}#popup_eJOY .titleTxt{font-size:18px;line-height:24px;padding-top:16px}#popup_eJOY .descTxt{font-size:14px;line-height:16px;padding-top:10px}#popup_eJOY .viewIcon{padding:16px 0 13px}}.popup_main_onboarding{position:absolute;left:0;right:0;bottom:0;top:0;margin:auto;height:520px;width:773px;max-width:100%;border-radius:10px;background-color:#fff;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;font-size:16px;font-weight:400;font-style:normal;font-stretch:normal;line-height:1.5;letter-spacing:-.4px;text-align:center;color:#000;animation:alertPop .2s ease-out}.popup_main_onboarding_no_ani{animation:none}.onboarding_popup_close{position:absolute;top:-25px;right:10px;width:12px;height:12px;border-radius:50%;display:flex;justify-content:center;align-items:center;cursor:pointer}.onboarding_btn{display:flex;flex-direction:column;justify-content:center;align-items:center}.onboarding_content{width:100%;height:100%;justify-content:space-around;align-items:center;display:flex;flex-direction:column;padding:10px 0 50px}.onboarding_text{font-style:normal;font-weight:600;font-size:18px;line-height:24px;font-family:sans-serif;display:flex;align-items:center;text-align:center;color:#333;padding:0 40px}.onboarding_btn>button{margin:16px 0!important;line-height:20px!important;padding:10px 20px!important;border-radius:72.6px!important;min-width:264px!important;font-weight:400!important}.onboarding_btn_no_remind{height:40px!important;min-width:264px!important;border:1px solid #B3B3B3!important;border-radius:72.6px!important;font-style:normal!important;margin:16px 0!important;font-weight:600!important;font-size:16px!important;line-height:20px!important;padding:10px 40px!important;display:flex!important;align-items:center!important;text-align:center!important;color:#b3b3b3!important;background:transparent!important}.onboarding_content_remind{width:100%;height:100%;font-family:sans-serif;align-items:center;display:flex;flex-direction:column}.onboarding_remind_main{display:flex;justify-content:space-around;width:100%;margin-top:40px}.onboarding_btn_back{font-style:normal;font-weight:400;font-size:16px;align-self:flex-start;line-height:20px;padding-top:16px;padding-left:16px;display:flex;align-items:center;cursor:pointer;text-align:center;color:#b3b3b3}.onboarding_remind_main_right_view_time{text-align:left;display:flex;padding:8px 0;font-family:Open Sans,Arial,sans-serif;font-family:sans-serif}.onboarding_remind_main_right_view_time>span{font-style:normal;font-weight:400;padding-right:8px;font-size:14px;min-width:94px;line-height:16px;display:flex;align-items:center;color:#8c8c8c}.onboarding_remind_main_right_view_time_main{display:flex}.onboarding_remind_main_right_view_time_main_item{display:flex;flex-direction:column;justify-content:center;align-items:center;cursor:pointer}.onboarding_remind_main_right_view_time_input_time{padding:2px 8px!important;border:1px solid #B3B3B3!important;border-radius:3px!important;box-sizing:border-box!important}.onboarding_remind_main_right_view_time_main_item span:first-child{margin:0 2px 2px;background:#fff;border:1px solid #B3B3B3;box-sizing:border-box;min-width:31px;border-radius:3px;font-style:normal;font-weight:400;font-size:10px;line-height:16px;display:flex;justify-content:center;align-items:center;text-align:center;color:#333}.onboarding_remind_main_right_view_time_main_item .span_check{border:1px solid #B2B2B2;width:10px;height:10px;border-radius:100px}.popup_main_onboarding .onboarding_btn button{margin-top:0!important}.onboarding_success_icon{border-radius:90.3704px;border:15px solid #7AC70C;width:92px;height:92px;display:flex;justify-content:center;align-items:center}.onboarding_success_text{font-style:normal;font-weight:400;font-size:16px;font-family:Open Sans,Arial,sans-serif;line-height:20px;display:flex;align-items:center;text-align:center;color:#333}.popup_main_success_onboarding{width:398px;height:245px}.onboarding_success_content{padding:16px}
+        </style>
+        <div id="eJOY__extension_shadow"><div class="wrapperEjoy"><div class="container"></div><span style="position: absolute; top: 1px; left: 1px; opacity: 0; pointer-events: none; background-color: rgb(229, 56, 56); border: 1px solid rgb(229, 56, 56); border-radius: 16px; display: flex; justify-content: center; color: rgb(255, 255, 255); z-index: 2147483647; font-size: 8px; min-width: 12px; min-height: 12px; line-height: 11px; align-items: center;">1</span><span style="position: absolute; top: 1px; opacity: 0; pointer-events: none; background-color: rgba(2, 2, 2, 0.9); border-radius: 4px; padding: 4px 10px; display: flex; min-width: 100px; justify-content: center; color: rgb(255, 255, 255); z-index: 2147483647; font-size: 12px; min-height: 12px; line-height: 16px; align-items: center;"></span></div></div></template></div></html>

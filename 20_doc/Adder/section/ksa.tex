@@ -1,0 +1,16 @@
+Kogge-Stone Adder (KSA) là một bộ cộng song song hiệu suất cao được thiết kế để tính toán tín hiệu carry một cách nhanh chóng bằng cách sử dụng cấu trúc prefix network. Đây là một trong những loại Parallel Prefix Adders được sử dụng phổ biến nhất trong các bộ xử lý hiện đại, nhờ khả năng giảm độ trễ tính toán của tín hiệu carry xuống mức tối thiểu.
+
+\begin{itemize}[label = -]
+	\item Ưu điểm: 
+	\begin{itemize}[label = +]
+		\item Tốc độ xử lý nhanh, độ trễ tính toán carry giảm xuống $O(\log_{2}(n))$, rất nhanh đối với số bit lớn.
+		\item Khả năng tính toán trong từng cấp có thể thực hiện đồng thời, cải thiện hiệu suất.
+		\item Thích hợp cho tính toán số bit lớn như 32-bit, 64-bit, 128-bit hoặc lớn. 
+	\end{itemize}
+	\item Nhược điểm:
+	\begin{itemize}[label = +]
+		\item Tài nguyên phần cứng lớn do cần nhiều cổng logic rất lớn, đặc biết đối với các số bit lớn.
+		\item Độ phức tạp thiết kế cao do cấu trúc mạng prèĩ đòi hỏi thiết kế phức tạp, khó tối ưu hóa cho chi phí.
+		\item Tiêu thụ năng lượng cao do sử dụng lượng lớn cổng logic và phép tính đồng thời.
+	\end{itemize}
+\end{itemize}

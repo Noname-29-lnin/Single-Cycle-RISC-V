@@ -1,0 +1,451 @@
+|half_adder
+i_data_a[0] => i_data_a[0].IN1
+i_data_a[1] => i_data_a[1].IN1
+i_data_a[2] => i_data_a[2].IN1
+i_data_a[3] => i_data_a[3].IN1
+i_data_a[4] => i_data_a[4].IN1
+i_data_a[5] => i_data_a[5].IN1
+i_data_a[6] => i_data_a[6].IN1
+i_data_a[7] => i_data_a[7].IN1
+i_data_a[8] => i_data_a[8].IN1
+i_data_a[9] => i_data_a[9].IN1
+i_data_a[10] => i_data_a[10].IN1
+i_data_a[11] => i_data_a[11].IN1
+i_data_a[12] => i_data_a[12].IN1
+i_data_a[13] => i_data_a[13].IN1
+i_data_a[14] => i_data_a[14].IN1
+i_data_a[15] => i_data_a[15].IN1
+i_data_a[16] => i_data_a[16].IN1
+i_data_a[17] => i_data_a[17].IN1
+i_data_a[18] => i_data_a[18].IN1
+i_data_a[19] => i_data_a[19].IN1
+i_data_a[20] => i_data_a[20].IN1
+i_data_a[21] => i_data_a[21].IN1
+i_data_a[22] => i_data_a[22].IN1
+i_data_a[23] => i_data_a[23].IN1
+i_data_a[24] => i_data_a[24].IN1
+i_data_a[25] => i_data_a[25].IN1
+i_data_a[26] => i_data_a[26].IN1
+i_data_a[27] => i_data_a[27].IN1
+i_data_a[28] => i_data_a[28].IN1
+i_data_a[29] => i_data_a[29].IN1
+i_data_a[30] => i_data_a[30].IN1
+i_data_a[31] => i_data_a[31].IN1
+i_data_b[0] => i_data_b[0].IN1
+i_data_b[1] => i_data_b[1].IN1
+i_data_b[2] => i_data_b[2].IN1
+i_data_b[3] => i_data_b[3].IN1
+i_data_b[4] => i_data_b[4].IN1
+i_data_b[5] => i_data_b[5].IN1
+i_data_b[6] => i_data_b[6].IN1
+i_data_b[7] => i_data_b[7].IN1
+i_data_b[8] => i_data_b[8].IN1
+i_data_b[9] => i_data_b[9].IN1
+i_data_b[10] => i_data_b[10].IN1
+i_data_b[11] => i_data_b[11].IN1
+i_data_b[12] => i_data_b[12].IN1
+i_data_b[13] => i_data_b[13].IN1
+i_data_b[14] => i_data_b[14].IN1
+i_data_b[15] => i_data_b[15].IN1
+i_data_b[16] => i_data_b[16].IN1
+i_data_b[17] => i_data_b[17].IN1
+i_data_b[18] => i_data_b[18].IN1
+i_data_b[19] => i_data_b[19].IN1
+i_data_b[20] => i_data_b[20].IN1
+i_data_b[21] => i_data_b[21].IN1
+i_data_b[22] => i_data_b[22].IN1
+i_data_b[23] => i_data_b[23].IN1
+i_data_b[24] => i_data_b[24].IN1
+i_data_b[25] => i_data_b[25].IN1
+i_data_b[26] => i_data_b[26].IN1
+i_data_b[27] => i_data_b[27].IN1
+i_data_b[28] => i_data_b[28].IN1
+i_data_b[29] => i_data_b[29].IN1
+i_data_b[30] => i_data_b[30].IN1
+i_data_b[31] => i_data_b[31].IN1
+o_data[0] << full_adder:FA0.o_data
+o_data[1] << full_adder:FA1.o_data
+o_data[2] << full_adder:FA2.o_data
+o_data[3] << full_adder:FA3.o_data
+o_data[4] << full_adder:FA4.o_data
+o_data[5] << full_adder:FA5.o_data
+o_data[6] << full_adder:FA6.o_data
+o_data[7] << full_adder:FA7.o_data
+o_data[8] << full_adder:FA8.o_data
+o_data[9] << full_adder:FA9.o_data
+o_data[10] << full_adder:FA10.o_data
+o_data[11] << full_adder:FA11.o_data
+o_data[12] << full_adder:FA12.o_data
+o_data[13] << full_adder:FA13.o_data
+o_data[14] << full_adder:FA14.o_data
+o_data[15] << full_adder:FA15.o_data
+o_data[16] << full_adder:FA16.o_data
+o_data[17] << full_adder:FA17.o_data
+o_data[18] << full_adder:FA18.o_data
+o_data[19] << full_adder:FA19.o_data
+o_data[20] << full_adder:FA20.o_data
+o_data[21] << full_adder:FA21.o_data
+o_data[22] << full_adder:FA22.o_data
+o_data[23] << full_adder:FA23.o_data
+o_data[24] << full_adder:FA24.o_data
+o_data[25] << full_adder:FA25.o_data
+o_data[26] << full_adder:FA26.o_data
+o_data[27] << full_adder:FA27.o_data
+o_data[28] << full_adder:FA28.o_data
+o_data[29] << full_adder:FA29.o_data
+o_data[30] << full_adder:FA30.o_data
+o_data[31] << full_adder:FA31.o_data
+
+
+|half_adder|full_adder:FA0
+i_data_a => xor1.IN0
+i_data_a => o_carry.IN0
+i_data_b => xor1.IN1
+i_data_b => o_carry.IN1
+i_carry => o_data.IN1
+i_carry => o_carry.IN1
+o_data <= o_data.DB_MAX_OUTPUT_PORT_TYPE
+o_carry <= o_carry.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|half_adder|full_adder:FA1
+i_data_a => xor1.IN0
+i_data_a => o_carry.IN0
+i_data_b => xor1.IN1
+i_data_b => o_carry.IN1
+i_carry => o_data.IN1
+i_carry => o_carry.IN1
+o_data <= o_data.DB_MAX_OUTPUT_PORT_TYPE
+o_carry <= o_carry.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|half_adder|full_adder:FA2
+i_data_a => xor1.IN0
+i_data_a => o_carry.IN0
+i_data_b => xor1.IN1
+i_data_b => o_carry.IN1
+i_carry => o_data.IN1
+i_carry => o_carry.IN1
+o_data <= o_data.DB_MAX_OUTPUT_PORT_TYPE
+o_carry <= o_carry.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|half_adder|full_adder:FA3
+i_data_a => xor1.IN0
+i_data_a => o_carry.IN0
+i_data_b => xor1.IN1
+i_data_b => o_carry.IN1
+i_carry => o_data.IN1
+i_carry => o_carry.IN1
+o_data <= o_data.DB_MAX_OUTPUT_PORT_TYPE
+o_carry <= o_carry.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|half_adder|full_adder:FA4
+i_data_a => xor1.IN0
+i_data_a => o_carry.IN0
+i_data_b => xor1.IN1
+i_data_b => o_carry.IN1
+i_carry => o_data.IN1
+i_carry => o_carry.IN1
+o_data <= o_data.DB_MAX_OUTPUT_PORT_TYPE
+o_carry <= o_carry.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|half_adder|full_adder:FA5
+i_data_a => xor1.IN0
+i_data_a => o_carry.IN0
+i_data_b => xor1.IN1
+i_data_b => o_carry.IN1
+i_carry => o_data.IN1
+i_carry => o_carry.IN1
+o_data <= o_data.DB_MAX_OUTPUT_PORT_TYPE
+o_carry <= o_carry.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|half_adder|full_adder:FA6
+i_data_a => xor1.IN0
+i_data_a => o_carry.IN0
+i_data_b => xor1.IN1
+i_data_b => o_carry.IN1
+i_carry => o_data.IN1
+i_carry => o_carry.IN1
+o_data <= o_data.DB_MAX_OUTPUT_PORT_TYPE
+o_carry <= o_carry.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|half_adder|full_adder:FA7
+i_data_a => xor1.IN0
+i_data_a => o_carry.IN0
+i_data_b => xor1.IN1
+i_data_b => o_carry.IN1
+i_carry => o_data.IN1
+i_carry => o_carry.IN1
+o_data <= o_data.DB_MAX_OUTPUT_PORT_TYPE
+o_carry <= o_carry.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|half_adder|full_adder:FA8
+i_data_a => xor1.IN0
+i_data_a => o_carry.IN0
+i_data_b => xor1.IN1
+i_data_b => o_carry.IN1
+i_carry => o_data.IN1
+i_carry => o_carry.IN1
+o_data <= o_data.DB_MAX_OUTPUT_PORT_TYPE
+o_carry <= o_carry.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|half_adder|full_adder:FA9
+i_data_a => xor1.IN0
+i_data_a => o_carry.IN0
+i_data_b => xor1.IN1
+i_data_b => o_carry.IN1
+i_carry => o_data.IN1
+i_carry => o_carry.IN1
+o_data <= o_data.DB_MAX_OUTPUT_PORT_TYPE
+o_carry <= o_carry.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|half_adder|full_adder:FA10
+i_data_a => xor1.IN0
+i_data_a => o_carry.IN0
+i_data_b => xor1.IN1
+i_data_b => o_carry.IN1
+i_carry => o_data.IN1
+i_carry => o_carry.IN1
+o_data <= o_data.DB_MAX_OUTPUT_PORT_TYPE
+o_carry <= o_carry.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|half_adder|full_adder:FA11
+i_data_a => xor1.IN0
+i_data_a => o_carry.IN0
+i_data_b => xor1.IN1
+i_data_b => o_carry.IN1
+i_carry => o_data.IN1
+i_carry => o_carry.IN1
+o_data <= o_data.DB_MAX_OUTPUT_PORT_TYPE
+o_carry <= o_carry.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|half_adder|full_adder:FA12
+i_data_a => xor1.IN0
+i_data_a => o_carry.IN0
+i_data_b => xor1.IN1
+i_data_b => o_carry.IN1
+i_carry => o_data.IN1
+i_carry => o_carry.IN1
+o_data <= o_data.DB_MAX_OUTPUT_PORT_TYPE
+o_carry <= o_carry.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|half_adder|full_adder:FA13
+i_data_a => xor1.IN0
+i_data_a => o_carry.IN0
+i_data_b => xor1.IN1
+i_data_b => o_carry.IN1
+i_carry => o_data.IN1
+i_carry => o_carry.IN1
+o_data <= o_data.DB_MAX_OUTPUT_PORT_TYPE
+o_carry <= o_carry.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|half_adder|full_adder:FA14
+i_data_a => xor1.IN0
+i_data_a => o_carry.IN0
+i_data_b => xor1.IN1
+i_data_b => o_carry.IN1
+i_carry => o_data.IN1
+i_carry => o_carry.IN1
+o_data <= o_data.DB_MAX_OUTPUT_PORT_TYPE
+o_carry <= o_carry.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|half_adder|full_adder:FA15
+i_data_a => xor1.IN0
+i_data_a => o_carry.IN0
+i_data_b => xor1.IN1
+i_data_b => o_carry.IN1
+i_carry => o_data.IN1
+i_carry => o_carry.IN1
+o_data <= o_data.DB_MAX_OUTPUT_PORT_TYPE
+o_carry <= o_carry.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|half_adder|full_adder:FA16
+i_data_a => xor1.IN0
+i_data_a => o_carry.IN0
+i_data_b => xor1.IN1
+i_data_b => o_carry.IN1
+i_carry => o_data.IN1
+i_carry => o_carry.IN1
+o_data <= o_data.DB_MAX_OUTPUT_PORT_TYPE
+o_carry <= o_carry.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|half_adder|full_adder:FA17
+i_data_a => xor1.IN0
+i_data_a => o_carry.IN0
+i_data_b => xor1.IN1
+i_data_b => o_carry.IN1
+i_carry => o_data.IN1
+i_carry => o_carry.IN1
+o_data <= o_data.DB_MAX_OUTPUT_PORT_TYPE
+o_carry <= o_carry.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|half_adder|full_adder:FA18
+i_data_a => xor1.IN0
+i_data_a => o_carry.IN0
+i_data_b => xor1.IN1
+i_data_b => o_carry.IN1
+i_carry => o_data.IN1
+i_carry => o_carry.IN1
+o_data <= o_data.DB_MAX_OUTPUT_PORT_TYPE
+o_carry <= o_carry.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|half_adder|full_adder:FA19
+i_data_a => xor1.IN0
+i_data_a => o_carry.IN0
+i_data_b => xor1.IN1
+i_data_b => o_carry.IN1
+i_carry => o_data.IN1
+i_carry => o_carry.IN1
+o_data <= o_data.DB_MAX_OUTPUT_PORT_TYPE
+o_carry <= o_carry.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|half_adder|full_adder:FA20
+i_data_a => xor1.IN0
+i_data_a => o_carry.IN0
+i_data_b => xor1.IN1
+i_data_b => o_carry.IN1
+i_carry => o_data.IN1
+i_carry => o_carry.IN1
+o_data <= o_data.DB_MAX_OUTPUT_PORT_TYPE
+o_carry <= o_carry.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|half_adder|full_adder:FA21
+i_data_a => xor1.IN0
+i_data_a => o_carry.IN0
+i_data_b => xor1.IN1
+i_data_b => o_carry.IN1
+i_carry => o_data.IN1
+i_carry => o_carry.IN1
+o_data <= o_data.DB_MAX_OUTPUT_PORT_TYPE
+o_carry <= o_carry.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|half_adder|full_adder:FA22
+i_data_a => xor1.IN0
+i_data_a => o_carry.IN0
+i_data_b => xor1.IN1
+i_data_b => o_carry.IN1
+i_carry => o_data.IN1
+i_carry => o_carry.IN1
+o_data <= o_data.DB_MAX_OUTPUT_PORT_TYPE
+o_carry <= o_carry.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|half_adder|full_adder:FA23
+i_data_a => xor1.IN0
+i_data_a => o_carry.IN0
+i_data_b => xor1.IN1
+i_data_b => o_carry.IN1
+i_carry => o_data.IN1
+i_carry => o_carry.IN1
+o_data <= o_data.DB_MAX_OUTPUT_PORT_TYPE
+o_carry <= o_carry.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|half_adder|full_adder:FA24
+i_data_a => xor1.IN0
+i_data_a => o_carry.IN0
+i_data_b => xor1.IN1
+i_data_b => o_carry.IN1
+i_carry => o_data.IN1
+i_carry => o_carry.IN1
+o_data <= o_data.DB_MAX_OUTPUT_PORT_TYPE
+o_carry <= o_carry.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|half_adder|full_adder:FA25
+i_data_a => xor1.IN0
+i_data_a => o_carry.IN0
+i_data_b => xor1.IN1
+i_data_b => o_carry.IN1
+i_carry => o_data.IN1
+i_carry => o_carry.IN1
+o_data <= o_data.DB_MAX_OUTPUT_PORT_TYPE
+o_carry <= o_carry.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|half_adder|full_adder:FA26
+i_data_a => xor1.IN0
+i_data_a => o_carry.IN0
+i_data_b => xor1.IN1
+i_data_b => o_carry.IN1
+i_carry => o_data.IN1
+i_carry => o_carry.IN1
+o_data <= o_data.DB_MAX_OUTPUT_PORT_TYPE
+o_carry <= o_carry.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|half_adder|full_adder:FA27
+i_data_a => xor1.IN0
+i_data_a => o_carry.IN0
+i_data_b => xor1.IN1
+i_data_b => o_carry.IN1
+i_carry => o_data.IN1
+i_carry => o_carry.IN1
+o_data <= o_data.DB_MAX_OUTPUT_PORT_TYPE
+o_carry <= o_carry.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|half_adder|full_adder:FA28
+i_data_a => xor1.IN0
+i_data_a => o_carry.IN0
+i_data_b => xor1.IN1
+i_data_b => o_carry.IN1
+i_carry => o_data.IN1
+i_carry => o_carry.IN1
+o_data <= o_data.DB_MAX_OUTPUT_PORT_TYPE
+o_carry <= o_carry.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|half_adder|full_adder:FA29
+i_data_a => xor1.IN0
+i_data_a => o_carry.IN0
+i_data_b => xor1.IN1
+i_data_b => o_carry.IN1
+i_carry => o_data.IN1
+i_carry => o_carry.IN1
+o_data <= o_data.DB_MAX_OUTPUT_PORT_TYPE
+o_carry <= o_carry.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|half_adder|full_adder:FA30
+i_data_a => xor1.IN0
+i_data_a => o_carry.IN0
+i_data_b => xor1.IN1
+i_data_b => o_carry.IN1
+i_carry => o_data.IN1
+i_carry => o_carry.IN1
+o_data <= o_data.DB_MAX_OUTPUT_PORT_TYPE
+o_carry <= o_carry.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|half_adder|full_adder:FA31
+i_data_a => xor1.IN0
+i_data_a => o_carry.IN0
+i_data_b => xor1.IN1
+i_data_b => o_carry.IN1
+i_carry => o_data.IN1
+i_carry => o_carry.IN1
+o_data <= o_data.DB_MAX_OUTPUT_PORT_TYPE
+o_carry <= o_carry.DB_MAX_OUTPUT_PORT_TYPE
+
+

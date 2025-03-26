@@ -1,0 +1,139 @@
+module output_buf(
+    input logic         i_clk,
+    input logic         i_rst_n,
+    input logic         i_lsu_wren,
+    input logic [2:0]   i_func3,
+    input logic [31:0]  i_lsu_addr,
+    input logic [31:0]  i_output_buf_data,
+
+    output logic [31:0] o_output_buf_data,
+    output logic [31:0] o_io_ledr,
+    output logic [31:0] o_io_ledg,
+    output logic [6:0]  o_io_hex0,
+    output logic [6:0]  o_io_hex1,
+    output logic [6:0]  o_io_hex2,
+    output logic [6:0]  o_io_hex3,
+    output logic [6:0]  o_io_hex4,
+    output logic [6:0]  o_io_hex5,
+    output logic [6:0]  o_io_hex6,
+    output logic [6:0]  o_io_hex7,
+    output logic [31:0] o_io_lcd
+);
+
+// == Addr
+localparam O_BUF_SIZE = 64;
+logic [7:0] out_buf [O_BUF_SIZE - 1:0];
+
+// == Func3 
+localparam [2:0] LB  = 3'b000,
+                 LH  = 3'b001,
+                 LW  = 3'b010,
+                 LBU = 3'b100,
+                 LHU = 3'b101;
+
+// == Memory mapping
+localparam [7:0]  ledr_addr  = 8'h00,
+                  ledg_addr  = 8'h10,
+                  hex0_addr  = 8'h20,
+                  hex1_addr  = 8'h21,
+                  hex2_addr  = 8'h22,
+                  hex3_addr  = 8'h23,
+                  hex4_addr  = 8'h24,
+                  hex5_addr  = 8'h25,
+                  hex6_addr  = 8'h26,
+                  hex7_addr  = 8'h27,
+                  lcd_addr   = 8'h30,
+                  end_addr   = 8'hFF;
+assign o_io_ledr = {out_buf[ledr_addr + 3], out_buf[ledr_addr + 2], out_buf[ledr_addr + 1], out_buf[ledr_addr]};
+assign o_io_ledg = {out_buf[ledg_addr + 3], out_buf[ledg_addr + 2], out_buf[ledg_addr + 1], out_buf[ledg_addr]};
+assign o_io_hex0 = out_buf[hex0_addr][6:0];
+assign o_io_hex1 = out_buf[hex1_addr][6:0];
+assign o_io_hex2 = out_buf[hex2_addr][6:0];
+assign o_io_hex3 = out_buf[hex3_addr][6:0];
+assign o_io_hex4 = out_buf[hex4_addr][6:0];
+assign o_io_hex5 = out_buf[hex5_addr][6:0];
+assign o_io_hex6 = out_buf[hex6_addr][6:0];
+assign o_io_hex7 = out_buf[hex7_addr][6:0];
+assign o_io_lcd  = {out_buf[lcd_addr + 3], out_buf[lcd_addr + 2], out_buf[lcd_addr + 1], out_buf[lcd_addr]};
+
+// == veriable
+logic [7:0] temp_data [3:0];
+logic [7:0] temp_addr;
+assign temp_addr = i_lsu_addr[7:0] & 8'hFE;
+
+always_comb begin : proc_check_out_data
+    if(temp_addr <= end_addr) temp_data[0] = out_buf[temp_addr];
+    else temp_data[0] = 8'h00;
+
+    if(temp_addr + 1 <= end_addr) temp_data[1] = out_buf[temp_addr + 1];
+    else temp_data[1] = 8'h00;
+
+    if(temp_addr + 2 <= end_addr) temp_data[2] = out_buf[temp_addr + 2];
+    else temp_data[2] = 8'h00;
+
+    if(temp_addr + 3 <= end_addr) temp_data[3] = out_buf[temp_addr + 3];
+    else temp_data[3] = 8'h00;    
+end
+
+always_comb begin : proc_select_opcode
+    o_output_buf_data = 32'hz; // Gán giá trị mặc định
+    case (i_func3)
+        LB: begin
+            if (i_lsu_addr[7:0] <= end_addr)
+                o_output_buf_data = {{24{out_buf[i_lsu_addr[7:0]][7]}}, out_buf[i_lsu_addr[7:0]]};
+        end
+        LH: o_output_buf_data = {{16{temp_data[1][7]}}, temp_addr[1], temp_data[0]};
+        LW: o_output_buf_data = {temp_data[3], temp_data[2], temp_data[1], temp_data[0]};
+        LBU: begin
+            if (i_lsu_addr[7:0] <= end_addr)
+                o_output_buf_data = {24'h0, out_buf[i_lsu_addr[7:0]]};
+            else
+                o_output_buf_data = 32'h0;
+        end
+        LHU: o_output_buf_data = {16'h0, temp_data[1], temp_data[0]};
+        default: o_output_buf_data = 32'hz;
+    endcase
+end
+
+always_ff @( posedge i_clk or negedge i_rst_n ) begin : proc_output_buf
+    if(~(i_rst_n)) begin
+        out_buf[ledr_addr]      <= 8'h0;
+        out_buf[ledr_addr + 1]  <= 8'h0;
+        out_buf[ledr_addr + 2]  <= 8'h0;
+        out_buf[ledr_addr + 3]  <= 8'h0;
+        out_buf[ledg_addr]      <= 8'h0;
+        out_buf[ledg_addr + 1]  <= 8'h0;
+        out_buf[hex0_addr]      <= 8'h0;
+        out_buf[hex1_addr]      <= 8'h0;
+        out_buf[hex2_addr]      <= 8'h0;
+        out_buf[hex3_addr]      <= 8'h0;
+        out_buf[hex4_addr]      <= 8'h0;
+        out_buf[hex5_addr]      <= 8'h0;
+        out_buf[hex6_addr]      <= 8'h0;
+        out_buf[hex7_addr]      <= 8'h0;
+        out_buf[lcd_addr]       <= 8'h0;
+        out_buf[lcd_addr + 1]   <= 8'h0;
+        out_buf[lcd_addr + 2]   <= 8'h0;
+        out_buf[lcd_addr + 3]   <= 8'h0;
+    end else begin
+        if((i_lsu_wren == 1'b1) && (i_lsu_addr[15:8] == 8'h70) ) begin // cho phep ghi 
+            case (i_func3[1:0])
+                2'b00: begin // Byte
+                    if(i_lsu_addr[7:0] <= end_addr) out_buf[i_lsu_addr[7:0]] = i_output_buf_data[7:0];
+                end
+                2'b01: begin // Half
+                    if(temp_addr <= end_addr) out_buf[temp_addr] = i_output_buf_data[7:0];
+                    if(temp_addr + 1 <= end_addr) out_buf[temp_addr + 1] = i_output_buf_data[15:8]; 
+                end
+                2'b10: begin // Word
+                    if(temp_addr <= end_addr)     out_buf[temp_addr]     = i_output_buf_data[7:0];
+                    if(temp_addr + 1 <= end_addr) out_buf[temp_addr + 1] = i_output_buf_data[15:8];
+                    if(temp_addr + 2 <= end_addr) out_buf[temp_addr + 2] = i_output_buf_data[23:16];
+                    if(temp_addr + 3 <= end_addr) out_buf[temp_addr + 3] = i_output_buf_data[31:24];
+                end
+            endcase
+        end
+    end
+end
+
+endmodule

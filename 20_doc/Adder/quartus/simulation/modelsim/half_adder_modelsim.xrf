@@ -1,0 +1,11 @@
+vendor_name = ModelSim
+source_file = 1, /home/noname_lnin/Documents/project_tiny/Single_Cycle/doc/Adder/quartus/half_adder.sv
+source_file = 1, /home/noname_lnin/Documents/project_tiny/Single_Cycle/doc/Adder/quartus/db/half_adder.cbx.xml
+design_name = half_adder
+instance = comp, \o_data~output , o_data~output, half_adder, 1
+instance = comp, \o_carry~output , o_carry~output, half_adder, 1
+instance = comp, \i_data_a~input , i_data_a~input, half_adder, 1
+instance = comp, \i_data_b~input , i_data_b~input, half_adder, 1
+instance = comp, \o_data~0 , o_data~0, half_adder, 1
+instance = comp, \nor3~0 , nor3~0, half_adder, 1
+instance = comp, \~QUARTUS_CREATED_GND~I , ~QUARTUS_CREATED_GND~I, half_adder, 1
