@@ -1,7 +1,7 @@
 # Định nghĩa biến
 TOP_MODULE = alu
 SRC_DIR = ./../../00_src
-SRC_FILES = $(SRC_DIR)/$(TOP_MODULE).sv $(TOP_MODULE)_tb.sv
+SRC_FILES = flist.f
 VCD_FILE = $(TOP_MODULE)_wave.vcd
 FST_FILE = $(TOP_MODULE)_wave.fst
 DUMP_VCD = +dumpfile=$(VCD_FILE)
@@ -12,12 +12,12 @@ all: clean test compile run view
 # Kiểm tra cú pháp (không biên dịch)
 test:
 	@echo "🔍 Kiểm tra cú pháp với Verilator..."
-	@verilator --lint-only --sv $(SRC_FILES)
+	@verilator --lint-only -f $(SRC_FILES)
 
 # Biên dịch với Verilator
 compile:
 	@echo "🚀 Biên dịch với Verilator..."
-	@verilator --cc --exe --build --trace-fst --sv $(SRC_FILES) -o sim
+	@verilator --binary --build --trace-fst --timing $(TOP_MODULE)_tb.sv -f $(SRC_FILES) -o sim
 
 # Chạy mô phỏng và tạo file VCD
 run:

@@ -85,7 +85,7 @@
 
 
 `timescale 1ns/1ps
-module alu
+module alu(
     input logic [31:0]  i_operand_a,
     input logic [31:0]  i_operand_b,
     input logic [3:0]   i_alu_op,
@@ -102,6 +102,7 @@ parameter logic [3:0] OP_AND  = 4'b0110;
 parameter logic [3:0] OP_SLL  = 4'b0111;
 parameter logic [3:0] OP_SRL  = 4'b1000;
 parameter logic [3:0] OP_SRA  = 4'b1001;
+parameter logic [3:0] OP_OP_B = 4'b1010;
 
 wire [31:0] w_op_add;
 alu_carry_lookahead_adder CLA(
@@ -118,13 +119,50 @@ alu_carry_lookahead_subtractor CLS(
 );
 
 wire [31:0] w_op_slt, w_op_sltu;
+alu_less_than SLT(
+    .i_a        (i_a),
+    .i_b        (i_b),
+    .sign       (1'b0),   // 1: unsign, 0 sign
+    .o_lt       (w_op_slt)
+);
+alu_less_than SLTU(
+    .i_a        (i_a),
+    .i_b        (i_b),
+    .sign       (1'b1),   // 1: unsign, 0 sign
+    .o_lt       (w_op_sltu)
+);
+
+wire [31:0] w_op_sll, w_op_srl, w_op_sra;
+alu_shift_left_logic SLL(
+    .i_a        (i_operand_a),
+    .i_b        (i_operand_b),
+    .o_sll      (w_op_sll)
+);
+alu_shift_right_logic SLR(
+    .i_a        (i_operand_a),
+    .i_b        (i_operand_b),
+    .o_srl      (w_op_srl)
+);
+alu_shift_right_arithmetic SRA(
+    .i_a        (i_operand_a),
+    .i_b        (i_operand_b),
+    .o_sra      (w_op_sra)
+);
 
 always_comb begin
     case (i_alu_op)
-        OP_ADD: o_alu_data = w_op_add;
-        OP_SUB: o_alu_data = w_op_sub;
-        OP_SLT: o_alu_data = w_op_slt;
-        OP_SLTU: o_alu_data = w_op_sltu;
+        OP_ADD:     o_alu_data = w_op_add;
+        OP_SUB:     o_alu_data = w_op_sub;
+        OP_SLT:     o_alu_data = w_op_slt;
+        OP_SLTU:    o_alu_data = w_op_sltu;
+        OP_XOR:     o_alu_data = i_operand_a ^ i_operand_b;
+        OP_OR:      o_alu_data = i_operand_b | i_operand_b;
+        OP_AND:     o_alu_data = i_operand_a & i_operand_b;
+        OP_SLL:     o_alu_data = w_op_sll;
+        OP_SRL:     o_alu_data = w_op_srl;
+        OP_SRA:     o_alu_data = w_op_sra;
+        OP_OP_B:    o_alu_data = i_operand_b;
+        default:    o_alu_data = 32'b0;
     endcase
 end 
 endmodule

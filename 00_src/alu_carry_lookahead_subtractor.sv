@@ -25,7 +25,7 @@ module alu_carry_lookahead_subtractor(
         end
     endgenerate
 
-    carry_lookahead_32bit_unit CLA32 (
+    alu_carry_lookahead_32bit_unit CLA32 (
         .i_c0(1'b1),   // Carry-in khởi tạo là 1
         .i_p(p),
         .i_g(g),

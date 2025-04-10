@@ -24,7 +24,7 @@ module alu_carry_lookahead_adder(
     endgenerate
 
     // Tính toàn bộ carry bits
-    carry_lookahead_32bit_unit CLA32 (
+    alu_carry_lookahead_32bit_unit CLA32 (
         .i_c0(1'b0),
         .i_p(p),
         .i_g(g),
